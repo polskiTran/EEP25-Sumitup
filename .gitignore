@@ -1,0 +1,12 @@
+.env.dev
+.env.prod
+.env.staging
+.env.test
+.env.local
+.env.development
+.env.production
+.env.staging
+.env.test
+.env.local
+.env.development
+.env.production
