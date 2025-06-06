@@ -18,3 +18,15 @@ A project for EEP Summer 2025 - Web app for newsletters summary
 ## Why
 
     - Cause no one like reading 10+ newsletter every morning in their inbox
+
+## Development Setup
+
+The backend uses [`uv`](https://docs.astral.sh/uv/) to manage Python
+dependencies. After installing `uv`, install the locked dependencies and
+run the server with:
+
+```bash
+cd backend
+uv sync --lock
+uv run main.py
+```
