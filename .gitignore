@@ -1,3 +1,4 @@
+# Environment variables
 .env.dev
 .env.prod
 .env.staging
@@ -10,3 +11,14 @@
 .env.local
 .env.development
 .env.production
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
