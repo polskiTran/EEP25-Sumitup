@@ -17,3 +17,13 @@ wheels/
 
 # Virtual environments
 .venv
+
+#ruff
+.ruff_cache
+
+#Vscode
+.vscode
+
+# Gmail API
+credentials.json
+token.json

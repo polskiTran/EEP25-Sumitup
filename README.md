@@ -25,8 +25,8 @@ The backend uses [`uv`](https://docs.astral.sh/uv/) to manage Python
 dependencies. After installing `uv`, install the locked dependencies and
 run the server with:
 
-```bash
-cd backend
-uv sync --lock
-uv run main.py
-```
+    ```bash
+    cd backend
+    uv sync --lock
+    uv run main.py
+    ```
