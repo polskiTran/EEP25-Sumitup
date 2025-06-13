@@ -12,11 +12,15 @@ class Settings(BaseSettings):
     # Google
     google_gmail_client_id: str
     google_gmail_client_secret: str
-    google_gemini_genai_api: str
+    google_gemini_genai_api_token: str
+
+    # HTML to Markdown Converter
+    html_md_converter_api_token: str
+    html_md_converter_api_base_url: str
 
     # Popular tech newsletters to monitor
     target_newsletters: List[str] = [
-        "morning@morningbrew.com",
+        # "morning@morningbrew.com",
         "dan@tldrnewsletter.com",
     ]
 
