@@ -3,7 +3,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from config import settings
-from helpers.helpers import gmail_response_to_html
+from helpers.helpers import get_html_from_gmail_response
 
 
 class HTMLToMarkdownConfig:
@@ -15,15 +15,24 @@ class HTMLToMarkdownConfig:
 
 
 def get_html_body_from_gmail_response(response_json: dict) -> str:
-    html_body = gmail_response_to_html(response_json)
+    """Get the html body from the gmail response
+
+    Args:
+        response_json (dict): The gmail response json
+
+    Returns:
+        str: The html body value
+    """
+    html_body = get_html_from_gmail_response(response_json)
     soup = BeautifulSoup(html_body, "html.parser")
     return str(soup.find("body"))
 
 
 def test_api_endpoint():
-    response_json = json.load(
-        open("TEST_Newsletters/TLDR_AI_Jun_12.json", "r", encoding="utf-8")
-    )
+    """Test the api endpoint for html to markdown conversion"""
+    gmail_response_file_path = f"TEST_Newsletters/{settings.test_newsletter_name}.json"
+
+    response_json = json.load(open(gmail_response_file_path, "r", encoding="utf-8"))
     html_body = get_html_body_from_gmail_response(response_json)
     payload = {"html": html_body}
     # print(payload)
@@ -34,7 +43,11 @@ def test_api_endpoint():
         headers=HTMLToMarkdownConfig.HEADERS,
         timeout=30,
     )
-    with open("TEST_Newsletters/response.json", "w", encoding="utf-8") as f:
+    with open(
+        f"TEST_Newsletters/responses/{settings.test_newsletter_name}_html_md_converter.json",
+        "w",
+        encoding="utf-8",
+    ) as f:
         f.write(response.text)
 
     return response.status_code == 201
