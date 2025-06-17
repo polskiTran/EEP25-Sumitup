@@ -3,7 +3,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 from config import settings
-from helpers.helpers import get_html_from_gmail_response
+from helpers.helpers import get_item_from_gmail_response
 
 
 class HTMLToMarkdownConfig:
@@ -23,9 +23,28 @@ def get_html_body_from_gmail_response(response_json: dict) -> str:
     Returns:
         str: The html body value
     """
-    html_body = get_html_from_gmail_response(response_json)
+    html_body = get_item_from_gmail_response(response_json, "html")
     soup = BeautifulSoup(html_body, "html.parser")
     return str(soup.find("body"))
+
+
+def html_to_markdown(response_json: dict) -> str:
+    """Convert html to markdown
+    Args:
+        response_json (dict): The gmail response json
+    Returns:
+        str: The markdown body
+    """
+    html_body = get_html_body_from_gmail_response(response_json)
+    payload = {"html": html_body}
+
+    response = requests.post(
+        f"{HTMLToMarkdownConfig.BASE_URL}",
+        json=payload,
+        headers=HTMLToMarkdownConfig.HEADERS,
+        timeout=30,
+    )
+    return json.loads(response.text)["markdown"]
 
 
 def test_api_endpoint():

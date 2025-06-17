@@ -1,6 +1,6 @@
 from config import settings
 from database.database import get_collection_names
-from fastapi import APIRouter, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, HTTPException
 from models.newsletter import Newsletter
 from services import gmail_service
 
@@ -29,6 +29,15 @@ async def gmail_api_test():
     results = service.users().messages().list(userId="me").execute()
     print(results)
     return {"message": "Gmail API test", "results": results}
+
+
+@router.get("/target-newsletters-ids-TEST")
+async def target_newsletters_ids_test():
+    try:
+        response = await gmail_service.fetch_new_newsletters_ids()
+        return response
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @router.get("/list")  # List or search newsletters (perhaps with query params)

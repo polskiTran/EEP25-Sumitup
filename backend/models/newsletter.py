@@ -1,12 +1,19 @@
-from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
 
 class Newsletter(BaseModel):
-    subject: str
-    sender: str
-    body: str  # raw HTML or text content of the newsletter
-    date: datetime
-    summary: str | None = None  # will be filled after summarization
-    tags: list[str] = []  # e.g., for filtering/categorization
+    id: str = Field(..., alias="_id")
+    thread_id: str = Field(...)
+    history_id: Optional[str]
+    internal_date: int = Field(...)
+    sender_name: str = Field(...)
+    sender_email: str = Field(...)
+    subject: str = Field(...)
+    raw_html: Optional[str]
+    raw_md: Optional[str]
+    cleaned_md: Optional[str]
+
+    class Config:
+        validate_by_name = True

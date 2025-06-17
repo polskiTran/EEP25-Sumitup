@@ -8,7 +8,10 @@ from pydantic_settings import BaseSettings
 class Settings(BaseSettings):
     # MongoDB
     mongodb_url: str
-    database_name: str = "sumitup_db"
+    database_name: str = "sumitup-dev"
+    newsletter_collection_name: str = "newsletters"
+    sync_state_collection_name: str = "sync_state"
+    sync_state_id: str = "SYNC_STATE_ID"
 
     # Google
     google_gmail_client_id: str
@@ -30,12 +33,24 @@ class Settings(BaseSettings):
 
     # Popular tech newsletters to monitor
     target_newsletters: List[Dict[str, str]] = [
-        # "morning@morningbrew.com",
-        {"name": "TLDR AI", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR AI", "email": "dan@tldrnewsletter.com"},
+        {"name": "TLDR", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Design", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Web Dev", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Product", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Founders", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Data", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Fintech", "email": "dan@tldrnewsletter.com"},
+        # {"name": "TLDR Marketing", "email": "dan@tldrnewsletter.com"},
+        {"name": "Tech Brew", "email": "crew@morningbrew.com"},
+        {"name": "IT Brew", "email": "crew@morningbrew.com"},
     ]
 
     # dev email to receive newsletters
     newsletter_email: EmailStr
+
+    # Logger
+    logger_level: str = "DEBUG"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
 
     # TEST:
     # test newsletter name

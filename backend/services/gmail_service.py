@@ -1,15 +1,59 @@
+import logging
 import os
 import os.path
 from datetime import datetime
 
 from config import settings
+from database.database import (
+    close_mongo_connection,
+    connect_to_mongo,
+    get_newsletter,
+    get_newsletters,
+    get_sync_state,
+    upsert_newsletter,
+    upsert_sync_state,
+)
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from helpers.helpers import (
+    construct_sender_info,
+    convert_internal_date_to_datetime,
+    get_item_from_gmail_response,
+    parse_sender,
+)
 from models.newsletter import Newsletter
+from models.sync_state import SyncState
+from services.genai_service import llm_clean_up
+from services.pre_processing_service import html_to_markdown
 
+# ------------------------------
+# Logger
+# ------------------------------
+# capture module name and set level
+logger = logging.getLogger(__name__)
+logger.setLevel(settings.logger_level)
+
+# Create console handler (stream logger to console) and set level to debug
+console_handler = logging.StreamHandler()
+console_handler.setLevel(settings.logger_level)  # Capture all levels
+
+# Create formatter and add it to the handler
+formatter = logging.Formatter(
+    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+console_handler.setFormatter(formatter)
+
+# Add the handler to the logger if not already added
+if not logger.hasHandlers():
+    logger.addHandler(console_handler)
+
+# ------------------------------
+# Gmail Service
+# ------------------------------
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
@@ -35,104 +79,171 @@ def gmail_authenticate():
     return build("gmail", "v1", credentials=creds)
 
 
-async def fetch_and_process_latest():
-    """Fetch the latest email from Gmail and process it (save + summarize)."""
-    # In a real implementation, use Gmail API to fetch email:
-    # e.g., service = build('gmail', 'v1', credentials=...)
-    # message = service.users().messages().get(userId='me', id=msg_id, format='full').execute()
-    # For now, this is a placeholder:
-    newsletter_data = {
-        "subject": "(demo) Latest Newsletter",
-        "sender": "example@example.com",
-        "body": "<p>Hello world</p>",
-        "date": datetime.now().isoformat(),
+def sync_state_to_model(latest_email_id: str) -> SyncState:
+    """Convert the sync state to a model
+    Args:
+        newsletter_data (dict): The newsletter data
+    Returns:
+        SyncState: The sync state model
+    """
+    service = gmail_authenticate()
+    latest_email = (
+        service.users().messages().get(userId="me", id=latest_email_id).execute()
+    )
+    return SyncState(
+        gmail_message_id=latest_email_id,
+        subject=get_item_from_gmail_response(latest_email, "subject"),
+        sender_name=parse_sender(get_item_from_gmail_response(latest_email, "sender"))[
+            "name"
+        ],
+        sender_email=parse_sender(get_item_from_gmail_response(latest_email, "sender"))[
+            "email"
+        ],
+        last_synced_internal_date=get_item_from_gmail_response(
+            latest_email, "internal_date"
+        ),
+    )
+
+
+async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
+    """Convert the newsletter data to a model
+    Args:
+        newsletter_data (dict): The newsletter data
+    Returns:
+        Newsletter: The newsletter model
+    """
+    sender_info = parse_sender(get_item_from_gmail_response(newsletter_data, "sender"))
+    raw_md = html_to_markdown(newsletter_data)  # clean markdown text
+    log_info = f"{construct_sender_info(sender_info)}_{convert_internal_date_to_datetime(int(get_item_from_gmail_response(newsletter_data, 'internal_date')))}"
+    cleaned_md = await llm_clean_up(raw_md, log_info)
+    return Newsletter(
+        id=get_item_from_gmail_response(newsletter_data, "id"),
+        thread_id=get_item_from_gmail_response(newsletter_data, "thread_id"),
+        history_id=get_item_from_gmail_response(newsletter_data, "history_id"),
+        internal_date=get_item_from_gmail_response(newsletter_data, "internal_date"),
+        sender_name=sender_info["name"],
+        sender_email=sender_info["email"],
+        subject=get_item_from_gmail_response(newsletter_data, "subject"),
+        raw_html=get_item_from_gmail_response(newsletter_data, "html"),
+        raw_md=raw_md,
+        cleaned_md=cleaned_md,
+    )
+
+
+async def fetch_new_newsletters_ids():
+    """Fetch the latest newsletter from Gmail and process it (save + summarize).
+    Returns:
+        dict: {
+            "message": "Fetch newsletters from Gmail API",
+            "results": {
+                "sender_email": {}
+            }
+        }
+    """
+    service = gmail_authenticate()
+    # sync state
+    sync_state = await get_sync_state()
+    fetched_newsletter_ids = []
+    query = ""
+    if not sync_state:  # first time run
+        # capture latest newsletter for sync state
+        latest_email_id = (
+            service.users().messages().list(userId="me").execute()["messages"][0]["id"]
+        )
+        sync_state = sync_state_to_model(latest_email_id)
+        await upsert_sync_state(sync_state)
+
+        # construct query from target newsletters
+        query = " OR ".join(
+            [
+                f'from:"{sender_info["name"]}"'
+                for sender_info in settings.target_newsletters
+            ]
+        )
+    else:  # subsequent runs that will start from the last sync state
+        # construct query from target newsletters
+        query = " OR ".join(
+            [
+                f'from:"{sender_info["name"]}"'
+                for sender_info in settings.target_newsletters
+            ]
+        )
+        # add 5 seconds to the last synced internal date to avoid duplicates
+        query = (
+            f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
+        )
+
+    # fetch newsletters from query
+    logger.info(f"Fetching newsletters using query: {query}")
+    next_page_token = None
+    while True:
+        request = (
+            service.users()
+            .messages()
+            .list(
+                userId="me",
+                q=query,
+                pageToken=next_page_token,
+            )
+        )
+        gmail_fetch_result = request.execute()
+        if "messages" in gmail_fetch_result:
+            fetched_newsletter_ids.extend(gmail_fetch_result["messages"])
+        next_page_token = gmail_fetch_result.get("nextPageToken")
+        if not next_page_token:
+            break
+
+    # fetch result
+    fetch_result = {
+        "message": "Fetch newsletters from Gmail API",
+        "results": fetched_newsletter_ids,
+        "count": len(fetched_newsletter_ids),
     }
-    # TODO: Save to DB and trigger summarization
-    # from database import get_collection_names  # Use your actual DB functions
-    print("Newsletter data processed:", newsletter_data)
-    return newsletter_data
+    logger.info(f"Fetched {fetch_result['count']} newsletters")
+    return fetch_result
 
 
-# region gmail api test functions ==============================================
-# gmail ingestion test function
-# def test_gmail_ingestion():
-#     newsletter_data: Newsletter = Newsletter(
-#         subject="(demo) Latest Newsletter",
-#         sender="example@example.com",
-#         body="<p>Hello world</p>",
-#         date=datetime.now(),
-#     )
-#     return newsletter_data
+async def process_fetched_newsletters(fetched_newsletters_ids: list):
+    """Process the newsletter data
+    Args:
+        fetched_newsletters_ids (list): The fetched newsletters ids
+    """
+    service = gmail_authenticate()
+    for newsletter_id in fetched_newsletters_ids:
+        # fetch newsletters from ids
+        newsletter_data = (
+            service.users()
+            .messages()
+            .get(userId="me", id=newsletter_id["id"])
+            .execute()
+        )
+        # check if newsletter already exists
+        if await get_newsletter(newsletter_data["id"]):
+            logger.info(f"Newsletter already exists: {newsletter_data['id']}")
+            continue
+        else:
+            # to pydantic model
+            newsletter: Newsletter = await newsletter_to_model(newsletter_data)
+        # save to db
+        await upsert_newsletter(newsletter)
 
-
-# # gmail process test function
-# async def test_gmail_process():
-#     """Test function for isolated testing"""
-#     print("Testing Gmail service...")
-
-#     newsletter = test_gmail_ingestion()
-#     # strip html tags from body
-#     return newsletter
-
-
-# # Test function that can be run independently
-# async def test():
-#     """Test function for isolated testing"""
-#     print("Testing Gmail service...")
-
-#     # Test 1: Create newsletter object
-#     newsletter = test_gmail_ingestion()
-#     print(f"✅ Newsletter created: {newsletter.subject}")
-
-#     # Test 2: Process latest newsletter
-#     result = await fetch_and_process_latest()
-#     print(f"✅ Newsletter processed: {result}")
-
-
-# def gmail_api_test():
-#     """Shows basic usage of the Gmail API.
-#     Lists the user's Gmail labels.
-#     """
-#     creds = None
-#     # The file token.json stores the user's access and refresh tokens, and is
-#     # created automatically when the authorization flow completes for the first
-#     # time.
-#     if os.path.exists("token.json"):
-#         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-#     # If there are no (valid) credentials available, let the user log in.
-#     if not creds or not creds.valid:
-#         if creds and creds.expired and creds.refresh_token:
-#             creds.refresh(Request())
-#         else:
-#             flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
-#             creds = flow.run_local_server(port=0)
-#         # Save the credentials for the next run
-#         with open("token.json", "w") as token:
-#             token.write(creds.to_json())
-
-#     try:
-#         # Call the Gmail API
-#         service = build("gmail", "v1", credentials=creds)
-#         results = service.users().labels().list(userId="me").execute()
-#         labels = results.get("labels", [])
-
-#         if not labels:
-#             print("No labels found.")
-#             return
-#         print("Labels:")
-#         for label in labels:
-#             print(label["name"])
-
-#     except HttpError as error:
-#         # TODO(developer) - Handle errors from gmail API.
-#         print(f"An error occurred: {error}")
-
-
-# endregion
 
 if __name__ == "__main__":
     import asyncio
+    import json
+    import pprint
 
-    # gmail_api_test()
-    # asyncio.run(test())
-    service = gmail_authenticate()
+    async def test_run():
+        # start db
+        await connect_to_mongo()
+
+        # test fetch_new_newsletters_ids
+        fetched_newsletters_ids = await fetch_new_newsletters_ids()
+
+        # process fetched newsletters
+        await process_fetched_newsletters(fetched_newsletters_ids["results"])
+
+        # stop db
+        await close_mongo_connection()
+
+    asyncio.run(test_run())
