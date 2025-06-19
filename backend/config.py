@@ -21,9 +21,13 @@ class Settings(BaseSettings):
     google_gemini_genai_cleanup_prompt_path: str = (
         "helpers/google_gemini_llm_cleanup_prompt.txt"
     )
+    google_gemini_genai_system_instruction: str = open(
+        google_gemini_genai_cleanup_prompt_path, "r", encoding="utf-8"
+    ).read()
     google_gemini_genai_config: types.GenerateContentConfig = (
         types.GenerateContentConfig(
-            temperature=0.5,
+            temperature=0,
+            system_instruction=google_gemini_genai_system_instruction,
         )
     )
 
@@ -44,6 +48,10 @@ class Settings(BaseSettings):
         # {"name": "TLDR Marketing", "email": "dan@tldrnewsletter.com"},
         {"name": "Tech Brew", "email": "crew@morningbrew.com"},
         {"name": "IT Brew", "email": "crew@morningbrew.com"},
+        {
+            "name": "ByteByteGo",
+            "email": "bytebytego@substack.com",
+        },
     ]
 
     # dev email to receive newsletters

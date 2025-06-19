@@ -1,9 +1,32 @@
 import json
+import logging
 
 import requests
 from bs4 import BeautifulSoup
 from config import settings
 from helpers.helpers import get_item_from_gmail_response
+
+# ------------------------------
+# Logger
+# ------------------------------
+# capture module name and set level
+logger = logging.getLogger(__name__)
+logger.setLevel(settings.logger_level)
+
+# Create console handler (stream logger to console) and set level to debug
+console_handler = logging.StreamHandler()
+console_handler.setLevel(settings.logger_level)  # Capture all levels
+
+# Create formatter and add it to the handler
+formatter = logging.Formatter(
+    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
+console_handler.setFormatter(formatter)
+
+# Add the handler to the logger if not already added
+if not logger.hasHandlers():
+    logger.addHandler(console_handler)
 
 
 class HTMLToMarkdownConfig:
@@ -24,6 +47,9 @@ def get_html_body_from_gmail_response(response_json: dict) -> str:
         str: The html body value
     """
     html_body = get_item_from_gmail_response(response_json, "html")
+    if not html_body:
+        logger.error(f"No html body found for {response_json['id']}")
+        return ""
     soup = BeautifulSoup(html_body, "html.parser")
     return str(soup.find("body"))
 

@@ -4,6 +4,7 @@ from datetime import datetime
 
 from config import settings
 from google import genai
+from google.genai import types
 
 # ------------------------------
 # Logger
@@ -47,21 +48,6 @@ def construct_prompt(prompt_path: str, newsletter_markdown: str) -> str:
     return prompt + newsletter_markdown + '"'
 
 
-# async def summarize_and_store(newsletter: dict, doc_id):
-#     """Generate summary for the newsletter and update the DB record.
-
-#     Args:
-#         newsletter (dict): The newsletter to summarize
-#         doc_id (str): The id of the newsletter document
-#     """
-#     summary = summarize_text(newsletter.get("body", ""))
-#     # Update the Mongo document with the summary
-#     await newsletters_collection.update_one(
-#         {"_id": doc_id},
-#         {"$set": {"summary": summary, "summary_timestamp": datetime.now()}},
-#     )
-
-
 async def llm_clean_up(newsletter_markdown: str, log_info: str):
     """The LLM clean up function.
 
@@ -89,11 +75,29 @@ async def llm_clean_up(newsletter_markdown: str, log_info: str):
     )
     response = client.models.generate_content(
         model=settings.google_gemini_genai_model,
-        contents=construct_prompt(
-            settings.google_gemini_genai_cleanup_prompt_path, newsletter_markdown
-        ),
+        contents=newsletter_markdown,
         config=settings.google_gemini_genai_config,
     )
+    if not response.text:
+        logger.debug(
+            f"LLM response is empty for {log_info}. Retrying with system instruction in prompt + thinking."
+        )
+        response = client.models.generate_content(
+            model=settings.google_gemini_genai_model,
+            contents=construct_prompt(
+                settings.google_gemini_genai_cleanup_prompt_path, newsletter_markdown
+            ),
+            config=types.GenerateContentConfig(
+                temperature=0.0,
+                thinking_config=types.ThinkingConfig(
+                    thinking_budget=8000,
+                ),
+                response_mime_type="text/plain",
+            ),
+        )
+        if not response.text:
+            logger.error(f"LLM response is still empty for {log_info}.")
+            return response.text
     return response.text
 
 
@@ -110,14 +114,14 @@ if __name__ == "__main__":
     # )
 
     # test the llm clean up function
-    import asyncio
+    # import asyncio
 
-    with open(
-        f"TEST_Newsletters/responses/{settings.test_newsletter_name}_html_md_converter.json",
-        "r",
-        encoding="utf-8",
-    ) as f:
-        newsletter_md_converted_response = json.load(f)
-    response = asyncio.run(test_llm_clean_up(newsletter_md_converted_response))
-    # test status
-    print("✅ Test done")
+    # with open(
+    #     f"TEST_Newsletters/responses/{settings.test_newsletter_name}_html_md_converter.json",
+    #     "r",
+    #     encoding="utf-8",
+    # ) as f:
+    #     newsletter_md_converted_response = json.load(f)
+    # response = asyncio.run(llm_clean_up(newsletter_md_converted_response))
+    # # test status
+    print("GenAI Service")

@@ -9,6 +9,7 @@ from database.database import (
     connect_to_mongo,
     get_newsletter,
     get_newsletters,
+    get_null_cleaned_md_newsletters,
     get_sync_state,
     upsert_newsletter,
     upsert_sync_state,
@@ -146,13 +147,6 @@ async def fetch_new_newsletters_ids():
     fetched_newsletter_ids = []
     query = ""
     if not sync_state:  # first time run
-        # capture latest newsletter for sync state
-        latest_email_id = (
-            service.users().messages().list(userId="me").execute()["messages"][0]["id"]
-        )
-        sync_state = sync_state_to_model(latest_email_id)
-        await upsert_sync_state(sync_state)
-
         # construct query from target newsletters
         query = " OR ".join(
             [
@@ -172,6 +166,13 @@ async def fetch_new_newsletters_ids():
         query = (
             f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
         )
+
+    # capture latest newsletter for sync state
+    latest_email_id = (
+        service.users().messages().list(userId="me").execute()["messages"][0]["id"]
+    )
+    latest_sync_state = sync_state_to_model(latest_email_id)
+    await upsert_sync_state(latest_sync_state)
 
     # fetch newsletters from query
     logger.info(f"Fetching newsletters using query: {query}")
@@ -228,6 +229,23 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
         await upsert_newsletter(newsletter)
 
 
+async def retry_null_cleaned_md():
+    """Retry to clean the newsletter if the cleaned_md is null
+    Args:
+        newsletter (Newsletter): The newsletter model
+    """
+    null_cleaned_md_newsletters = await get_null_cleaned_md_newsletters()
+    for newsletter in null_cleaned_md_newsletters:
+        retried_cleaned_md: str = await llm_clean_up(newsletter.raw_md, newsletter.id)
+        if not retried_cleaned_md:
+            logger.error(
+                f"Failed to clean the newsletter: {newsletter.id}. Skipping..."
+            )
+            continue
+        newsletter.cleaned_md = retried_cleaned_md
+        await upsert_newsletter(newsletter)
+
+
 if __name__ == "__main__":
     import asyncio
     import json
@@ -236,13 +254,12 @@ if __name__ == "__main__":
     async def test_run():
         # start db
         await connect_to_mongo()
-
         # test fetch_new_newsletters_ids
         fetched_newsletters_ids = await fetch_new_newsletters_ids()
-
         # process fetched newsletters
         await process_fetched_newsletters(fetched_newsletters_ids["results"])
-
+        # retry null cleaned md
+        await retry_null_cleaned_md()
         # stop db
         await close_mongo_connection()
 

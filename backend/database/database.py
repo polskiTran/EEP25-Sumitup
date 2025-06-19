@@ -1,9 +1,7 @@
-import asyncio
 import logging
 from typing import List, Optional
 
 from config import settings
-from helpers.mock_data import *
 from models.newsletter import Newsletter
 from models.sync_state import SyncState
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorCollection
@@ -177,6 +175,19 @@ async def get_newsletters(filter: dict = {}) -> List[Newsletter]:
     return [Newsletter(**newsletter) for newsletter in newsletters]
 
 
+async def get_null_cleaned_md_newsletters():
+    """Get the newsletters with null cleaned_md
+    Returns:
+        List[Newsletter]: The newsletters models
+    """
+    newsletter_collection = get_collection(settings.newsletter_collection_name)
+    newsletters = await newsletter_collection.find({"cleaned_md": None}).to_list(
+        length=None
+    )
+    logger.info(f"Found {len(newsletters)} newsletters with null cleaned_md")
+    return [Newsletter(**newsletter) for newsletter in newsletters]
+
+
 async def upsert_newsletter(newsletter: Newsletter) -> Newsletter:
     """Update the newsletter
     Args:
@@ -220,11 +231,14 @@ async def delete_newsletter(gmail_message_id: str):
 
 
 if __name__ == "__main__":
-    # async def main():
-    #     await connect_to_mongo()
-    #     # test delete_newsletter
-    #     await delete_newsletter(mock_newsletter_data_1["_id"])
-    #     await close_mongo_connection()
+    import asyncio
 
-    # asyncio.run(main())
+    async def main():
+        await connect_to_mongo()
+        # test delete_newsletter
+        await get_null_cleaned_md_newsletters()
+
+        await close_mongo_connection()
+
+    asyncio.run(main())
     print("database.py _ test")

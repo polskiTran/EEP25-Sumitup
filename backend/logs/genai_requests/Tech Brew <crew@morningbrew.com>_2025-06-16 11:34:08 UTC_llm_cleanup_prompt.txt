@@ -11,6 +11,7 @@ Things you can MODIFY:
 Must PRESERVES:
 	- links to mentioned article (no article or headline should be there without links to it).
     - Credits to writers and sources
+    - Images that are relevant to, referenced in the content of the newsletter
 Before every heading, a proper newline must be inserted. 
 
 Output in markdown format
@@ -79,9 +80,7 @@ Design Mode on v0 allows users to quickly tweak generations, preview changes, an
 
 The studios claim Midjourney, which reportedly made $300 million last year, built a "bootlegging business model" by generating thousands of images featuring characters from Marvel, Star Wars, Pixar, and DreamWorks properties."
 
-NEWSLETTER TO PROCESS:
-"
-EV charging a decade after Dieselgate.
+NEWSLETTER TO PROCESS BELOW:EV charging a decade after Dieselgate.
 
 [![](https://link.morningbrew.com/img/683083fb5bc6b6d210091294nzfd6.8k1l/374b1386.gif)](http://www.morningbrew.com)
 
