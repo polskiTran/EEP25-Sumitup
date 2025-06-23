@@ -8,6 +8,7 @@ In this step, you are strictly FORBID to add new content or modify content to th
     - content that does not in anyway focus on delivering news story to the reader. 
 Things you can MODIFY:
 	- replace &amp;, &#8217 with chars
+    - Dollar sign `$` used as currency (rather than markdown math block) should be prepend with `\` so that markdown wont mistakingly put content in math block (Example `$100 dollars and 99$` should be `\$100 dollars and \$99`)
     - Modify markdown headings level so that the level reflects content (highest should be # (categories) then ## (content of that category), etc..)
 Must PRESERVES:
 	- links to mentioned article (no article or headline should be there without links to it).
