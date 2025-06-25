@@ -61,23 +61,32 @@ SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
 def gmail_authenticate():
     """Authenticate with the Gmail API and return the service."""
-    creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
-            creds = flow.run_local_server(port=8080)
-        # Save the credentials for the next run
-        with open("token.json", "w") as token:
-            token.write(creds.to_json())
-    return build("gmail", "v1", credentials=creds)
+    try:
+        creds = None
+        # The file token.json stores the user's access and refresh tokens, and is
+        # created automatically when the authorization flow completes for the first
+        # time.
+        if os.path.exists("token.json"):
+            creds = Credentials.from_authorized_user_file("token.json", SCOPES)
+        # If there are no (valid) credentials available, let the user log in.
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    "credentials.json", SCOPES
+                )
+                creds = flow.run_local_server(port=8080)
+            # Save the credentials for the next run
+            with open("token.json", "w") as token:
+                token.write(creds.to_json())
+        return build("gmail", "v1", credentials=creds)
+    except HttpError as e:
+        logger.error(f"Gmail API HttpError during authentication: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected error during Gmail authentication: {e}")
+        raise
 
 
 def sync_state_to_model(latest_email_id: str) -> SyncState:
@@ -141,67 +150,69 @@ async def fetch_new_newsletters_ids():
             }
         }
     """
-    service = gmail_authenticate()
-    # sync state
-    sync_state = await get_sync_state()
-    fetched_newsletter_ids = []
-    query = ""
-    if not sync_state:  # first time run
-        # construct query from target newsletters
-        query = " OR ".join(
-            [
-                f'from:"{sender_info["name"]}"'
-                for sender_info in settings.target_newsletters
-            ]
-        )
-    else:  # subsequent runs that will start from the last sync state
-        # construct query from target newsletters
-        query = " OR ".join(
-            [
-                f'from:"{sender_info["name"]}"'
-                for sender_info in settings.target_newsletters
-            ]
-        )
-        # add 5 seconds to the last synced internal date to avoid duplicates
-        query = (
-            f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
-        )
-
-    # capture latest newsletter for sync state
-    latest_email_id = (
-        service.users().messages().list(userId="me").execute()["messages"][0]["id"]
-    )
-    latest_sync_state = sync_state_to_model(latest_email_id)
-    await upsert_sync_state(latest_sync_state)
-
-    # fetch newsletters from query
-    logger.info(f"Fetching newsletters using query: {query}")
-    next_page_token = None
-    while True:
-        request = (
-            service.users()
-            .messages()
-            .list(
-                userId="me",
-                q=query,
-                pageToken=next_page_token,
+    try:
+        service = gmail_authenticate()
+        # sync state
+        sync_state = await get_sync_state()
+        fetched_newsletter_ids = []
+        query = ""
+        if not sync_state:  # first time run
+            # construct query from target newsletters
+            query = " OR ".join(
+                [
+                    f'from:"{sender_info["name"]}"'
+                    for sender_info in settings.target_newsletters
+                ]
             )
-        )
-        gmail_fetch_result = request.execute()
-        if "messages" in gmail_fetch_result:
-            fetched_newsletter_ids.extend(gmail_fetch_result["messages"])
-        next_page_token = gmail_fetch_result.get("nextPageToken")
-        if not next_page_token:
-            break
+        else:  # subsequent runs that will start from the last sync state
+            # construct query from target newsletters
+            query = " OR ".join(
+                [
+                    f'from:"{sender_info["name"]}"'
+                    for sender_info in settings.target_newsletters
+                ]
+            )
+            # add 5 seconds to the last synced internal date to avoid duplicates
+            query = f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
 
-    # fetch result
-    fetch_result = {
-        "message": "Fetch newsletters from Gmail API",
-        "results": fetched_newsletter_ids,
-        "count": len(fetched_newsletter_ids),
-    }
-    logger.info(f"Fetched {fetch_result['count']} newsletters")
-    return fetch_result
+        # fetch newsletters from query
+        logger.info(f"Fetching newsletters using query: {query}")
+        next_page_token = None
+        while True:
+            try:
+                request = (
+                    service.users()
+                    .messages()
+                    .list(
+                        userId="me",
+                        q=query,
+                        pageToken=next_page_token,
+                    )
+                )
+                gmail_fetch_result = request.execute()
+                if "messages" in gmail_fetch_result:
+                    fetched_newsletter_ids.extend(gmail_fetch_result["messages"])
+                next_page_token = gmail_fetch_result.get("nextPageToken")
+                if not next_page_token:
+                    break
+            except HttpError as e:
+                logger.error(f"Gmail API HttpError during fetch: {e}")
+                break
+            except Exception as e:
+                logger.error(f"Unexpected error during fetch: {e}")
+                break
+
+        # fetch result
+        fetch_result = {
+            "message": "Fetch newsletters from Gmail API",
+            "results": fetched_newsletter_ids,
+            "count": len(fetched_newsletter_ids),
+        }
+        logger.info(f"Fetched {fetch_result['count']} newsletters")
+        return fetch_result
+    except Exception as e:
+        logger.error(f"Error in fetch_new_newsletters_ids: {e}")
+        return {"message": "Error fetching newsletters", "results": [], "count": 0}
 
 
 async def process_fetched_newsletters(fetched_newsletters_ids: list):
@@ -209,24 +220,46 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
     Args:
         fetched_newsletters_ids (list): The fetched newsletters ids
     """
-    service = gmail_authenticate()
-    for newsletter_id in fetched_newsletters_ids:
-        # fetch newsletters from ids
-        newsletter_data = (
-            service.users()
-            .messages()
-            .get(userId="me", id=newsletter_id["id"])
-            .execute()
+    try:
+        # authenticate
+        service = gmail_authenticate()
+
+        # process fetched newsletters
+        for newsletter_id in fetched_newsletters_ids:
+            try:
+                # fetch newsletters from ids
+                newsletter_data = (
+                    service.users()
+                    .messages()
+                    .get(userId="me", id=newsletter_id["id"])
+                    .execute()
+                )
+                # check if newsletter already exists
+                if await get_newsletter(newsletter_data["id"]):
+                    logger.info(f"Newsletter already exists: {newsletter_data['id']}")
+                    continue
+                else:
+                    # to pydantic model
+                    newsletter: Newsletter = await newsletter_to_model(newsletter_data)
+                # save to db
+                await upsert_newsletter(newsletter)
+            except HttpError as e:
+                logger.error(
+                    f"Gmail API HttpError processing newsletter {newsletter_id['id']}: {e}"
+                )
+                continue
+            except Exception as e:
+                logger.error(f"Error processing newsletter {newsletter_id['id']}: {e}")
+                continue
+
+        # capture latest fetched email id
+        latest_email_id = (
+            service.users().messages().list(userId="me").execute()["messages"][0]["id"]
         )
-        # check if newsletter already exists
-        if await get_newsletter(newsletter_data["id"]):
-            logger.info(f"Newsletter already exists: {newsletter_data['id']}")
-            continue
-        else:
-            # to pydantic model
-            newsletter: Newsletter = await newsletter_to_model(newsletter_data)
-        # save to db
-        await upsert_newsletter(newsletter)
+        latest_sync_state = sync_state_to_model(latest_email_id)
+        await upsert_sync_state(latest_sync_state)
+    except Exception as e:
+        logger.error(f"Error in process_fetched_newsletters: {e}")
 
 
 async def retry_null_cleaned_md():
@@ -234,16 +267,27 @@ async def retry_null_cleaned_md():
     Args:
         newsletter (Newsletter): The newsletter model
     """
-    null_cleaned_md_newsletters = await get_null_cleaned_md_newsletters()
-    for newsletter in null_cleaned_md_newsletters:
-        retried_cleaned_md: str = await llm_clean_up(newsletter.raw_md, newsletter.id)
-        if not retried_cleaned_md:
-            logger.error(
-                f"Failed to clean the newsletter: {newsletter.id}. Skipping..."
-            )
-            continue
-        newsletter.cleaned_md = retried_cleaned_md
-        await upsert_newsletter(newsletter)
+    try:
+        null_cleaned_md_newsletters = await get_null_cleaned_md_newsletters()
+        for newsletter in null_cleaned_md_newsletters:
+            try:
+                retried_cleaned_md: str = await llm_clean_up(
+                    newsletter.raw_md, newsletter.id
+                )
+                if not retried_cleaned_md:
+                    logger.error(
+                        f"Failed to clean the newsletter: {newsletter.id}. Skipping..."
+                    )
+                    continue
+                newsletter.cleaned_md = retried_cleaned_md
+                await upsert_newsletter(newsletter)
+            except Exception as e:
+                logger.error(
+                    f"Error retrying cleaned_md for newsletter {newsletter.id}: {e}"
+                )
+                continue
+    except Exception as e:
+        logger.error(f"Error in retry_null_cleaned_md: {e}")
 
 
 if __name__ == "__main__":
