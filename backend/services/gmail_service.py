@@ -1,14 +1,12 @@
 import logging
 import os
 import os.path
-from datetime import datetime
 
 from config import settings
 from database.database import (
     close_mongo_connection,
     connect_to_mongo,
     get_newsletter,
-    get_newsletters,
     get_null_cleaned_md_newsletters,
     get_sync_state,
     upsert_newsletter,
@@ -292,8 +290,6 @@ async def retry_null_cleaned_md():
 
 if __name__ == "__main__":
     import asyncio
-    import json
-    import pprint
 
     async def test_run():
         # start db
