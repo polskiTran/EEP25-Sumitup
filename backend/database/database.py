@@ -19,7 +19,7 @@ console_handler.setLevel(settings.logger_level)  # Capture all levels
 
 # Create formatter and add it to the handler
 formatter = logging.Formatter(
-    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+    "\n[%(asctime)s] %(levelname)s in [%(module)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 console_handler.setFormatter(formatter)

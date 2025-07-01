@@ -1,6 +1,8 @@
+import json
 import logging
 import os
 import os.path
+import time
 
 from config import settings
 from database.database import (
@@ -41,7 +43,7 @@ console_handler.setLevel(settings.logger_level)  # Capture all levels
 
 # Create formatter and add it to the handler
 formatter = logging.Formatter(
-    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+    "\n[%(asctime)s] %(levelname)s in [%(module)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 console_handler.setFormatter(formatter)
@@ -219,6 +221,7 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
         fetched_newsletters_ids (list): The fetched newsletters ids
     """
     try:
+        error_flag = False
         # authenticate
         service = gmail_authenticate()
 
@@ -248,14 +251,19 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
                 continue
             except Exception as e:
                 logger.error(f"Error processing newsletter {newsletter_id['id']}: {e}")
-                continue
+                error_flag = True
+                break
 
         # capture latest fetched email id
-        latest_email_id = (
-            service.users().messages().list(userId="me").execute()["messages"][0]["id"]
-        )
-        latest_sync_state = sync_state_to_model(latest_email_id)
-        await upsert_sync_state(latest_sync_state)
+        if not error_flag:
+            latest_email_id = (
+                service.users()
+                .messages()
+                .list(userId="me")
+                .execute()["messages"][0]["id"]
+            )
+            latest_sync_state = sync_state_to_model(latest_email_id)
+            await upsert_sync_state(latest_sync_state)
     except Exception as e:
         logger.error(f"Error in process_fetched_newsletters: {e}")
 

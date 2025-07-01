@@ -180,16 +180,16 @@ wheels = [
 
 [[package]]
 name = "fastapi"
-version = "0.115.13"
+version = "0.115.14"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "starlette" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/20/64/ec0788201b5554e2a87c49af26b77a4d132f807a0fa9675257ac92c6aa0e/fastapi-0.115.13.tar.gz", hash = "sha256:55d1d25c2e1e0a0a50aceb1c8705cd932def273c102bff0b1c1da88b3c6eb307", size = 295680, upload-time = "2025-06-17T11:49:45.575Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/53/8c38a874844a8b0fa10dd8adf3836ac154082cf88d3f22b544e9ceea0a15/fastapi-0.115.14.tar.gz", hash = "sha256:b1de15cdc1c499a4da47914db35d0e4ef8f1ce62b624e94e0e5824421df99739", size = 296263, upload-time = "2025-06-26T15:29:08.21Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/59/4a/e17764385382062b0edbb35a26b7cf76d71e27e456546277a42ba6545c6e/fastapi-0.115.13-py3-none-any.whl", hash = "sha256:0a0cab59afa7bab22f5eb347f8c9864b681558c278395e94035a741fc10cd865", size = 95315, upload-time = "2025-06-17T11:49:44.106Z" },
+    { url = "https://files.pythonhosted.org/packages/53/50/b1222562c6d270fea83e9c9075b8e8600b8479150a18e4516a6138b980d1/fastapi-0.115.14-py3-none-any.whl", hash = "sha256:6c0c8bf9420bd58f565e585036d971872472b4f7d3f6c73b698e10cffdefb3ca", size = 95514, upload-time = "2025-06-26T15:29:06.49Z" },
 ]
 
 [package.optional-dependencies]
@@ -239,7 +239,7 @@ wheels = [
 
 [[package]]
 name = "google-api-python-client"
-version = "2.173.0"
+version = "2.174.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "google-api-core" },
@@ -248,9 +248,9 @@ dependencies = [
     { name = "httplib2" },
     { name = "uritemplate" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8f/7e/7c6e43e54f611f0f97f1678ea567fe06fecd545bd574db05e204e5b136fe/google_api_python_client-2.173.0.tar.gz", hash = "sha256:b537bc689758f4be3e6f40d59a6c0cd305abafdea91af4bc66ec31d40c08c804", size = 13091318, upload-time = "2025-06-19T19:39:05.881Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1a/fd/860fef0cf3edbad828e2ab4d2ddee5dfe8e595b6da748ac6c77e95bc7bef/google_api_python_client-2.174.0.tar.gz", hash = "sha256:9eb7616a820b38a9c12c5486f9b9055385c7feb18b20cbafc5c5a688b14f3515", size = 13127872, upload-time = "2025-06-25T19:27:12.977Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e6/c9/dc9ca0537ee2ddac0f0b1e458903afe3f490a0f90dfd4b1b16eb339cdfbb/google_api_python_client-2.173.0-py3-none-any.whl", hash = "sha256:16a8e81c772dd116f5c4ee47d83643149e1367dc8fb4f47cb471fbcb5c7d7ac7", size = 13612778, upload-time = "2025-06-19T19:39:03.283Z" },
+    { url = "https://files.pythonhosted.org/packages/16/2d/4250b81e8f5309b58650660f403584db6f64067acac74475893a8f33348d/google_api_python_client-2.174.0-py3-none-any.whl", hash = "sha256:f695205ceec97bfaa1590a14282559c4109326c473b07352233a3584cdbf4b89", size = 13650466, upload-time = "2025-06-25T19:27:10.426Z" },
 ]
 
 [[package]]
@@ -295,7 +295,7 @@ wheels = [
 
 [[package]]
 name = "google-genai"
-version = "1.21.1"
+version = "1.23.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anyio" },
@@ -307,9 +307,9 @@ dependencies = [
     { name = "typing-extensions" },
     { name = "websockets" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/49/8a/4a628e2e918f8c4a48ea778b68395b97b05b6873c6e528e78ccfb02a2c8d/google_genai-1.21.1.tar.gz", hash = "sha256:5412fde7f0b39574a4670a9a25e398824a12b3cddd632fdff66d1b9bcfdbfcb4", size = 205636, upload-time = "2025-06-19T14:09:20.466Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/86/8a/ac6f0efa0a874072b87ea13a827d549116c7c78ade93042abf0a3492039f/google_genai-1.23.0.tar.gz", hash = "sha256:a3ce7803ac3b038d4c4e166070451b560278c9f20cd819650debd17cd69cb1b3", size = 223825, upload-time = "2025-06-27T23:45:56.828Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/92/5c/659c2b992d631a873ae8fed612ce92af423fdc5f7d541dec7ce8f4b1789e/google_genai-1.21.1-py3-none-any.whl", hash = "sha256:fa6fa5311f9a757ce65cd528a938a0f309bb3032516015bf5b3022e63b2fc46b", size = 206388, upload-time = "2025-06-19T14:09:19.016Z" },
+    { url = "https://files.pythonhosted.org/packages/3c/b1/9bc286d0880173ac81b72b12363eea54db552265933bec5f5b3c8385cc44/google_genai-1.23.0-py3-none-any.whl", hash = "sha256:59d603e35440fb1e61482264ee214d17f8c4ed9d29ec08cd4a6de8d090aaabb9", size = 223845, upload-time = "2025-06-27T23:45:55.442Z" },
 ]
 
 [[package]]
@@ -708,16 +708,16 @@ wheels = [
 
 [[package]]
 name = "rich-toolkit"
-version = "0.14.7"
+version = "0.14.8"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "rich" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5b/7a/cb48b7024b247631ce39b1f14a0f1abedf311fb27b892b0e0387d809d4b5/rich_toolkit-0.14.7.tar.gz", hash = "sha256:6cca5a68850cc5778915f528eb785662c27ba3b4b2624612cce8340fa9701c5e", size = 104977, upload-time = "2025-05-27T15:48:09.377Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/1b/de/d3d329d670bb271ee82e7bbc2946f985b2782f4cae2857138ed94be1335b/rich_toolkit-0.14.8.tar.gz", hash = "sha256:1f77b32e6c25d9e3644c1efbce00d8d90daf2457b3abdb4699e263c03b9ca6cf", size = 110926, upload-time = "2025-06-30T22:05:53.663Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0f/2e/95fde5b818dac9a37683ea064096323f593442d0f6358923c5f635974393/rich_toolkit-0.14.7-py3-none-any.whl", hash = "sha256:def05cc6e0f1176d6263b6a26648f16a62c4563b277ca2f8538683acdba1e0da", size = 24870, upload-time = "2025-05-27T15:48:07.942Z" },
+    { url = "https://files.pythonhosted.org/packages/78/39/c0fd75955aa963a15c642dfe6fb2acdd1fd2114028ec5ff2e2fd26218ad7/rich_toolkit-0.14.8-py3-none-any.whl", hash = "sha256:c54bda82b93145a79bbae04c3e15352e6711787c470728ff41fdfa0c2f0c11ae", size = 24975, upload-time = "2025-06-30T22:05:52.153Z" },
 ]
 
 [[package]]
@@ -836,15 +836,15 @@ wheels = [
 
 [[package]]
 name = "uvicorn"
-version = "0.34.3"
+version = "0.35.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "h11" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/de/ad/713be230bcda622eaa35c28f0d328c3675c371238470abdea52417f17a8e/uvicorn-0.34.3.tar.gz", hash = "sha256:35919a9a979d7a59334b6b10e05d77c1d0d574c50e0fc98b8b1a0f165708b55a", size = 76631, upload-time = "2025-06-01T07:48:17.531Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5e/42/e0e305207bb88c6b8d3061399c6a961ffe5fbb7e2aa63c9234df7259e9cd/uvicorn-0.35.0.tar.gz", hash = "sha256:bc662f087f7cf2ce11a1d7fd70b90c9f98ef2e2831556dd078d131b96cc94a01", size = 78473, upload-time = "2025-06-28T16:15:46.058Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/0d/8adfeaa62945f90d19ddc461c55f4a50c258af7662d34b6a3d5d1f8646f6/uvicorn-0.34.3-py3-none-any.whl", hash = "sha256:16246631db62bdfbf069b0645177d6e8a77ba950cfedbfd093acef9444e4d885", size = 62431, upload-time = "2025-06-01T07:48:15.664Z" },
+    { url = "https://files.pythonhosted.org/packages/d2/e2/dc81b1bd1dcfe91735810265e9d26bc8ec5da45b4c0f6237e286819194c3/uvicorn-0.35.0-py3-none-any.whl", hash = "sha256:197535216b25ff9b785e29a0b79199f55222193d47f820816e7da751e9bc8d4a", size = 66406, upload-time = "2025-06-28T16:15:44.816Z" },
 ]
 
 [package.optional-dependencies]

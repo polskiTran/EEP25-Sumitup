@@ -1,5 +1,6 @@
 import json
 import logging
+import time
 from datetime import datetime
 
 from config import settings
@@ -19,7 +20,7 @@ console_handler.setLevel(settings.logger_level)  # Capture all levels
 
 # Create formatter and add it to the handler
 formatter = logging.Formatter(
-    "[%(asctime)s] %(levelname)s in %(module)s: %(message)s",
+    "\n[%(asctime)s] %(levelname)s in [%(module)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 console_handler.setFormatter(formatter)
@@ -51,44 +52,59 @@ def construct_prompt(prompt_path: str, newsletter_markdown: str) -> str:
 def llm_call(
     newsletter_markdown: str, retry: bool = False
 ) -> types.GenerateContentResponse:
-    """Construct the LLM call.
-
+    """Construct the LLM call with manual exponential backoff and retry for 429/resource exhaustion errors.
     Args:
         newsletter_markdown (str): The newsletter markdown to summarize
-        retry (bool): Whether to retry the LLM call
-
+        retry (bool): Whether to retry the LLM call in case of empty response
     Returns:
         types.GenerateContentResponse: The LLM response
-
-    Raises:
-        Exception: If the LLM call fails
     """
-    try:
-        if retry:
-            # retry with backup model and thinking budget
-            config = types.GenerateContentConfig(
-                temperature=0.0,
-                thinking_config=types.ThinkingConfig(
-                    thinking_budget=8000,
-                ),
-                response_mime_type="text/plain",
-            )
-            response = client.models.generate_content(
-                model=settings.google_gemini_genai_model_backup,
-                contents=newsletter_markdown,
-                config=config,
-            )
-        else:
-            # call the LLM
-            response = client.models.generate_content(
-                model=settings.google_gemini_genai_model,
-                contents=newsletter_markdown,
-                config=settings.google_gemini_genai_config,
-            )
-        return response
-    except Exception as e:
-        logger.error(f"LLM call failed with error: {str(e)}")
-        raise Exception(f"LLM call failed: {str(e)}")
+    max_attempts = 10
+    backoff = 1  # seconds
+    for attempt in range(1, max_attempts + 1):
+        try:
+            if retry:
+                # retry with backup model and thinking budget
+                config = types.GenerateContentConfig(
+                    temperature=0.0,
+                    thinking_config=types.ThinkingConfig(
+                        thinking_budget=8000,
+                    ),
+                    response_mime_type="text/plain",
+                )
+                response = client.models.generate_content(
+                    model=settings.google_gemini_genai_model_backup,
+                    contents=newsletter_markdown,
+                    config=config,
+                )
+            else:
+                # call the LLM
+                response = client.models.generate_content(
+                    model=settings.google_gemini_genai_model,
+                    contents=newsletter_markdown,
+                    config=settings.google_gemini_genai_config,
+                )
+            return response
+        except Exception as e:
+            err_str = str(e).lower()
+            if (
+                "resource_exhausted" in err_str
+                or "429" in err_str
+                or "rate limit" in err_str
+            ):
+                logger.warning(
+                    f"LLM call attempt {attempt} failed with RESOURCE_EXHAUSTED/429: {e}. Retrying in {backoff} seconds..."
+                )
+                if attempt == max_attempts:
+                    logger.error(
+                        f"LLM call failed after {max_attempts} attempts due to RESOURCE_EXHAUSTED/429."
+                    )
+                    raise Exception(f"LLM call failed after retries: {str(e)}")
+                time.sleep(backoff)
+                backoff = min(backoff * 2, 60)  # Cap at 60s
+                continue
+            logger.error(f"LLM call failed with error: {str(e)}")
+            raise Exception(f"LLM call failed: {str(e)}")
 
 
 async def llm_clean_up(newsletter_markdown: str, log_info: str, logging: bool = False):
