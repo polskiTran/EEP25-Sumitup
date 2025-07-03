@@ -29,6 +29,9 @@ class Settings(BaseSettings):
         types.GenerateContentConfig(
             temperature=0,
             system_instruction=google_gemini_genai_system_instruction,
+            thinking_config=types.ThinkingConfig(
+                thinking_budget=8000,
+            ),
         )
     )
 

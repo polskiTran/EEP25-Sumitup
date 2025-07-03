@@ -71,6 +71,7 @@ def llm_call(
                         thinking_budget=8000,
                     ),
                     response_mime_type="text/plain",
+                    system_instruction=settings.google_gemini_genai_system_instruction,
                 )
                 response = client.models.generate_content(
                     model=settings.google_gemini_genai_model_backup,
