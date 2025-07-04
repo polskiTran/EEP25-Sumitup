@@ -1,32 +1,29 @@
 # SYSTEM INSTRUCTION (follow strictly):
 
-Return clean Markdown that contains only news-relevant text, links, bylines, and genuinely informative images. Everything else must be removed based on the below guidelines.
-In this step, you are strictly FORBID to add new content, you are only allow to REMOVE content from this newsletter that are specified below
+"You are an newsletter denoiser and cleaner that will help me pre process newsletter content in a markdown format before going to another summary process.
+In this step, you are strictly FORBID to add new content or modify content to the input newsletter, you are only allow to REMOVE content from this newsletter that is extra
+
+## Thins you can remove:
+
+    - html tags
+    - advert blocks, sponsored/partner messages ("Presented By ...", "Made possible by ...", "Together with ...")
+    - footers, unsubscribe links
+    - trivia, puzzles, quizzes, crosswords, sudoku, riddles sections
+    - content that does not in anyway focus on delivering news story to the reader.
+
+## Things you can MODIFY:
+
+    - Modify markdown headings level so that the level reflects content (highest should be # (categories) then ## (content of that category), etc..)
 
 ## Must PRESERVES:
 
-- **Links to articles and content follow after the ads link that are the subject of the newsletter's news reporting or analysis.** This includes direct links to the primary sources or articles discussed within the main body of the newsletter's content (**Ignore if advertisement**).
-- **Images, Image Links, and Substack Image Links that are in the newsletter reporting, analysis, or guides - aka the core content.** This includes diagrams, charts, graphs, or images that visually explain or enhance the understanding of the news stories or guides.
-  - **Crucially:** If an image or diagram is referenced in the accompanying text with phrases like "the diagram below:", "as shown in the image:", "see the chart:", or similar, it MUST be preserved, even if it appears within a section that might otherwise be considered promotional. The _illustrative purpose_ takes precedence in such cases.
-- **Core news reporting and analysis text.**
-
-## Must REMOVE:
-
-- **Advertisements, sponsored messages, and promotional content for third-party products or services.** This includes heading with keywords "Sponsored," "Presented By," "Made possible by," "Together with,".
-- **Exception:** If an image or diagram within a sponsored section is _explicitly referenced_ in the accompanying text as illustrative of the news content (as per the "Must PRESERVES" section), preserve that specific image/diagram. Remove all other surrounding promotional text and images.
-- **Sections that explicitly solicit advertising or sponsorship for the newsletter itself.** This includes calls to action such as "SPONSOR US," "Advertise with us," "Want to advertise in ...?", or similar phrases, regardless of whether they contain links.
-- **Footers, unsubscribe links, and social media links.**
-- **Trivia, puzzles, quizzes, crosswords, sudoku, riddles sections.**
-- **Content that does not in anyway focus on delivering news story to the reader.** This includes purely social commentary, personal anecdotes unrelated to the news, or sections that are clearly off-topic.
-
-## Can MODIFY:
-
-- replace &amp;, &#8217 with chars
-- Dollar sign `$` used as currency (rather than markdown math block) should be prepend with `\` so that markdown wont mistakingly put content in math block (Example `$100 dollars and 99$` should be `\$100 dollars and \$99`)
-- Modify markdown headings level so that the level reflects content (highest should be # (categories) then ## (content of that category), etc..)
+    - links to mentioned article (no article or headline should be there without links to it).
+    - Credits to writers and sources
+    - Images that are relevant to, referenced in the content of the newsletter
 
 Before every heading, a proper newline must be inserted.
 
+**AT THE VERY END OF THE CLEANING PROCESS, replace every `$` with `\$`, replace `&amp;`, `&#8217` with chars**
 **Output in markdown format**
 
 # EXAMPLE 1
@@ -413,15 +410,11 @@ Space Fills Up Fast - Reserve Today
 
 Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches this influential audience, reserve your space now by emailing **sponsorship@bytebytego.com.**
 
- 
-
 [![](https://substackcdn.com/image/fetch/$s_!PeVs!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideHeart%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Like](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&isFreemail=true&submitLike=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywicmVhY3Rpb24iOiLinaQiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTgxNzEzMiIsInN1YiI6InJlYWN0aW9uIn0.rcGSDbqnb5SsjAuvB9daZ-TaE7EtDqqDOB--mTIxkD4&utm_medium=email&utm_campaign=email-reaction&r=5s83oz)
 
 [![](https://substackcdn.com/image/fetch/$s_!x1tS!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideComments%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Comment](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&isFreemail=true&comments=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc&r=5s83oz&utm_campaign=email-half-magic-comments&action=post-comment&utm_source=substack&utm_medium=email)
 
 [![](https://substackcdn.com/image/fetch/$s_!5EGt!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FNoteForwardIcon%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Restack](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9vcGVuLnN1YnN0YWNrLmNvbS9wdWIvYnl0ZWJ5dGVnby9wL2hvdy1zcG90aWZ5LXVzZXMtZ2VuYWktYW5kLW1sLXRvP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZW1haWwtcmVzdGFjay1jb21tZW50JmFjdGlvbj1yZXN0YWNrLWNvbW1lbnQmcj01czgzb3omdG9rZW49ZXlKMWMyVnlYMmxrSWpvek5EazNNemd4TmpNc0luQnZjM1JmYVdRaU9qRTJOekF3TnpZeU15d2lhV0YwSWpveE56VXhNemcwT0RJMUxDSmxlSEFpT2pFM05UTTVOelk0TWpVc0ltbHpjeUk2SW5CMVlpMDRNVGN4TXpJaUxDSnpkV0lpT2lKd2IzTjBMWEpsWVdOMGFXOXVJbjAuaktsUGdCZHJETTZCd3NaQmtKU3dILThWQ2Z1SVBsdHJwb3JlQjNPYXFZYyIsInAiOjE2NzAwNzYyMywicyI6ODE3MTMyLCJmIjp0cnVlLCJ1IjozNDk3MzgxNjMsImlhdCI6MTc1MTM4NDgyNSwiZXhwIjoyMDY2OTYwODI1LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.7wEZa-z2E16RtXmU5aylfCRyK5R7X-hS7Dlkv2FujIU?&utm_source=substack&utm_medium=email)
-
- 
 
 © 2025 ByteByteGo  
 548 Market Street PMB 72296, San Francisco, CA 94104  
@@ -433,6 +426,33 @@ Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches 
 
 Copyright © 2025 Morning Brew Inc. All rights reserved.  
 22 W 19th St, 4th Floor, New York, NY 10011"
+
+Love TLDR? Tell your friends and get rewards!
+
+Share your referral link below with friends to get free TLDR swag!
+
+https://refer.tldr.tech/90728124/4
+
+Track your referrals here.
+
+Want to advertise in TLDR? 📰
+
+If your company is interested in reaching an audience of design professionals and decision makers, you may want to advertise with us
+
+.
+
+Want to work at TLDR? 💼
+
+Apply here
+or send a friend’s resume to jobs@tldr.tech
+
+and get $1k if we hire them!
+
+If you have any comments or feedback, just respond to this email!
+
+Thanks for reading,
+Jae Lee
+, Matej Latin & Ralph BrinkerManage your subscriptions to our other newsletters on tech, startups, and programming. Or if TLDR Design isn’t for you, please unsubscribe.
 ```
 
 <END_EXAMPLE_INPUT>

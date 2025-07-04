@@ -20,8 +20,10 @@ class Settings(BaseSettings):
     google_gemini_genai_model: str = "gemini-2.5-flash-lite-preview-06-17"
     google_gemini_genai_model_backup: str = "gemini-2.5-flash"
     google_gemini_genai_cleanup_prompt_path: str = (
-        "helpers/google_gemini_llm_cleanup_prompt.txt"
+        "helpers/system_instructions/google_gemini_llm_cleanup_prompt.md"
     )
+
+    google_gemini_genai_system_instruction_base_str: str = "_llm_cleanup_prompt.md"
     google_gemini_genai_system_instruction: str = open(
         google_gemini_genai_cleanup_prompt_path, "r", encoding="utf-8"
     ).read()
@@ -29,9 +31,9 @@ class Settings(BaseSettings):
         types.GenerateContentConfig(
             temperature=0,
             system_instruction=google_gemini_genai_system_instruction,
-            thinking_config=types.ThinkingConfig(
-                thinking_budget=8000,
-            ),
+            # thinking_config=types.ThinkingConfig(
+            #     thinking_budget=8000,
+            # ),
         )
     )
 
@@ -51,11 +53,13 @@ class Settings(BaseSettings):
         # {"name": "TLDR Fintech", "email": "dan@tldrnewsletter.com"},
         # {"name": "TLDR Marketing", "email": "dan@tldrnewsletter.com"},
         {"name": "Tech Brew", "email": "crew@morningbrew.com"},
-        # {"name": "IT Brew", "email": "crew@morningbrew.com"},
+        # {"name": "IT Brew", "email": "crew@morningbrew.com"}, # TODO: considering removal
         {
             "name": "ByteByteGo",
             "email": "bytebytego@substack.com",
         },
+        # {"name": "Last Week In AI", "email": "lastweekinai+news@substack.com"},
+        {"name": "Ben Lorica", "email": "gradientflow@substack.com"},  # gradientflow
     ]
 
     # dev email to receive newsletters

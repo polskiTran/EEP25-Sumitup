@@ -124,7 +124,13 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
     """
     sender_info = parse_sender(get_item_from_gmail_response(newsletter_data, "sender"))
     raw_md = html_to_markdown(newsletter_data)  # clean markdown text
-    log_info = f"{construct_sender_info(sender_info)}_{convert_internal_date_to_datetime(int(get_item_from_gmail_response(newsletter_data, 'internal_date')))}"
+    log_info = [
+        sender_info["name"],
+        sender_info["email"],
+        convert_internal_date_to_datetime(
+            int(get_item_from_gmail_response(newsletter_data, "internal_date"))
+        ),
+    ]
     cleaned_md = await llm_clean_up(raw_md, log_info)
     return Newsletter(
         id=get_item_from_gmail_response(newsletter_data, "id"),

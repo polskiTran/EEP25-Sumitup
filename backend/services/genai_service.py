@@ -1,5 +1,6 @@
 import json
 import logging
+import os
 import time
 from datetime import datetime
 
@@ -50,11 +51,12 @@ def construct_prompt(prompt_path: str, newsletter_markdown: str) -> str:
 
 
 def llm_call(
-    newsletter_markdown: str, retry: bool = False
+    newsletter_markdown: str, system_instruction: str, retry: bool = False
 ) -> types.GenerateContentResponse:
     """Construct the LLM call with manual exponential backoff and retry for 429/resource exhaustion errors.
     Args:
         newsletter_markdown (str): The newsletter markdown to summarize
+        system_instruction (str): The system instruction to use for the LLM call
         retry (bool): Whether to retry the LLM call in case of empty response
     Returns:
         types.GenerateContentResponse: The LLM response
@@ -71,7 +73,7 @@ def llm_call(
                         thinking_budget=8000,
                     ),
                     response_mime_type="text/plain",
-                    system_instruction=settings.google_gemini_genai_system_instruction,
+                    system_instruction=system_instruction,
                 )
                 response = client.models.generate_content(
                     model=settings.google_gemini_genai_model_backup,
@@ -83,7 +85,13 @@ def llm_call(
                 response = client.models.generate_content(
                     model=settings.google_gemini_genai_model,
                     contents=newsletter_markdown,
-                    config=settings.google_gemini_genai_config,
+                    config=types.GenerateContentConfig(
+                        temperature=0.0,
+                        # thinking_config=types.ThinkingConfig(
+                        #     thinking_budget=8000,
+                        # ),
+                        system_instruction=system_instruction,
+                    ),
                 )
             return response
         except Exception as e:
@@ -108,19 +116,21 @@ def llm_call(
             raise Exception(f"LLM call failed: {str(e)}")
 
 
-async def llm_clean_up(newsletter_markdown: str, log_info: str, logging: bool = False):
+async def llm_clean_up(newsletter_markdown: str, log_info: list, logging: bool = False):
     """The LLM clean up function.
 
     Args:
         newsletter_markdown (str): The newsletter markdown to summarize
-        log_info (str): The log info
+        log_info (list): The log info [sender_name, sender_email, date]
     Returns:
         str: The llm-cleaned markdown
     """
+    # unpack log info
+    sender_name, sender_email, date = log_info
     # save logs for debugging
     if logging:
         with open(
-            f"logs/genai_requests/{log_info}_llm_cleanup_prompt.txt",
+            f"logs/genai_requests/{sender_name}_{sender_email}_{date}_llm_cleanup_prompt.txt",
             "w",
             encoding="utf-8",
         ) as f:
@@ -131,18 +141,42 @@ async def llm_clean_up(newsletter_markdown: str, log_info: str, logging: bool = 
                 )
             )
 
+    # get system instruction based on sender email
+    system_instruction_file_name = (
+        sender_name.lower().replace(" ", "_")
+        + settings.google_gemini_genai_system_instruction_base_str
+    )
+    system_instruction_path = (
+        "helpers/system_instructions/" + system_instruction_file_name
+    )
+    # check if system instruction file exists
+    if not os.path.exists(system_instruction_path):
+        # use base system instruction
+        system_instruction = settings.google_gemini_genai_system_instruction
+        logger.warning(
+            f"System instruction file {system_instruction_file_name} does not exist. Using base system instruction."
+        )
+    else:
+        system_instruction = open(
+            system_instruction_path,
+            "r",
+            encoding="utf-8",
+        ).read()
+
     # call the llm
     logger.info(
-        f"Calling the LLM for the cleanup of the newsletter markdown for {log_info}"
+        f"Calling LLM cleanup for {sender_name}_{sender_email}_{date} with system instruction: {system_instruction_path}"
     )
-    response = llm_call(newsletter_markdown)
+    response = llm_call(newsletter_markdown, system_instruction)
     if not response.text:
         logger.debug(
-            f"LLM response is empty for {log_info}. Retrying with system instruction in prompt + thinking."
+            f"LLM response is empty for {sender_name}_{sender_email}_{date}. Retrying with system instruction in prompt + thinking."
         )
-        response = llm_call(newsletter_markdown, retry=True)
+        response = llm_call(newsletter_markdown, system_instruction, retry=True)
         if not response.text:
-            logger.error(f"LLM response is still empty for {log_info}.")
+            logger.error(
+                f"LLM response is still empty for {sender_name}_{sender_email}_{date}."
+            )
             return response.text
     return response.text
 
