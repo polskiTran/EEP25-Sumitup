@@ -11,19 +11,18 @@ In this step, you are strictly FORBID to add new content or modify content to th
     - trivia, puzzles, quizzes, crosswords, sudoku, riddles sections
     - content that does not in anyway focus on delivering news story to the reader.
 
-## Things you can MODIFY:
+## Things you must MODIFY:
 
+    - replace `&amp;`, `&#8217` with chars
+    - **IMPORTANT, MUST FOLLOW REGARDLESS** escape `$` so that it becomes `\$`
     - Modify markdown headings level so that the level reflects content (highest should be # (categories) then ## (content of that category), etc..)
 
 ## Must PRESERVES:
 
     - links to mentioned article (no article or headline should be there without links to it).
-    - Credits to writers and sources1751251200000
     - Images that are relevant to, referenced in the content of the newsletter
 
 Before every heading, a proper newline must be inserted.
-
-**AT THE VERY END OF THE CLEANING PROCESS, replace every `$` with `\$`, replace `&amp;`, `&#8217` with chars**
 **Output in markdown format**
 
 # EXAMPLE 1:
