@@ -182,7 +182,7 @@ async def fetch_new_newsletters_ids():
             query = f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
 
         # fetch newsletters from query
-        logger.info(f"Fetching newsletters using query: {query}")
+        logger.info(f"(*) Fetching newsletters using query: {query}")
         next_page_token = None
         while True:
             try:
@@ -214,7 +214,7 @@ async def fetch_new_newsletters_ids():
             "results": fetched_newsletter_ids,
             "count": len(fetched_newsletter_ids),
         }
-        logger.info(f"Fetched {fetch_result['count']} newsletters")
+        logger.info(f"(*) Fetched {fetch_result['count']} newsletters")
         return fetch_result
     except Exception as e:
         logger.error(f"Error in fetch_new_newsletters_ids: {e}")
@@ -232,7 +232,7 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
         service = gmail_authenticate()
 
         # process fetched newsletters
-        for newsletter_id in fetched_newsletters_ids:
+        for i, newsletter_id in enumerate(fetched_newsletters_ids):
             try:
                 # fetch newsletters from ids
                 newsletter_data = (
@@ -240,6 +240,10 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
                     .messages()
                     .get(userId="me", id=newsletter_id["id"])
                     .execute()
+                )
+                # progress bar
+                logger.info(
+                    f"(*) Processing newsletter {i + 1} of {len(fetched_newsletters_ids)} ======================================="
                 )
                 # check if newsletter already exists
                 if await get_newsletter(newsletter_data["id"]):

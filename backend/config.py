@@ -58,8 +58,23 @@ class Settings(BaseSettings):
             "name": "ByteByteGo",
             "email": "bytebytego@substack.com",
         },
-        # {"name": "Last Week In AI", "email": "lastweekinai+news@substack.com"},
+        {"name": "Last Week In AI", "email": "lastweekinai+news@substack.com"},
         {"name": "Ben Lorica", "email": "gradientflow@substack.com"},  # gradientflow
+    ]
+
+    tldr_newsletters_group_names: list[str] = [
+        "TLDR AI",
+        "TLDR",
+        "TLDR Web Dev",
+        "TLDR Product",
+        "TLDR Founders",
+        "TLDR Data",
+        "TLDR Fintech",
+        "TLDR Marketing",
+        "TLDR Design",
+        "TLDR Crypto",
+        "TLDR InfoSec",
+        "TLDR DevOps",
     ]
 
     # dev email to receive newsletters

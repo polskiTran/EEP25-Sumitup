@@ -141,11 +141,16 @@ async def llm_clean_up(newsletter_markdown: str, log_info: list, logging: bool =
                 )
             )
 
-    # get system instruction based on sender email
-    system_instruction_file_name = (
-        sender_name.lower().replace(" ", "_")
-        + settings.google_gemini_genai_system_instruction_base_str
-    )
+    # get system instruction based on sender name
+    if sender_name in settings.tldr_newsletters_group_names:
+        # use tldr system instruction
+        system_instruction_file_name = "tldr_llm_cleanup_prompt.md"
+    else:
+        system_instruction_file_name = (
+            sender_name.lower().replace(" ", "_")
+            + settings.google_gemini_genai_system_instruction_base_str
+        )
+
     system_instruction_path = (
         "helpers/system_instructions/" + system_instruction_file_name
     )

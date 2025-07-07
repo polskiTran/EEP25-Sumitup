@@ -32,6 +32,417 @@ Before every heading, a proper newline must be inserted.
 <START_EXAMPLE_INPUT>
 
 ```md
+This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs.
+
+͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­
+
+Forwarded this email? [Subscribe here](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ibG9nLmJ5dGVieXRlZ28uY29tL3N1YnNjcmliZT91dG1fc291cmNlPWVtYWlsJnV0bV9jYW1wYWlnbj1lbWFpbC1zdWJzY3JpYmUmcj01czgzb3ombmV4dD1odHRwcyUzQSUyRiUyRmJsb2cuYnl0ZWJ5dGVnby5jb20lMkZwJTJGaG93LXNwb3RpZnktdXNlcy1nZW5haS1hbmQtbWwtdG8iLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.GMAdhdYYCN3fktE7nWL71uXzoAu5YjH1pMGpgWOq8uA?) for more
+
+# [How Spotify Uses GenAI and ML to Annotate a Hundred Million Tracks](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=post-email-title&utm_campaign=email-post-title&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
+
+[ByteByteGo](https://substack.com/@bytebytego399569)
+
+Jul 1
+
+[![](https://substackcdn.com/image/fetch/$s_!U1Ej!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9941c68-e5b7-4b93-be75-df7cc4ffef02_504x540.png)](https://substack.com/@bytebytego399569)
+
+[![](https://substackcdn.com/image/fetch/$s_!PeVs!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideHeart%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&isFreemail=true&submitLike=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywicmVhY3Rpb24iOiLinaQiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTgxNzEzMiIsInN1YiI6InJlYWN0aW9uIn0.rcGSDbqnb5SsjAuvB9daZ-TaE7EtDqqDOB--mTIxkD4&utm_medium=email&utm_campaign=email-reaction&r=5s83oz)
+
+[![](https://substackcdn.com/image/fetch/$s_!x1tS!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideComments%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&isFreemail=true&comments=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc&r=5s83oz&utm_campaign=email-half-magic-comments&action=post-comment&utm_source=substack&utm_medium=email)
+
+[![](https://substackcdn.com/image/fetch/$s_!_L14!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideShare2%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&utm_content=share&utm_campaign=email-share&action=share&triggerShare=true&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
+
+[![](https://substackcdn.com/image/fetch/$s_!5EGt!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FNoteForwardIcon%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9vcGVuLnN1YnN0YWNrLmNvbS9wdWIvYnl0ZWJ5dGVnby9wL2hvdy1zcG90aWZ5LXVzZXMtZ2VuYWktYW5kLW1sLXRvP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZW1haWwtcmVzdGFjay1jb21tZW50JmFjdGlvbj1yZXN0YWNrLWNvbW1lbnQmcj01czgzb3omdG9rZW49ZXlKMWMyVnlYMmxrSWpvek5EazNNemd4TmpNc0luQnZjM1JmYVdRaU9qRTJOekF3TnpZeU15d2lhV0YwSWpveE56VXhNemcwT0RJMUxDSmxlSEFpT2pFM05UTTVOelk0TWpVc0ltbHpjeUk2SW5CMVlpMDRNVGN4TXpJaUxDSnpkV0lpT2lKd2IzTjBMWEpsWVdOMGFXOXVJbjAuaktsUGdCZHJETTZCd3NaQmtKU3dILThWQ2Z1SVBsdHJwb3JlQjNPYXFZYyIsInAiOjE2NzAwNzYyMywicyI6ODE3MTMyLCJmIjp0cnVlLCJ1IjozNDk3MzgxNjMsImlhdCI6MTc1MTM4NDgyNSwiZXhwIjoyMDY2OTYwODI1LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.7wEZa-z2E16RtXmU5aylfCRyK5R7X-hS7Dlkv2FujIU?&utm_source=substack&utm_medium=email)
+
+[READ IN APP![](https://substackcdn.com/image/fetch/$s_!ET-_!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideArrowUpRight%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://open.substack.com/pub/bytebytego/p/how-spotify-uses-genai-and-ml-to?utm_source=email&redirect=app-store&utm_campaign=email-read-in-app)
+
+## [Azure VM Cheatsheet for DevOps Teams (Sponsored)](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+[![](https://substackcdn.com/image/fetch/$s_!JMBh!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a1e05c6-ce8d-4e01-ac61-124c6afcc6e7_1200x628.png)](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Azure Virtual Machine (VM) lets you flexibly run virtualized environments and scale on demand. But how do you make sure your VMs are optimized and cost-effective?
+
+Download the cheatsheet to see how Datadog’s preconfigured Azure VM dashboard helps you:
+
+- Visualizing real-time VM performance and system metrics
+- Correlating host data with application behavior
+- Right-sizing VMs to optimize costs and performance
+
+[Download the cheatsheet](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+---
+
+_Disclaimer: The details in this post have been derived from the articles shared online by the Spotify Engineering Team. All credit for the technical details goes to the Spotify Engineering Team. The links to the original articles and sources are present in the references section at the end of the post. We’ve attempted to analyze the details and provide our input about them. If you find any inaccuracies or omissions, please leave a comment, and we will do our best to fix them._
+
+Spotify applies machine learning across its catalog to support key features.
+
+One set of models assigns tracks and albums to the correct artist pages, handling cases where metadata is missing, inconsistent, or duplicated. Another set analyzes podcasts to detect platform policy violations. These models review audio, video, and metadata to flag restricted content before it reaches listeners.
+
+All of these activities depend on large volumes of high-quality annotations. These annotations act as the ground truth for model training and evaluation. Without them, model accuracy drops, feedback loops fail, and feature development slows down. As the number of use cases increased, the existing annotation workflows at Spotify became a bottleneck. Each team built isolated tools, managed their reviewers, and shipped data through manual processes that didn’t scale or integrate with machine learning pipelines.
+
+The problem was structural. Annotation was treated as an isolated task instead of a core part of the machine learning workflow. There was no shared tooling, no centralized workforce model, and no infrastructure to automate annotation at scale.
+
+This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs. It covers:
+
+- How was human expertise organized into a structured and scalable workflow?
+- What tools were built to support complex annotation tasks across different data types?
+- How was the infrastructure designed to integrate annotation directly into ML pipelines?
+- The trade-offs involved in balancing quality, cost, and speed.
+
+---
+
+## [Warp's AI coding agent leaps ahead of Claude Code to hit #1 on Terminal-Bench (Sponsored)](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+[![](https://substackcdn.com/image/fetch/$s_!27Kp!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb2b97a44-49b7-408c-9656-8a92ba1652bd_1200x620.png)](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Warp just launched the first Agentic Development Environment, built for devs who want to move faster with AI agents.
+
+It's the top overall coding agent, jumping ahead of Claude Code by 20% to become the #1 agent on Terminal-Bench and scoring 71% on SWE-bench Verified.
+
+**✅ Long-running commands:** something no other tool can support
+
+**✅ Agent multi-threading: run** multiple agents in parallel – all under your control
+
+**✅ Across the development lifecycle: setup** → coding → deployment
+
+[Try Warp's coding agent for yourself](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+---
+
+## Moving from Manual Workflow to Scalable Annotation
+
+The starting point was a straightforward machine learning (ML) classification task. The team needed annotations to evaluate model predictions and improve training quality, so they built a minimal pipeline to collect them.
+
+They began by sampling model outputs and serving them to human annotators through simple scripts. Each annotation was reviewed, captured, and passed back into the system. The annotated data was then integrated directly into model training and evaluation workflows. There was no full-fledged platform yet, but just a focused attempt to connect annotations to something real and measurable.
+
+[![](https://substackcdn.com/image/fetch/$s_!nRS0!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcd674da0-4f28-4ebe-936b-b5caeda6872b_1600x1017.png)](https://substack.com/redirect/55a672ba-1f66-4fa9-8b6c-d2521ff7ee9a?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Even with this basic setup, the results were significant:
+
+- The annotation corpus grew by a factor of ten.
+- Annotator throughput tripled compared to previous manual efforts.
+
+This early success wasn’t just about volume. It showed that when annotation is directly tied into the model lifecycle, feedback loops become more useful and productivity improves. The outcome was enough to justify further investment.
+
+From here, the focus shifted from running isolated tasks to building a dedicated platform that could generalize the workflow and support many ML use cases in parallel.
+
+## Platform Architecture
+
+The overall platform architecture consists of three pillars. See the diagram below for reference:
+
+[![](https://substackcdn.com/image/fetch/$s_!NYv2!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3332ad32-136f-43ce-b5ab-8a09b8475e99_1600x1253.png)](https://substack.com/redirect/ebba799c-14d1-413a-bef9-2339729ce070?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Let’s look at each pillar in more detail.
+
+### 1 - Scaling Human Expertise
+
+To support large-scale annotation work, Spotify first focused on organizing its human annotation resources. Instead of treating annotators as a generic pool, the team defined clear roles with distinct responsibilities and escalation paths.
+
+The annotation workforce was structured into three levels:
+
+- **Core annotators** handled the initial pass across most annotation cases. These were domain experts trained to apply consistent standards across large datasets.
+- **Quality analysts** acted as the escalation layer for complex or ambiguous cases. These were top-level reviewers who ensured that edge cases were resolved with precision, especially when annotations involved subjectivity or context-specific judgment.
+- **Project managers** worked across teams to coordinate annotation efforts. They connected ML engineers and product stakeholders with the annotation workforce, maintained training materials, gathered feedback, and adjusted data collection strategies as projects evolved.
+
+In parallel with the human effort, Spotify also developed a configurable system powered by large language models.
+
+This system operates in conjunction with human annotators and is designed to generate high-quality labels for cases that follow predictable patterns. It is not a full replacement but a complement that handles clear-cut examples, allowing humans to focus on harder problems.
+
+See the diagram below:
+
+[![](https://substackcdn.com/image/fetch/$s_!Lvye!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bad79f0-d54f-499f-bef2-93ea8f1a0d7c_1600x1041.png)](https://substack.com/redirect/dc37a0b2-e288-4e81-9337-ce046a527b0d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+This hybrid model significantly increased annotation throughput. By assigning the right cases to the right annotator (human or machine), Spotify was able to expand its dataset coverage at a lower cost and with higher consistency.
+
+### 2 - Building Annotation Tooling for Complex Tasks
+
+As annotation needs grew beyond simple classification, Spotify expanded its tooling to support a wide range of complex, multimodal tasks.
+
+Early projects focused on basic question-answer formats, but new use cases required more flexible and interactive workflows. These included:
+
+- Annotating specific segments in audio and video streams.
+- Handling natural language processing tasks involving context-sensitive labeling.
+- Supporting multi-label classification where multiple attributes must be tagged per item.
+
+To support these varied requirements, the team invested in several core areas of tooling:
+
+- Custom interfaces were built to allow fast setup of new annotation tasks. This made it possible to launch new projects without writing custom code for each use case.
+- Back-office systems managed user access, assigned annotation tasks across multiple experts, and tracked the status of each project. This was critical for scaling to dozens of projects running simultaneously.
+- Project dashboards were introduced to give teams real-time visibility into key metrics such as:
+
+  - Completion rates for each task.
+  - Total annotation volume.
+  - Per-annotator productivity.
+
+See the diagram below for annotating tooling capabilities:
+
+[![](https://substackcdn.com/image/fetch/$s_!mWuu!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcce88161-9faf-43e7-ae49-c56323ff4b8a_1600x1235.png)](https://substack.com/redirect/7e3fb0fd-9c0a-4a85-bc77-5d14490b1342?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+In cases where annotation tasks involved subjective interpretation or fine-grained distinctions, such as identifying background music layered into a podcast, different experts could produce conflicting results. To handle this, the system computed an agreement score across annotators. Items with low agreement were automatically escalated to the quality analysts for resolution.
+
+This structure allowed multiple annotation projects to run in parallel with consistent oversight, predictable output quality, and tight feedback loops between engineers, annotators, and reviewers. It turned what was once a manual process into a managed and observable workflow.
+
+### 3 - Foundational Infrastructure and Integration
+
+To support annotation at Spotify scale, the platform infrastructure was designed to be flexible and tool-agnostic. No single tool can serve all annotation needs, so the team focused on building the right abstractions. These abstractions make it possible to integrate a variety of tools depending on the task, while keeping the core system consistent and maintainable.
+
+The foundation includes:
+
+- Generic APIs and data models that support multiple types of annotation tools. This allows teams to choose the right interface for each task without being locked into a specific implementation.
+- Interoperable interfaces that let engineers swap tools, layer them together, or use specialized tools for audio, video, text, or metadata tasks without rewriting pipelines.
+
+See the diagram below:
+
+[![](https://substackcdn.com/image/fetch/$s_!JJKi!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F373b7e08-25d4-443b-a968-a3f163a20932_1600x1235.png)](https://substack.com/redirect/f5793509-1428-4a59-94d2-bb31ddd0579f?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Integration was built across two levels of ML development:
+
+- For early-stage and experimental work, lightweight command-line tools and simple UIs were created. These allow teams to run ad hoc annotation projects with minimal overhead.
+- For production-grade workflows, the platform connects directly to Spotify’s internal batch orchestration systems and workflow infrastructure. This supports large-scale, long-running annotation jobs that need reliability, tracking, and throughput guarantees.
+
+The result is a system that supports both fast iteration in research environments and stable operation in production pipelines.
+
+Engineers can move between these modes without changing how they define tasks or access results. The infrastructure sits behind the tooling, but it is what allows the annotation platform to scale efficiently across diverse use cases.
+
+## Impact on Annotation Velocity
+
+The shift from manual, fragmented workflows to a unified annotation platform resulted in a sharp increase in annotation throughput.
+
+Internal metrics showed a sustained acceleration in annotation volume over time, driven by both improved tooling and more efficient workforce coordination. See the figure below that shows the rate of annotations over time.
+
+[![](https://substackcdn.com/image/fetch/$s_!E6mE!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f32ec6d-f9e8-46c9-878f-5b5ac991222f_823x596.png)](https://substack.com/redirect/2709bedb-d626-4f80-b627-55df11166508?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Source: [Spotify Engineering Blog](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+This increase in velocity directly reduced the time required to develop and iterate on machine learning models. Teams were able to move faster across several dimensions:
+
+- Training cycles became shorter, as labeled data could be collected, reviewed, and integrated into models with fewer handoffs and delays.
+- Ground-truth quality improved, thanks to structured escalation paths, agreement scoring, and the ability to resolve edge cases consistently.
+- GenAI experimentation became more efficient since the platform supported high-volume annotation needs with less setup overhead and more reliable output.
+
+As a result, ML teams could test hypotheses, refine models, and ship features faster. The annotation platform became a core enabler for iterative, data-driven development at scale.
+
+## Conclusion
+
+Spotify’s annotation platform is built on a clear principle: scaling machine learning requires more than just more data or larger models.
+
+It depends on structured, high-quality annotations delivered through systems that are efficient, adaptable, and integrated into the full model development lifecycle. Relying entirely on human labor can create bottlenecks. On the other hand, full automation without oversight can lead to quality drift. Real leverage comes from combining both, with humans providing context and judgment and automation handling volume and repeatability.
+
+By moving from isolated workflows to a unified platform, Spotify turned annotation into a shared capability rather than a one-time cost. The implementation of standardized roles, modular tools, and consistent infrastructure allowed ML teams to build and iterate faster without rebuilding pipelines from scratch.
+
+This approach supports fast experimentation and scaling across a wide range of use cases.
+
+**References:**
+
+- [How We Generated Millions of Content Annotations](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+---
+
+## **SPONSOR US**
+
+Get your product in front of more than 1,000,000 tech professionals.
+
+Our newsletter puts your products and services directly in front of an audience that matters - hundreds of thousands of engineering leaders and senior engineers - who have influence over significant tech decisions and big purchases.
+
+Space Fills Up Fast - Reserve Today
+
+Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches this influential audience, reserve your space now by emailing **sponsorship@bytebytego.com.**
+
+[![](https://substackcdn.com/image/fetch/$s_!PeVs!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideHeart%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Like](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&isFreemail=true&submitLike=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywicmVhY3Rpb24iOiLinaQiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTgxNzEzMiIsInN1YiI6InJlYWN0aW9uIn0.rcGSDbqnb5SsjAuvB9daZ-TaE7EtDqqDOB--mTIxkD4&utm_medium=email&utm_campaign=email-reaction&r=5s83oz)
+
+[![](https://substackcdn.com/image/fetch/$s_!x1tS!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideComments%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Comment](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&isFreemail=true&comments=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc&r=5s83oz&utm_campaign=email-half-magic-comments&action=post-comment&utm_source=substack&utm_medium=email)
+
+[![](https://substackcdn.com/image/fetch/$s_!5EGt!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FNoteForwardIcon%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Restack](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9vcGVuLnN1YnN0YWNrLmNvbS9wdWIvYnl0ZWJ5dGVnby9wL2hvdy1zcG90aWZ5LXVzZXMtZ2VuYWktYW5kLW1sLXRvP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZW1haWwtcmVzdGFjay1jb21tZW50JmFjdGlvbj1yZXN0YWNrLWNvbW1lbnQmcj01czgzb3omdG9rZW49ZXlKMWMyVnlYMmxrSWpvek5EazNNemd4TmpNc0luQnZjM1JmYVdRaU9qRTJOekF3TnpZeU15d2lhV0YwSWpveE56VXhNemcwT0RJMUxDSmxlSEFpT2pFM05UTTVOelk0TWpVc0ltbHpjeUk2SW5CMVlpMDRNVGN4TXpJaUxDSnpkV0lpT2lKd2IzTjBMWEpsWVdOMGFXOXVJbjAuaktsUGdCZHJETTZCd3NaQmtKU3dILThWQ2Z1SVBsdHJwb3JlQjNPYXFZYyIsInAiOjE2NzAwNzYyMywicyI6ODE3MTMyLCJmIjp0cnVlLCJ1IjozNDk3MzgxNjMsImlhdCI6MTc1MTM4NDgyNSwiZXhwIjoyMDY2OTYwODI1LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.7wEZa-z2E16RtXmU5aylfCRyK5R7X-hS7Dlkv2FujIU?&utm_source=substack&utm_medium=email)
+
+© 2025 ByteByteGo  
+548 Market Street PMB 72296, San Francisco, CA 94104  
+[Unsubscribe](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ibG9nLmJ5dGVieXRlZ28uY29tL2FjdGlvbi9kaXNhYmxlX2VtYWlsP3Rva2VuPWV5SjFjMlZ5WDJsa0lqb3pORGszTXpneE5qTXNJbkJ2YzNSZmFXUWlPakUyTnpBd056WXlNeXdpYVdGMElqb3hOelV4TXpnME9ESTFMQ0psZUhBaU9qRTNPREk1TWpBNE1qVXNJbWx6Y3lJNkluQjFZaTA0TVRjeE16SWlMQ0p6ZFdJaU9pSmthWE5oWW14bFgyVnRZV2xzSW4wLnZaeG14SXZiUkJEVXdGZWJpRGpfeHI3d1I1bXNvTFU2VlBya043ejdRdEkiLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.2XGmxDvjDVuGaE1LIY2_nqgovIoCi4voBPNPYISQpTI?)
+
+[![Get the app](https://substackcdn.com/image/fetch/$s_!IzGP!,w_262,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fgeneric-app-button%402x.png)](https://substack.com/redirect/85c29a72-6f05-4029-8b36-0ab40aa78e73?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)[![Start writing](https://substackcdn.com/image/fetch/$s_!LkrL!,w_270,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fpublish-button%402x.png)](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9zdWJzdGFjay5jb20vc2lnbnVwP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY29udGVudD1mb290ZXImdXRtX2NhbXBhaWduPWF1dG9maWxsZWQtZm9vdGVyJmZyZWVTaWdudXBFbWFpbD1zdW1pdHVwLmRldkBnbWFpbC5jb20mcj01czgzb3oiLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.yhJvU2GWQnyCddyT5IBfc8gYrtO57fbeuZzH7ltiT44?)
+
+![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJib3R0b20iLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.ncH-eqJgQ0Wk1Crp7CvWb6fI_aw3dgARZ1lEq1N-zOA)![](https://email.mg-d1.substack.com/o/eJw8kEtuxCAQBU8z7GKBMb8FZ7H4tB0UAxY0E_n2kWdGWfSmWiqVXnAIe22XPWtHEi03nuogCVimBON60ZwRyC4d6w4FmkOIq8P_7yyUUeTbbtFtsG1SqiXIObDNOL9oQx1wbZgwJNmZzoIqypjgVKiJT0JKT31wQnITZVCPheb9K7KpD9_RhZ8p1ExSX7cGrwSLbQC5S1c3YoISwMIT2lXLB6domVSUKjnzN8HrBFvgtx-ACI2cw6-h5jxKwmuF4vwB8SMe_kjBYarlFmmmGJ9Js33khOOcIjwfC93vkldZHz7W7FKx_kK4b68E30uODu2W8MUorpnk5GnnvwAAAP__EjJ5Ig)
+```
+
+<END_EXAMPLE_INPUT>
+
+## Output Cleaned Newsletter:
+
+<START_EXAMPLE_OUTPUT>
+
+```md
+![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJ0b3AiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.h_lq446Mo75DspReL5XiPVsYgLcjNPIiBcIO4BzezIA)
+
+This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs.
+
+# [How Spotify Uses GenAI and ML to Annotate a Hundred Million Tracks](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=post-email-title&utm_campaign=email-post-title&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
+
+[ByteByteGo](https://substack.com/@bytebytego399569)
+
+Jul 1
+
+---
+
+_Disclaimer: The details in this post have been derived from the articles shared online by the Spotify Engineering Team. All credit for the technical details goes to the Spotify Engineering Team. The links to the original articles and sources are present in the references section at the end of the post. We’ve attempted to analyze the details and provide our input about them. If you find any inaccuracies or omissions, please leave a comment, and we will do our best to fix them._
+
+Spotify applies machine learning across its catalog to support key features.
+
+One set of models assigns tracks and albums to the correct artist pages, handling cases where metadata is missing, inconsistent, or duplicated. Another set analyzes podcasts to detect platform policy violations. These models review audio, video, and metadata to flag restricted content before it reaches listeners.
+
+All of these activities depend on large volumes of high-quality annotations. These annotations act as the ground truth for model training and evaluation. Without them, model accuracy drops, feedback loops fail, and feature development slows down. As the number of use cases increased, the existing annotation workflows at Spotify became a bottleneck. Each team built isolated tools, managed their reviewers, and shipped data through manual processes that didn’t scale or integrate with machine learning pipelines.
+
+The problem was structural. Annotation was treated as an isolated task instead of a core part of the machine learning workflow. There was no shared tooling, no centralized workforce model, and no infrastructure to automate annotation at scale.
+
+This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs. It covers:
+
+- How was human expertise organized into a structured and scalable workflow?
+- What tools were built to support complex annotation tasks across different data types?
+- How was the infrastructure designed to integrate annotation directly into ML pipelines?
+- The trade-offs involved in balancing quality, cost, and speed.
+
+---
+
+## Moving from Manual Workflow to Scalable Annotation
+
+The starting point was a straightforward machine learning (ML) classification task. The team needed annotations to evaluate model predictions and improve training quality, so they built a minimal pipeline to collect them.
+
+They began by sampling model outputs and serving them to human annotators through simple scripts. Each annotation was reviewed, captured, and passed back into the system. The annotated data was then integrated directly into model training and evaluation workflows. There was no full-fledged platform yet, but just a focused attempt to connect annotations to something real and measurable.
+
+[![](https://substackcdn.com/image/fetch/$s_!nRS0!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcd674da0-4f28-4ebe-936b-b5caeda6872b_1600x1017.png)](https://substack.com/redirect/55a672ba-1f66-4fa9-8b6c-d2521ff7ee9a?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Even with this basic setup, the results were significant:
+
+- The annotation corpus grew by a factor of ten.
+- Annotator throughput tripled compared to previous manual efforts.
+
+This early success wasn’t just about volume. It showed that when annotation is directly tied into the model lifecycle, feedback loops become more useful and productivity improves. The outcome was enough to justify further investment.
+
+From here, the focus shifted from running isolated tasks to building a dedicated platform that could generalize the workflow and support many ML use cases in parallel.
+
+## Platform Architecture
+
+The overall platform architecture consists of three pillars. See the diagram below for reference:
+
+[![](https://substackcdn.com/image/fetch/$s_!NYv2!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3332ad32-136f-43ce-b5ab-8a09b8475e99_1600x1253.png)](https://substack.com/redirect/ebba799c-14d1-413a-bef9-2339729ce070?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Let’s look at each pillar in more detail.
+
+### 1 - Scaling Human Expertise
+
+To support large-scale annotation work, Spotify first focused on organizing its human annotation resources. Instead of treating annotators as a generic pool, the team defined clear roles with distinct responsibilities and escalation paths.
+
+The annotation workforce was structured into three levels:
+
+- **Core annotators** handled the initial pass across most annotation cases. These were domain experts trained to apply consistent standards across large datasets.
+- **Quality analysts** acted as the escalation layer for complex or ambiguous cases. These were top-level reviewers who ensured that edge cases were resolved with precision, especially when annotations involved subjectivity or context-specific judgment.
+- **Project managers** worked across teams to coordinate annotation efforts. They connected ML engineers and product stakeholders with the annotation workforce, maintained training materials, gathered feedback, and adjusted data collection strategies as projects evolved.
+
+In parallel with the human effort, Spotify also developed a configurable system powered by large language models.
+
+This system operates in conjunction with human annotators and is designed to generate high-quality labels for cases that follow predictable patterns. It is not a full replacement but a complement that handles clear-cut examples, allowing humans to focus on harder problems.
+
+See the diagram below:
+
+[![](https://substackcdn.com/image/fetch/$s_!Lvye!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bad79f0-d54f-499f-bef2-93ea8f1a0d7c_1600x1041.png)](https://substack.com/redirect/dc37a0b2-e288-4e81-9337-ce046a527b0d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+This hybrid model significantly increased annotation throughput. By assigning the right cases to the right annotator (human or machine), Spotify was able to expand its dataset coverage at a lower cost and with higher consistency.
+
+### 2 - Building Annotation Tooling for Complex Tasks
+
+As annotation needs grew beyond simple classification, Spotify expanded its tooling to support a wide range of complex, multimodal tasks.
+
+Early projects focused on basic question-answer formats, but new use cases required more flexible and interactive workflows. These included:
+
+- Annotating specific segments in audio and video streams.
+- Handling natural language processing tasks involving context-sensitive labeling.
+- Supporting multi-label classification where multiple attributes must be tagged per item.
+
+To support these varied requirements, the team invested in several core areas of tooling:
+
+- Custom interfaces were built to allow fast setup of new annotation tasks. This made it possible to launch new projects without writing custom code for each use case.
+- Back-office systems managed user access, assigned annotation tasks across multiple experts, and tracked the status of each project. This was critical for scaling to dozens of projects running simultaneously.
+- Project dashboards were introduced to give teams real-time visibility into key metrics such as:
+
+  - Completion rates for each task.
+  - Total annotation volume.
+  - Per-annotator productivity.
+
+See the diagram below for annotating tooling capabilities:
+
+[![](https://substackcdn.com/image/fetch/$s_!mWuu!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcce88161-9faf-43e7-ae49-c56323ff4b8a_1600x1235.png)](https://substack.com/redirect/7e3fb0fd-9c0a-4a85-bc77-5d14490b1342?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+In cases where annotation tasks involved subjective interpretation or fine-grained distinctions, such as identifying background music layered into a podcast, different experts could produce conflicting results. To handle this, the system computed an agreement score across annotators. Items with low agreement were automatically escalated to the quality analysts for resolution.
+
+This structure allowed multiple annotation projects to run in parallel with consistent oversight, predictable output quality, and tight feedback loops between engineers, annotators, and reviewers. It turned what was once a manual process into a managed and observable workflow.
+
+### 3 - Foundational Infrastructure and Integration
+
+To support annotation at Spotify scale, the platform infrastructure was designed to be flexible and tool-agnostic. No single tool can serve all annotation needs, so the team focused on building the right abstractions. These abstractions make it possible to integrate a variety of tools depending on the task, while keeping the core system consistent and maintainable.
+
+The foundation includes:
+
+- Generic APIs and data models that support multiple types of annotation tools. This allows teams to choose the right interface for each task without being locked into a specific implementation.
+- Interoperable interfaces that let engineers swap tools, layer them together, or use specialized tools for audio, video, text, or metadata tasks without rewriting pipelines.
+
+See the diagram below:
+
+[![](https://substackcdn.com/image/fetch/$s_!JJKi!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F373b7e08-25d4-443b-a968-a3f163a20932_1600x1235.png)](https://substack.com/redirect/f5793509-1428-4a59-94d2-bb31ddd0579f?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Integration was built across two levels of ML development:
+
+- For early-stage and experimental work, lightweight command-line tools and simple UIs were created. These allow teams to run ad hoc annotation projects with minimal overhead.
+- For production-grade workflows, the platform connects directly to Spotify’s internal batch orchestration systems and workflow infrastructure. This supports large-scale, long-running annotation jobs that need reliability, tracking, and throughput guarantees.
+
+The result is a system that supports both fast iteration in research environments and stable operation in production pipelines.
+
+Engineers can move between these modes without changing how they define tasks or access results. The infrastructure sits behind the tooling, but it is what allows the annotation platform to scale efficiently across diverse use cases.
+
+## Impact on Annotation Velocity
+
+The shift from manual, fragmented workflows to a unified annotation platform resulted in a sharp increase in annotation throughput.
+
+Internal metrics showed a sustained acceleration in annotation volume over time, driven by both improved tooling and more efficient workforce coordination. See the figure below that shows the rate of annotations over time.
+
+[![](https://substackcdn.com/image/fetch/$s_!E6mE!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f32ec6d-f9e8-46c9-878f-5b5ac991222f_823x596.png)](https://substack.com/redirect/2709bedb-d626-4f80-b627-55df11166508?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+Source: [Spotify Engineering Blog](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+This increase in velocity directly reduced the time required to develop and iterate on machine learning models. Teams were able to move faster across several dimensions:
+
+- Training cycles became shorter, as labeled data could be collected, reviewed, and integrated into models with fewer handoffs and delays.
+- Ground-truth quality improved, thanks to structured escalation paths, agreement scoring, and the ability to resolve edge cases consistently.
+- GenAI experimentation became more efficient since the platform supported high-volume annotation needs with less setup overhead and more reliable output.
+
+As a result, ML teams could test hypotheses, refine models, and ship features faster. The annotation platform became a core enabler for iterative, data-driven development at scale.
+
+## Conclusion
+
+Spotify’s annotation platform is built on a clear principle: scaling machine learning requires more than just more data or larger models.
+
+It depends on structured, high-quality annotations delivered through systems that are efficient, adaptable, and integrated into the full model development lifecycle. Relying entirely on human labor can create bottlenecks. On the other hand, full automation without oversight can lead to quality drift. Real leverage comes from combining both, with humans providing context and judgment and automation handling volume and repeatability.
+
+By moving from isolated workflows to a unified platform, Spotify turned annotation into a shared capability rather than a one-time cost. The implementation of standardized roles, modular tools, and consistent infrastructure allowed ML teams to build and iterate faster without rebuilding pipelines from scratch.
+
+This approach supports fast experimentation and scaling across a wide range of use cases.
+
+**References:**
+
+- [How We Generated Millions of Content Annotations](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
+
+---
+
+© 2025 ByteByteGo  
+548 Market Street PMB 72296, San Francisco, CA 94104
+```
+
+<END_EXAMPLE_OUTPUT>
+
+# EXAMPLE 2:
+
+## Input newsletter
+
+<START_EXAMPLE_INPUT>
+
+```md
 ![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNjIxMTUzMDE2LjMuNWZmMWI1YTJhNDIwOGQ3N0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NjQxODQxOSwidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJ0b3AiLCJpYXQiOjE3NTA1MjA2NzgsImV4cCI6MTc1MzExMjY3OCwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.v1XGsnmEBetGxQ7kKjx53BLYWBs8RdP_G0gx1nYT0Dw)
 
 What else will you add to understand these concepts better?
@@ -286,419 +697,8 @@ Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches 
 [![Get the app](https://substackcdn.com/image/fetch/$s_!IzGP!,w_262,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fgeneric-app-button%402x.png)](https://substack.com/redirect/13a7e568-552f-47db-b1c0-8f26e87a0482?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)[![Start writing](https://substackcdn.com/image/fetch/$s_!LkrL!,w_270,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fpublish-button%402x.png)](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9zdWJzdGFjay5jb20vc2lnbnVwP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY29udGVudD1mb290ZXImdXRtX2NhbXBhaWduPWF1dG9maWxsZWQtZm9vdGVyJmZyZWVTaWdudXBFbWFpbD1zdW1pdHVwLmRldkBnbWFpbC5jb20mcj01czgzb3oiLCJwIjoxNjY0MTg0MTksInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTA1MjA2NzcsImV4cCI6MjA2NjA5NjY3NywiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.d69lyWvpdrG5ZQkfAzr8s_7ChUyf08mn9fBxjHWfGEI?)
 
 ![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNjIxMTUzMDE2LjMuNWZmMWI1YTJhNDIwOGQ3N0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NjQxODQxOSwidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJib3R0b20iLCJpYXQiOjE3NTA1MjA2NzgsImV4cCI6MTc1MzExMjY3OCwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.M2NXWOYbKrEux4nbqkLgtyVeqFKAt9ISJDo2v-VuCEY)![](https://email.mg-d1.substack.com/o/eJw8kEluxCAQRU_T7GIxmMELzmIxlB0UAxYUHfn2kbtbWdTmlfT09IND2Gu77Fk7kmjF4qkJioBlWlLJqTKSQHbpWHco0BxCXB3-f7URiyHfFpzmMVDFF9Bq26RmemFahYWazTuYSbKcckkVZ0wKytQkJrltzEvH3cypiVo_Zpr3r8imPnxHF36mUDNJfd0avBIstgHkLl3diAlKAAtPaFctH5yiZUrNzMxseRO8TrAFfvsBiNDIOfwaas6jJLxWKM4fED_i4Y8UHKZabpFhmglOmu0jJxznFOH5mOl-l7zK-vCxZpeK9RfCfXsl-F5ydGi3RMyLFoYpQZ6W_wUAAP__jm54tQ)
-```
 
-<END_EXAMPLE_INPUT>
-
-## Output Cleaned Newsletter:
-
-<START_EXAMPLE_OUTPUT>
-
-```md
 ![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJ0b3AiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.h_lq446Mo75DspReL5XiPVsYgLcjNPIiBcIO4BzezIA)
-
-This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs.
-
-# [How Spotify Uses GenAI and ML to Annotate a Hundred Million Tracks](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=post-email-title&utm_campaign=email-post-title&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
-
-[ByteByteGo](https://substack.com/@bytebytego399569)
-
-Jul 1
-
----
-
-_Disclaimer: The details in this post have been derived from the articles shared online by the Spotify Engineering Team. All credit for the technical details goes to the Spotify Engineering Team. The links to the original articles and sources are present in the references section at the end of the post. We’ve attempted to analyze the details and provide our input about them. If you find any inaccuracies or omissions, please leave a comment, and we will do our best to fix them._
-
-Spotify applies machine learning across its catalog to support key features.
-
-One set of models assigns tracks and albums to the correct artist pages, handling cases where metadata is missing, inconsistent, or duplicated. Another set analyzes podcasts to detect platform policy violations. These models review audio, video, and metadata to flag restricted content before it reaches listeners.
-
-All of these activities depend on large volumes of high-quality annotations. These annotations act as the ground truth for model training and evaluation. Without them, model accuracy drops, feedback loops fail, and feature development slows down. As the number of use cases increased, the existing annotation workflows at Spotify became a bottleneck. Each team built isolated tools, managed their reviewers, and shipped data through manual processes that didn’t scale or integrate with machine learning pipelines.
-
-The problem was structural. Annotation was treated as an isolated task instead of a core part of the machine learning workflow. There was no shared tooling, no centralized workforce model, and no infrastructure to automate annotation at scale.
-
-This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs. It covers:
-
-- How was human expertise organized into a structured and scalable workflow?
-- What tools were built to support complex annotation tasks across different data types?
-- How was the infrastructure designed to integrate annotation directly into ML pipelines?
-- The trade-offs involved in balancing quality, cost, and speed.
-
----
-
-## Moving from Manual Workflow to Scalable Annotation
-
-The starting point was a straightforward machine learning (ML) classification task. The team needed annotations to evaluate model predictions and improve training quality, so they built a minimal pipeline to collect them.
-
-They began by sampling model outputs and serving them to human annotators through simple scripts. Each annotation was reviewed, captured, and passed back into the system. The annotated data was then integrated directly into model training and evaluation workflows. There was no full-fledged platform yet, but just a focused attempt to connect annotations to something real and measurable.
-
-[![](https://substackcdn.com/image/fetch/$s_!nRS0!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcd674da0-4f28-4ebe-936b-b5caeda6872b_1600x1017.png)](https://substack.com/redirect/55a672ba-1f66-4fa9-8b6c-d2521ff7ee9a?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Even with this basic setup, the results were significant:
-
-- The annotation corpus grew by a factor of ten.
-- Annotator throughput tripled compared to previous manual efforts.
-
-This early success wasn’t just about volume. It showed that when annotation is directly tied into the model lifecycle, feedback loops become more useful and productivity improves. The outcome was enough to justify further investment.
-
-From here, the focus shifted from running isolated tasks to building a dedicated platform that could generalize the workflow and support many ML use cases in parallel.
-
-## Platform Architecture
-
-The overall platform architecture consists of three pillars. See the diagram below for reference:
-
-[![](https://substackcdn.com/image/fetch/$s_!NYv2!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3332ad32-136f-43ce-b5ab-8a09b8475e99_1600x1253.png)](https://substack.com/redirect/ebba799c-14d1-413a-bef9-2339729ce070?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Let’s look at each pillar in more detail.
-
-### 1 - Scaling Human Expertise
-
-To support large-scale annotation work, Spotify first focused on organizing its human annotation resources. Instead of treating annotators as a generic pool, the team defined clear roles with distinct responsibilities and escalation paths.
-
-The annotation workforce was structured into three levels:
-
-- **Core annotators** handled the initial pass across most annotation cases. These were domain experts trained to apply consistent standards across large datasets.
-- **Quality analysts** acted as the escalation layer for complex or ambiguous cases. These were top-level reviewers who ensured that edge cases were resolved with precision, especially when annotations involved subjectivity or context-specific judgment.
-- **Project managers** worked across teams to coordinate annotation efforts. They connected ML engineers and product stakeholders with the annotation workforce, maintained training materials, gathered feedback, and adjusted data collection strategies as projects evolved.
-
-In parallel with the human effort, Spotify also developed a configurable system powered by large language models.
-
-This system operates in conjunction with human annotators and is designed to generate high-quality labels for cases that follow predictable patterns. It is not a full replacement but a complement that handles clear-cut examples, allowing humans to focus on harder problems.
-
-See the diagram below:
-
-[![](https://substackcdn.com/image/fetch/$s_!Lvye!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bad79f0-d54f-499f-bef2-93ea8f1a0d7c_1600x1041.png)](https://substack.com/redirect/dc37a0b2-e288-4e81-9337-ce046a527b0d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-This hybrid model significantly increased annotation throughput. By assigning the right cases to the right annotator (human or machine), Spotify was able to expand its dataset coverage at a lower cost and with higher consistency.
-
-### 2 - Building Annotation Tooling for Complex Tasks
-
-As annotation needs grew beyond simple classification, Spotify expanded its tooling to support a wide range of complex, multimodal tasks.
-
-Early projects focused on basic question-answer formats, but new use cases required more flexible and interactive workflows. These included:
-
-- Annotating specific segments in audio and video streams.
-- Handling natural language processing tasks involving context-sensitive labeling.
-- Supporting multi-label classification where multiple attributes must be tagged per item.
-
-To support these varied requirements, the team invested in several core areas of tooling:
-
-- Custom interfaces were built to allow fast setup of new annotation tasks. This made it possible to launch new projects without writing custom code for each use case.
-- Back-office systems managed user access, assigned annotation tasks across multiple experts, and tracked the status of each project. This was critical for scaling to dozens of projects running simultaneously.
-- Project dashboards were introduced to give teams real-time visibility into key metrics such as:
-
-  - Completion rates for each task.
-  - Total annotation volume.
-  - Per-annotator productivity.
-
-See the diagram below for annotating tooling capabilities:
-
-[![](https://substackcdn.com/image/fetch/$s_!mWuu!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcce88161-9faf-43e7-ae49-c56323ff4b8a_1600x1235.png)](https://substack.com/redirect/7e3fb0fd-9c0a-4a85-bc77-5d14490b1342?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-In cases where annotation tasks involved subjective interpretation or fine-grained distinctions, such as identifying background music layered into a podcast, different experts could produce conflicting results. To handle this, the system computed an agreement score across annotators. Items with low agreement were automatically escalated to the quality analysts for resolution.
-
-This structure allowed multiple annotation projects to run in parallel with consistent oversight, predictable output quality, and tight feedback loops between engineers, annotators, and reviewers. It turned what was once a manual process into a managed and observable workflow.
-
-### 3 - Foundational Infrastructure and Integration
-
-To support annotation at Spotify scale, the platform infrastructure was designed to be flexible and tool-agnostic. No single tool can serve all annotation needs, so the team focused on building the right abstractions. These abstractions make it possible to integrate a variety of tools depending on the task, while keeping the core system consistent and maintainable.
-
-The foundation includes:
-
-- Generic APIs and data models that support multiple types of annotation tools. This allows teams to choose the right interface for each task without being locked into a specific implementation.
-- Interoperable interfaces that let engineers swap tools, layer them together, or use specialized tools for audio, video, text, or metadata tasks without rewriting pipelines.
-
-See the diagram below:
-
-[![](https://substackcdn.com/image/fetch/$s_!JJKi!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F373b7e08-25d4-443b-a968-a3f163a20932_1600x1235.png)](https://substack.com/redirect/f5793509-1428-4a59-94d2-bb31ddd0579f?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Integration was built across two levels of ML development:
-
-- For early-stage and experimental work, lightweight command-line tools and simple UIs were created. These allow teams to run ad hoc annotation projects with minimal overhead.
-- For production-grade workflows, the platform connects directly to Spotify’s internal batch orchestration systems and workflow infrastructure. This supports large-scale, long-running annotation jobs that need reliability, tracking, and throughput guarantees.
-
-The result is a system that supports both fast iteration in research environments and stable operation in production pipelines.
-
-Engineers can move between these modes without changing how they define tasks or access results. The infrastructure sits behind the tooling, but it is what allows the annotation platform to scale efficiently across diverse use cases.
-
-## Impact on Annotation Velocity
-
-The shift from manual, fragmented workflows to a unified annotation platform resulted in a sharp increase in annotation throughput.
-
-Internal metrics showed a sustained acceleration in annotation volume over time, driven by both improved tooling and more efficient workforce coordination. See the figure below that shows the rate of annotations over time.
-
-[![](https://substackcdn.com/image/fetch/$s_!E6mE!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f32ec6d-f9e8-46c9-878f-5b5ac991222f_823x596.png)](https://substack.com/redirect/2709bedb-d626-4f80-b627-55df11166508?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Source: [Spotify Engineering Blog](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-This increase in velocity directly reduced the time required to develop and iterate on machine learning models. Teams were able to move faster across several dimensions:
-
-- Training cycles became shorter, as labeled data could be collected, reviewed, and integrated into models with fewer handoffs and delays.
-- Ground-truth quality improved, thanks to structured escalation paths, agreement scoring, and the ability to resolve edge cases consistently.
-- GenAI experimentation became more efficient since the platform supported high-volume annotation needs with less setup overhead and more reliable output.
-
-As a result, ML teams could test hypotheses, refine models, and ship features faster. The annotation platform became a core enabler for iterative, data-driven development at scale.
-
-## Conclusion
-
-Spotify’s annotation platform is built on a clear principle: scaling machine learning requires more than just more data or larger models.
-
-It depends on structured, high-quality annotations delivered through systems that are efficient, adaptable, and integrated into the full model development lifecycle. Relying entirely on human labor can create bottlenecks. On the other hand, full automation without oversight can lead to quality drift. Real leverage comes from combining both, with humans providing context and judgment and automation handling volume and repeatability.
-
-By moving from isolated workflows to a unified platform, Spotify turned annotation into a shared capability rather than a one-time cost. The implementation of standardized roles, modular tools, and consistent infrastructure allowed ML teams to build and iterate faster without rebuilding pipelines from scratch.
-
-This approach supports fast experimentation and scaling across a wide range of use cases.
-
-**References:**
-
-- [How We Generated Millions of Content Annotations](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
----
-
-© 2025 ByteByteGo  
-548 Market Street PMB 72296, San Francisco, CA 94104
-```
-
-<END_EXAMPLE_OUTPUT>
-
-# EXAMPLE 2:
-
-## Input newsletter
-
-<START_EXAMPLE_INPUT>
-
-```md
-![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJ0b3AiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.h_lq446Mo75DspReL5XiPVsYgLcjNPIiBcIO4BzezIA)
-
-This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs.
-
-͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­͏     ­
-
-Forwarded this email? [Subscribe here](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ibG9nLmJ5dGVieXRlZ28uY29tL3N1YnNjcmliZT91dG1fc291cmNlPWVtYWlsJnV0bV9jYW1wYWlnbj1lbWFpbC1zdWJzY3JpYmUmcj01czgzb3ombmV4dD1odHRwcyUzQSUyRiUyRmJsb2cuYnl0ZWJ5dGVnby5jb20lMkZwJTJGaG93LXNwb3RpZnktdXNlcy1nZW5haS1hbmQtbWwtdG8iLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.GMAdhdYYCN3fktE7nWL71uXzoAu5YjH1pMGpgWOq8uA?) for more
-
-# [How Spotify Uses GenAI and ML to Annotate a Hundred Million Tracks](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=post-email-title&utm_campaign=email-post-title&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
-
-[ByteByteGo](https://substack.com/@bytebytego399569)
-
-Jul 1
-
-[![](https://substackcdn.com/image/fetch/$s_!U1Ej!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc9941c68-e5b7-4b93-be75-df7cc4ffef02_504x540.png)](https://substack.com/@bytebytego399569)
-
-[![](https://substackcdn.com/image/fetch/$s_!PeVs!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideHeart%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&isFreemail=true&submitLike=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywicmVhY3Rpb24iOiLinaQiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTgxNzEzMiIsInN1YiI6InJlYWN0aW9uIn0.rcGSDbqnb5SsjAuvB9daZ-TaE7EtDqqDOB--mTIxkD4&utm_medium=email&utm_campaign=email-reaction&r=5s83oz)
-
-[![](https://substackcdn.com/image/fetch/$s_!x1tS!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideComments%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&isFreemail=true&comments=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc&r=5s83oz&utm_campaign=email-half-magic-comments&action=post-comment&utm_source=substack&utm_medium=email)
-
-[![](https://substackcdn.com/image/fetch/$s_!_L14!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideShare2%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&utm_content=share&utm_campaign=email-share&action=share&triggerShare=true&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
-
-[![](https://substackcdn.com/image/fetch/$s_!5EGt!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FNoteForwardIcon%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9vcGVuLnN1YnN0YWNrLmNvbS9wdWIvYnl0ZWJ5dGVnby9wL2hvdy1zcG90aWZ5LXVzZXMtZ2VuYWktYW5kLW1sLXRvP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZW1haWwtcmVzdGFjay1jb21tZW50JmFjdGlvbj1yZXN0YWNrLWNvbW1lbnQmcj01czgzb3omdG9rZW49ZXlKMWMyVnlYMmxrSWpvek5EazNNemd4TmpNc0luQnZjM1JmYVdRaU9qRTJOekF3TnpZeU15d2lhV0YwSWpveE56VXhNemcwT0RJMUxDSmxlSEFpT2pFM05UTTVOelk0TWpVc0ltbHpjeUk2SW5CMVlpMDRNVGN4TXpJaUxDSnpkV0lpT2lKd2IzTjBMWEpsWVdOMGFXOXVJbjAuaktsUGdCZHJETTZCd3NaQmtKU3dILThWQ2Z1SVBsdHJwb3JlQjNPYXFZYyIsInAiOjE2NzAwNzYyMywicyI6ODE3MTMyLCJmIjp0cnVlLCJ1IjozNDk3MzgxNjMsImlhdCI6MTc1MTM4NDgyNSwiZXhwIjoyMDY2OTYwODI1LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.7wEZa-z2E16RtXmU5aylfCRyK5R7X-hS7Dlkv2FujIU?&utm_source=substack&utm_medium=email)
-
-[READ IN APP![](https://substackcdn.com/image/fetch/$s_!ET-_!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideArrowUpRight%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)](https://open.substack.com/pub/bytebytego/p/how-spotify-uses-genai-and-ml-to?utm_source=email&redirect=app-store&utm_campaign=email-read-in-app)
-
-## [Azure VM Cheatsheet for DevOps Teams (Sponsored)](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-[![](https://substackcdn.com/image/fetch/$s_!JMBh!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4a1e05c6-ce8d-4e01-ac61-124c6afcc6e7_1200x628.png)](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Azure Virtual Machine (VM) lets you flexibly run virtualized environments and scale on demand. But how do you make sure your VMs are optimized and cost-effective?
-
-Download the cheatsheet to see how Datadog’s preconfigured Azure VM dashboard helps you:
-
-- Visualizing real-time VM performance and system metrics
-- Correlating host data with application behavior
-- Right-sizing VMs to optimize costs and performance
-
-[Download the cheatsheet](https://substack.com/redirect/441e7422-9ad3-4ed5-992f-305ba40c2f3d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
----
-
-_Disclaimer: The details in this post have been derived from the articles shared online by the Spotify Engineering Team. All credit for the technical details goes to the Spotify Engineering Team. The links to the original articles and sources are present in the references section at the end of the post. We’ve attempted to analyze the details and provide our input about them. If you find any inaccuracies or omissions, please leave a comment, and we will do our best to fix them._
-
-Spotify applies machine learning across its catalog to support key features.
-
-One set of models assigns tracks and albums to the correct artist pages, handling cases where metadata is missing, inconsistent, or duplicated. Another set analyzes podcasts to detect platform policy violations. These models review audio, video, and metadata to flag restricted content before it reaches listeners.
-
-All of these activities depend on large volumes of high-quality annotations. These annotations act as the ground truth for model training and evaluation. Without them, model accuracy drops, feedback loops fail, and feature development slows down. As the number of use cases increased, the existing annotation workflows at Spotify became a bottleneck. Each team built isolated tools, managed their reviewers, and shipped data through manual processes that didn’t scale or integrate with machine learning pipelines.
-
-The problem was structural. Annotation was treated as an isolated task instead of a core part of the machine learning workflow. There was no shared tooling, no centralized workforce model, and no infrastructure to automate annotation at scale.
-
-This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs. It covers:
-
-- How was human expertise organized into a structured and scalable workflow?
-- What tools were built to support complex annotation tasks across different data types?
-- How was the infrastructure designed to integrate annotation directly into ML pipelines?
-- The trade-offs involved in balancing quality, cost, and speed.
-
----
-
-## [Warp's AI coding agent leaps ahead of Claude Code to hit #1 on Terminal-Bench (Sponsored)](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-[![](https://substackcdn.com/image/fetch/$s_!27Kp!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb2b97a44-49b7-408c-9656-8a92ba1652bd_1200x620.png)](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Warp just launched the first Agentic Development Environment, built for devs who want to move faster with AI agents.
-
-It's the top overall coding agent, jumping ahead of Claude Code by 20% to become the #1 agent on Terminal-Bench and scoring 71% on SWE-bench Verified.
-
-**✅ Long-running commands:** something no other tool can support
-
-**✅ Agent multi-threading: run** multiple agents in parallel – all under your control
-
-**✅ Across the development lifecycle: setup** → coding → deployment
-
-[Try Warp's coding agent for yourself](https://substack.com/redirect/50a18c2c-5d48-4000-a227-fd1696647745?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
----
-
-## Moving from Manual Workflow to Scalable Annotation
-
-The starting point was a straightforward machine learning (ML) classification task. The team needed annotations to evaluate model predictions and improve training quality, so they built a minimal pipeline to collect them.
-
-They began by sampling model outputs and serving them to human annotators through simple scripts. Each annotation was reviewed, captured, and passed back into the system. The annotated data was then integrated directly into model training and evaluation workflows. There was no full-fledged platform yet, but just a focused attempt to connect annotations to something real and measurable.
-
-[![](https://substackcdn.com/image/fetch/$s_!nRS0!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcd674da0-4f28-4ebe-936b-b5caeda6872b_1600x1017.png)](https://substack.com/redirect/55a672ba-1f66-4fa9-8b6c-d2521ff7ee9a?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Even with this basic setup, the results were significant:
-
-- The annotation corpus grew by a factor of ten.
-- Annotator throughput tripled compared to previous manual efforts.
-
-This early success wasn’t just about volume. It showed that when annotation is directly tied into the model lifecycle, feedback loops become more useful and productivity improves. The outcome was enough to justify further investment.
-
-From here, the focus shifted from running isolated tasks to building a dedicated platform that could generalize the workflow and support many ML use cases in parallel.
-
-## Platform Architecture
-
-The overall platform architecture consists of three pillars. See the diagram below for reference:
-
-[![](https://substackcdn.com/image/fetch/$s_!NYv2!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F3332ad32-136f-43ce-b5ab-8a09b8475e99_1600x1253.png)](https://substack.com/redirect/ebba799c-14d1-413a-bef9-2339729ce070?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Let’s look at each pillar in more detail.
-
-### 1 - Scaling Human Expertise
-
-To support large-scale annotation work, Spotify first focused on organizing its human annotation resources. Instead of treating annotators as a generic pool, the team defined clear roles with distinct responsibilities and escalation paths.
-
-The annotation workforce was structured into three levels:
-
-- **Core annotators** handled the initial pass across most annotation cases. These were domain experts trained to apply consistent standards across large datasets.
-- **Quality analysts** acted as the escalation layer for complex or ambiguous cases. These were top-level reviewers who ensured that edge cases were resolved with precision, especially when annotations involved subjectivity or context-specific judgment.
-- **Project managers** worked across teams to coordinate annotation efforts. They connected ML engineers and product stakeholders with the annotation workforce, maintained training materials, gathered feedback, and adjusted data collection strategies as projects evolved.
-
-In parallel with the human effort, Spotify also developed a configurable system powered by large language models.
-
-This system operates in conjunction with human annotators and is designed to generate high-quality labels for cases that follow predictable patterns. It is not a full replacement but a complement that handles clear-cut examples, allowing humans to focus on harder problems.
-
-See the diagram below:
-
-[![](https://substackcdn.com/image/fetch/$s_!Lvye!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F0bad79f0-d54f-499f-bef2-93ea8f1a0d7c_1600x1041.png)](https://substack.com/redirect/dc37a0b2-e288-4e81-9337-ce046a527b0d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-This hybrid model significantly increased annotation throughput. By assigning the right cases to the right annotator (human or machine), Spotify was able to expand its dataset coverage at a lower cost and with higher consistency.
-
-### 2 - Building Annotation Tooling for Complex Tasks
-
-As annotation needs grew beyond simple classification, Spotify expanded its tooling to support a wide range of complex, multimodal tasks.
-
-Early projects focused on basic question-answer formats, but new use cases required more flexible and interactive workflows. These included:
-
-- Annotating specific segments in audio and video streams.
-- Handling natural language processing tasks involving context-sensitive labeling.
-- Supporting multi-label classification where multiple attributes must be tagged per item.
-
-To support these varied requirements, the team invested in several core areas of tooling:
-
-- Custom interfaces were built to allow fast setup of new annotation tasks. This made it possible to launch new projects without writing custom code for each use case.
-- Back-office systems managed user access, assigned annotation tasks across multiple experts, and tracked the status of each project. This was critical for scaling to dozens of projects running simultaneously.
-- Project dashboards were introduced to give teams real-time visibility into key metrics such as:
-
-  - Completion rates for each task.
-  - Total annotation volume.
-  - Per-annotator productivity.
-
-See the diagram below for annotating tooling capabilities:
-
-[![](https://substackcdn.com/image/fetch/$s_!mWuu!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fcce88161-9faf-43e7-ae49-c56323ff4b8a_1600x1235.png)](https://substack.com/redirect/7e3fb0fd-9c0a-4a85-bc77-5d14490b1342?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-In cases where annotation tasks involved subjective interpretation or fine-grained distinctions, such as identifying background music layered into a podcast, different experts could produce conflicting results. To handle this, the system computed an agreement score across annotators. Items with low agreement were automatically escalated to the quality analysts for resolution.
-
-This structure allowed multiple annotation projects to run in parallel with consistent oversight, predictable output quality, and tight feedback loops between engineers, annotators, and reviewers. It turned what was once a manual process into a managed and observable workflow.
-
-### 3 - Foundational Infrastructure and Integration
-
-To support annotation at Spotify scale, the platform infrastructure was designed to be flexible and tool-agnostic. No single tool can serve all annotation needs, so the team focused on building the right abstractions. These abstractions make it possible to integrate a variety of tools depending on the task, while keeping the core system consistent and maintainable.
-
-The foundation includes:
-
-- Generic APIs and data models that support multiple types of annotation tools. This allows teams to choose the right interface for each task without being locked into a specific implementation.
-- Interoperable interfaces that let engineers swap tools, layer them together, or use specialized tools for audio, video, text, or metadata tasks without rewriting pipelines.
-
-See the diagram below:
-
-[![](https://substackcdn.com/image/fetch/$s_!JJKi!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F373b7e08-25d4-443b-a968-a3f163a20932_1600x1235.png)](https://substack.com/redirect/f5793509-1428-4a59-94d2-bb31ddd0579f?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Integration was built across two levels of ML development:
-
-- For early-stage and experimental work, lightweight command-line tools and simple UIs were created. These allow teams to run ad hoc annotation projects with minimal overhead.
-- For production-grade workflows, the platform connects directly to Spotify’s internal batch orchestration systems and workflow infrastructure. This supports large-scale, long-running annotation jobs that need reliability, tracking, and throughput guarantees.
-
-The result is a system that supports both fast iteration in research environments and stable operation in production pipelines.
-
-Engineers can move between these modes without changing how they define tasks or access results. The infrastructure sits behind the tooling, but it is what allows the annotation platform to scale efficiently across diverse use cases.
-
-## Impact on Annotation Velocity
-
-The shift from manual, fragmented workflows to a unified annotation platform resulted in a sharp increase in annotation throughput.
-
-Internal metrics showed a sustained acceleration in annotation volume over time, driven by both improved tooling and more efficient workforce coordination. See the figure below that shows the rate of annotations over time.
-
-[![](https://substackcdn.com/image/fetch/$s_!E6mE!,w_1100,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F9f32ec6d-f9e8-46c9-878f-5b5ac991222f_823x596.png)](https://substack.com/redirect/2709bedb-d626-4f80-b627-55df11166508?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-Source: [Spotify Engineering Blog](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
-This increase in velocity directly reduced the time required to develop and iterate on machine learning models. Teams were able to move faster across several dimensions:
-
-- Training cycles became shorter, as labeled data could be collected, reviewed, and integrated into models with fewer handoffs and delays.
-- Ground-truth quality improved, thanks to structured escalation paths, agreement scoring, and the ability to resolve edge cases consistently.
-- GenAI experimentation became more efficient since the platform supported high-volume annotation needs with less setup overhead and more reliable output.
-
-As a result, ML teams could test hypotheses, refine models, and ship features faster. The annotation platform became a core enabler for iterative, data-driven development at scale.
-
-## Conclusion
-
-Spotify’s annotation platform is built on a clear principle: scaling machine learning requires more than just more data or larger models.
-
-It depends on structured, high-quality annotations delivered through systems that are efficient, adaptable, and integrated into the full model development lifecycle. Relying entirely on human labor can create bottlenecks. On the other hand, full automation without oversight can lead to quality drift. Real leverage comes from combining both, with humans providing context and judgment and automation handling volume and repeatability.
-
-By moving from isolated workflows to a unified platform, Spotify turned annotation into a shared capability rather than a one-time cost. The implementation of standardized roles, modular tools, and consistent infrastructure allowed ML teams to build and iterate faster without rebuilding pipelines from scratch.
-
-This approach supports fast experimentation and scaling across a wide range of use cases.
-
-**References:**
-
-- [How We Generated Millions of Content Annotations](https://substack.com/redirect/252af4af-c6b5-4805-8f16-2b60dfd6a54b?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)
-
----
-
-## **SPONSOR US**
-
-Get your product in front of more than 1,000,000 tech professionals.
-
-Our newsletter puts your products and services directly in front of an audience that matters - hundreds of thousands of engineering leaders and senior engineers - who have influence over significant tech decisions and big purchases.
-
-Space Fills Up Fast - Reserve Today
-
-Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches this influential audience, reserve your space now by emailing **sponsorship@bytebytego.com.**
-
-[![](https://substackcdn.com/image/fetch/$s_!PeVs!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideHeart%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Like](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&isFreemail=true&submitLike=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywicmVhY3Rpb24iOiLinaQiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTgxNzEzMiIsInN1YiI6InJlYWN0aW9uIn0.rcGSDbqnb5SsjAuvB9daZ-TaE7EtDqqDOB--mTIxkD4&utm_medium=email&utm_campaign=email-reaction&r=5s83oz)
-
-[![](https://substackcdn.com/image/fetch/$s_!x1tS!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FLucideComments%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Comment](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=substack&utm_medium=email&isFreemail=true&comments=true&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc&r=5s83oz&utm_campaign=email-half-magic-comments&action=post-comment&utm_source=substack&utm_medium=email)
-
-[![](https://substackcdn.com/image/fetch/$s_!5EGt!,w_36,c_scale,f_png,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Ficon%2FNoteForwardIcon%3Fv%3D4%26height%3D36%26fill%3Dnone%26stroke%3D%2523808080%26strokeWidth%3D2)Restack](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9vcGVuLnN1YnN0YWNrLmNvbS9wdWIvYnl0ZWJ5dGVnby9wL2hvdy1zcG90aWZ5LXVzZXMtZ2VuYWktYW5kLW1sLXRvP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY2FtcGFpZ249ZW1haWwtcmVzdGFjay1jb21tZW50JmFjdGlvbj1yZXN0YWNrLWNvbW1lbnQmcj01czgzb3omdG9rZW49ZXlKMWMyVnlYMmxrSWpvek5EazNNemd4TmpNc0luQnZjM1JmYVdRaU9qRTJOekF3TnpZeU15d2lhV0YwSWpveE56VXhNemcwT0RJMUxDSmxlSEFpT2pFM05UTTVOelk0TWpVc0ltbHpjeUk2SW5CMVlpMDRNVGN4TXpJaUxDSnpkV0lpT2lKd2IzTjBMWEpsWVdOMGFXOXVJbjAuaktsUGdCZHJETTZCd3NaQmtKU3dILThWQ2Z1SVBsdHJwb3JlQjNPYXFZYyIsInAiOjE2NzAwNzYyMywicyI6ODE3MTMyLCJmIjp0cnVlLCJ1IjozNDk3MzgxNjMsImlhdCI6MTc1MTM4NDgyNSwiZXhwIjoyMDY2OTYwODI1LCJpc3MiOiJwdWItMCIsInN1YiI6ImxpbmstcmVkaXJlY3QifQ.7wEZa-z2E16RtXmU5aylfCRyK5R7X-hS7Dlkv2FujIU?&utm_source=substack&utm_medium=email)
-
-© 2025 ByteByteGo  
-548 Market Street PMB 72296, San Francisco, CA 94104  
-[Unsubscribe](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ibG9nLmJ5dGVieXRlZ28uY29tL2FjdGlvbi9kaXNhYmxlX2VtYWlsP3Rva2VuPWV5SjFjMlZ5WDJsa0lqb3pORGszTXpneE5qTXNJbkJ2YzNSZmFXUWlPakUyTnpBd056WXlNeXdpYVdGMElqb3hOelV4TXpnME9ESTFMQ0psZUhBaU9qRTNPREk1TWpBNE1qVXNJbWx6Y3lJNkluQjFZaTA0TVRjeE16SWlMQ0p6ZFdJaU9pSmthWE5oWW14bFgyVnRZV2xzSW4wLnZaeG14SXZiUkJEVXdGZWJpRGpfeHI3d1I1bXNvTFU2VlBya043ejdRdEkiLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.2XGmxDvjDVuGaE1LIY2_nqgovIoCi4voBPNPYISQpTI?)
-
-[![Get the app](https://substackcdn.com/image/fetch/$s_!IzGP!,w_262,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fgeneric-app-button%402x.png)](https://substack.com/redirect/85c29a72-6f05-4029-8b36-0ab40aa78e73?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)[![Start writing](https://substackcdn.com/image/fetch/$s_!LkrL!,w_270,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack.com%2Fimg%2Femail%2Fpublish-button%402x.png)](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9zdWJzdGFjay5jb20vc2lnbnVwP3V0bV9zb3VyY2U9c3Vic3RhY2smdXRtX21lZGl1bT1lbWFpbCZ1dG1fY29udGVudD1mb290ZXImdXRtX2NhbXBhaWduPWF1dG9maWxsZWQtZm9vdGVyJmZyZWVTaWdudXBFbWFpbD1zdW1pdHVwLmRldkBnbWFpbC5jb20mcj01czgzb3oiLCJwIjoxNjcwMDc2MjMsInMiOjgxNzEzMiwiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MjA2Njk2MDgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.yhJvU2GWQnyCddyT5IBfc8gYrtO57fbeuZzH7ltiT44?)
-
-![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJib3R0b20iLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.ncH-eqJgQ0Wk1Crp7CvWb6fI_aw3dgARZ1lEq1N-zOA)![](https://email.mg-d1.substack.com/o/eJw8kEtuxCAQBU8z7GKBMb8FZ7H4tB0UAxY0E_n2kWdGWfSmWiqVXnAIe22XPWtHEi03nuogCVimBON60ZwRyC4d6w4FmkOIq8P_7yyUUeTbbtFtsG1SqiXIObDNOL9oQx1wbZgwJNmZzoIqypjgVKiJT0JKT31wQnITZVCPheb9K7KpD9_RhZ8p1ExSX7cGrwSLbQC5S1c3YoISwMIT2lXLB6domVSUKjnzN8HrBFvgtx-ACI2cw6-h5jxKwmuF4vwB8SMe_kjBYarlFmmmGJ9Js33khOOcIjwfC93vkldZHz7W7FKx_kK4b68E30uODu2W8MUorpnk5GnnvwAAAP__EjJ5Ig)
 ```
 
 <END_EXAMPLE_INPUT>
@@ -725,7 +725,6 @@ This week’s system design refresher:
 - Top 20 AI Agent Concepts You Should Know
 - How RabbitMQ Works
 - Hiring Now
-- SPONSOR US
 
 ---
 

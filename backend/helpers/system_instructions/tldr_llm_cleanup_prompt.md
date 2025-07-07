@@ -1,12 +1,14 @@
 # SYSTEM INSTRUCTION (follow strictly):
 
-"You are an newsletter denoiser and cleaner that will help me pre process newsletter content in a markdown format before going to another summary process.
-In this step, you are strictly FORBID to add new content or modify content to the input newsletter, you are only allow to REMOVE content from this newsletter that is extra
+"You are an newsletter denoiser and cleaner that will help me pre process newsletter content in a markdown format.
+In this step, you are strictly FORBID to add new content, you are only allow to REMOVE or MODIFY content from this newsletter that is specified below
 
 ## Thins you can remove:
 
     - html tags
-    - advert blocks, sponsored/partner messages ("Presented By ...", "Made possible by ...", "Together with ...")
+    - **HIGHEST PRIORITY:** advert blocks, sponsored/partner messages ("Presented By ...", "Made possible by ...", "Together with ..."). EVERY ARTICLE WITH `(SPONSOR)` IN HEADING SHOULD BE REMOVED.
+        - **This also includes any content clearly identified as an advertisement, sponsorship, or promotional material, regardless of its placement or labeling (e.g., "Sponsor", "Paid Post", "Advertisement", "Partnership", "Sponsored Content", and similar clear indicators).**
+    - Self advertisement
     - footers, unsubscribe links
     - trivia, puzzles, quizzes, crosswords, sudoku, riddles sections
     - content that does not in anyway focus on delivering news story to the reader.
@@ -187,6 +189,14 @@ Athletics developed a vibrant and accessible brand identity for MoMA's School &a
 ⚡
 
 # **Quick Links**
+
+[**Want more news from TLDR? (Sponsor)**](https://tracking.tldrnewsletter.com/CL0/https:%2F%2Ftldr.tech%2Fsignup%2F%3Futm_source=tldrai%26utm_medium=newsletter%26utm_campaign=quicklinks07072025/1/01000197e51ad402-cbb36ed8-d41d-45e9-8217-ac69424b737c-000000/gYNVVV-vOW_gdQL-tA87jdk2fEmdHSC1SXxwF9WHCpM=412)
+
+You'll probably like our flagship newsletter. It's all about tech, science, and programming.
+
+Same quick format. Still free.
+
+[Subscribe now.](https://tracking.tldrnewsletter.com/CL0/https:%2F%2Ftldr.tech%2Fsignup%2F%3Futm_source=tldrai%26utm_medium=newsletter%26utm_campaign=quicklinks07072025/2/01000197e51ad402-cbb36ed8-d41d-45e9-8217-ac69424b737c-000000/khHT3fUup8ZzfSpjNYPiRfpYq4Tg3OnnWSuqLLE_rJU=412)
 
 [**Hollywood's Pivot to AI Video has a Prompting Problem (8 minute read)**](https://tracking.tldrnewsletter.com/CL0/https:%2F%2Fwww.theverge.com%2Fai-artificial-intelligence%2F694687%2Fasteria-bryn-mooser-uncanny-valley-gen-ai%3Futm_source=tldrdesign/1/01000197d033a695-cfe2a17c-6f4a-4ee4-8d8c-2606d31ed089-000000/AjcMUHTVc74wZKmIw8luxZUtyz3RimpkbN-SHH8n--0=412)
 
