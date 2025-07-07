@@ -28,6 +28,7 @@ In this step, you are strictly FORBID to add new content, you are only allow to 
 Before every heading, a proper newline must be inserted.
 
 **Output in markdown format**
+Follow
 
 # EXAMPLE 1
 
