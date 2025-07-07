@@ -243,7 +243,7 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
                 )
                 # progress bar
                 logger.info(
-                    f"(*) Processing newsletter {i + 1} of {len(fetched_newsletters_ids)} ======================================="
+                    f"(*) Processing newsletter {i + 1} of {len(fetched_newsletters_ids)} =========================="
                 )
                 # check if newsletter already exists
                 if await get_newsletter(newsletter_data["id"]):

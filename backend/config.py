@@ -60,6 +60,7 @@ class Settings(BaseSettings):
         },
         {"name": "Last Week In AI", "email": "lastweekinai+news@substack.com"},
         {"name": "Ben Lorica", "email": "gradientflow@substack.com"},  # gradientflow
+        {"name": "ChinAI Newsletter", "email": "chinai@substack.com"},
     ]
 
     tldr_newsletters_group_names: list[str] = [
