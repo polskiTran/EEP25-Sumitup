@@ -63,6 +63,22 @@ Jul 1
 
 **[Subscribe](https://substack.com/redirect/f40d9219-3f21-45f9-a001-79f89d2da44d?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8) • [Previous Issues](https://substack.com/redirect/1487ca53-ed62-43bc-87e8-b711c6ed6170?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8)**
 
+---
+
+**Readers keep Gradient Flow going. Subscribe free or paid to get new posts and help sustain this work.**
+
+[Upgrade to paid](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ncmFkaWVudGZsb3cuc3Vic3RhY2suY29tL3N1YnNjcmliZT91dG1fc291cmNlPXBvc3QmdXRtX2NhbXBhaWduPWVtYWlsLWNoZWNrb3V0Jm5leHQ9aHR0cHMlM0ElMkYlMkZncmFkaWVudGZsb3cuc3Vic3RhY2suY29tJTJGcCUyRnlvdXItYWktcGxheWJvb2stZm9yLXRoZS1yZXN0LW9mJnI9NXM4M296JnRva2VuPWV5SjFjMlZ5WDJsa0lqb3pORGszTXpneE5qTXNJbWxoZENJNk1UYzFNVGs0TXpnMk5Td2laWGh3SWpveE56VTBOVGMxT0RZMUxDSnBjM01pT2lKd2RXSXRNakE1T0RNaUxDSnpkV0lpT2lKamFHVmphMjkxZENKOS50Y0pnOU4yN1BhNkg3eksyaEdTbTN6UzE1b3l3M3Y2Y19ZWWx0cWtSQlQ4IiwicCI6MTY3MDUyOTI2LCJzIjoyMDk4MywiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTE5ODM4NjUsImV4cCI6MjA2NzU1OTg2NSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.OX0pL71_ATGx-gNNM-sosJ9JOoN3-q_W0tO6QAYhD_4?&utm_medium=email&utm_source=subscribe-widget-preamble&utm_content=167052926)
+
+---
+
+---
+
+#### _If this playbook resonated, consider becoming a paid subscriber 🙏_
+
+[Upgrade to paid](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ncmFkaWVudGZsb3cuc3Vic3RhY2suY29tL3N1YnNjcmliZT91dG1fc291cmNlPXBvc3QmdXRtX2NhbXBhaWduPWVtYWlsLWNoZWNrb3V0Jm5leHQ9aHR0cHMlM0ElMkYlMkZncmFkaWVudGZsb3cuc3Vic3RhY2suY29tJTJGcCUyRnlvdXItYWktcGxheWJvb2stZm9yLXRoZS1yZXN0LW9mJnI9NXM4M296JnRva2VuPWV5SjFjMlZ5WDJsa0lqb3pORGszTXpneE5qTXNJbWxoZENJNk1UYzFNVGs0TXpnMk5Td2laWGh3SWpveE56VTBOVGMxT0RZMUxDSnBjM01pT2lKd2RXSXRNakE1T0RNaUxDSnpkV0lpT2lKamFHVmphMjkxZENKOS50Y0pnOU4yN1BhNkg3eksyaEdTbTN6UzE1b3l3M3Y2Y19ZWWx0cWtSQlQ4IiwicCI6MTY3MDUyOTI2LCJzIjoyMDk4MywiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTE5ODM4NjUsImV4cCI6MjA2NzU1OTg2NSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.OX0pL71_ATGx-gNNM-sosJ9JOoN3-q_W0tO6QAYhD_4?&utm_medium=email&utm_source=substack&utm_content=postcta)
+
+---
+
 # **From Monoliths to Specialists: The New Era of AI**
 
 In a [previous analysis](https://substack.com/redirect/bbef10a2-4f85-45f6-a22a-ffcc586980fd?j=eyJ1IjoiNXM4M296In0.tGNGSdtmlCx12UO5VTFY50vjzjDXKZsMTxKEYVZUdc8), I examined how a company could build a highly effective AI application for writing database queries _without_ any fine-tuning, relying instead on semantic catalogs and validation loops to mirror how experienced analysts write SQL. This approach worked exceptionally well for that specific, targeted application. However, it represents just one narrow slice of what AI can accomplish.
@@ -112,6 +128,14 @@ The current moment in AI development resembles an inflection point where assumpt
 **Smaller agents can think and act faster in domain-specific settings**
 
 To build these systems, we need more than just powerful base models. We need agents that are reliable, aligned with our goals, and specialized for the work at hand. **It is through the careful art of post-training—refining, specializing, and guiding these models with techniques from supervised fine-tuning to reinforcement learning—that we will forge the dependable, task-specific AI that defines this new era of computing**.
+
+---
+
+---
+
+#### _If this playbook resonated, consider becoming a paid subscriber 🙏_
+
+[Upgrade to paid](https://substack.com/redirect/2/eyJlIjoiaHR0cHM6Ly9ncmFkaWVudGZsb3cuc3Vic3RhY2suY29tL3N1YnNjcmliZT91dG1fc291cmNlPXBvc3QmdXRtX2NhbXBhaWduPWVtYWlsLWNoZWNrb3V0Jm5leHQ9aHR0cHMlM0ElMkYlMkZncmFkaWVudGZsb3cuc3Vic3RhY2suY29tJTJGcCUyRnlvdXItYWktcGxheWJvb2stZm9yLXRoZS1yZXN0LW9mJnI9NXM4M296JnRva2VuPWV5SjFjMlZ5WDJsa0lqb3pORGszTXpneE5qTXNJbWxoZENJNk1UYzFNVGs0TXpnMk5Td2laWGh3SWpveE56VTBOVGMxT0RZMUxDSnBjM01pT2lKd2RXSXRNakE1T0RNaUxDSnpkV0lpT2lKamFHVmphMjkxZENKOS50Y0pnOU4yN1BhNkg3eksyaEdTbTN6UzE1b3l3M3Y2Y19ZWWx0cWtSQlQ4IiwicCI6MTY3MDUyOTI2LCJzIjoyMDk4MywiZiI6dHJ1ZSwidSI6MzQ5NzM4MTYzLCJpYXQiOjE3NTE5ODM4NjUsImV4cCI6MjA2NzU1OTg2NSwiaXNzIjoicHViLTAiLCJzdWIiOiJsaW5rLXJlZGlyZWN0In0.OX0pL71_ATGx-gNNM-sosJ9JOoN3-q_W0tO6QAYhD_4?&utm_medium=email&utm_source=substack&utm_content=postcta)
 
 ---
 
