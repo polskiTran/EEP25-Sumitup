@@ -6,6 +6,7 @@ from datetime import datetime
 
 from config import settings
 from google import genai
+from google.api_core.exceptions import GoogleAPIError
 from google.genai import types
 
 # ------------------------------
@@ -184,6 +185,50 @@ async def llm_clean_up(newsletter_markdown: str, log_info: list, logging: bool =
             )
             return response.text
     return response.text
+
+
+def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
+    """Embed the newsletter markdown using the Gemini embedding model.
+
+    Args:
+        newsletter_cleaned_markdown (str): The cleaned newsletter markdown to embed
+    Returns:
+        list[float]: The embedded cleaned newsletter markdown as a list of floats
+    """
+    max_attempts = 10
+    backoff = 1
+    for attempt in range(1, max_attempts + 1):
+        try:
+            logger.info(f"Embedding newsletter...")
+            result = client.models.embed_content(
+                model=settings.google_gemini_embedding_model,
+                contents=newsletter_cleaned_markdown,
+                config=settings.google_gemini_embedding_config,
+            )
+            logger.info(
+                f"Embedding done! Embedding length: {len(result.embeddings[0].values)}"
+            )
+            return result.embeddings[0].values
+        except Exception as e:
+            err_str = str(e).lower()
+            if (
+                "resource_exhausted" in err_str
+                or "429" in err_str
+                or "rate limit" in err_str
+            ):
+                logger.warning(
+                    f"Embedding attempt {attempt} failed with RESOURCE_EXHAUSTED/429: {e}. Retrying in {backoff} seconds..."
+                )
+                if attempt == max_attempts:
+                    logger.error(
+                        f"Embedding failed after {max_attempts} attempts due to RESOURCE_EXHAUSTED/429."
+                    )
+                    raise Exception(f"Embedding failed after retries: {str(e)}")
+                time.sleep(backoff)
+                backoff = min(backoff * 2, 60)  # Cap at 60s
+                continue
+            logger.error(f"Unexpected error generating embedding: {e}")
+            raise Exception(f"Embedding failed: {str(e)}")
 
 
 if __name__ == "__main__":

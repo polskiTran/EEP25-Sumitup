@@ -27,7 +27,7 @@ from helpers.helpers import (
 )
 from models.newsletter import Newsletter
 from models.sync_state import SyncState
-from services.genai_service import llm_clean_up
+from services.genai_service import embed_newsletter, llm_clean_up
 from services.pre_processing_service import html_to_markdown
 
 # ------------------------------
@@ -132,6 +132,7 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         ),
     ]
     cleaned_md = await llm_clean_up(raw_md, log_info)
+    cleaned_md_embedding = embed_newsletter(cleaned_md)
     return Newsletter(
         id=get_item_from_gmail_response(newsletter_data, "id"),
         thread_id=get_item_from_gmail_response(newsletter_data, "thread_id"),
@@ -143,6 +144,7 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         raw_html=get_item_from_gmail_response(newsletter_data, "html"),
         raw_md=raw_md,
         cleaned_md=cleaned_md,
+        cleaned_md_embedding=cleaned_md_embedding,
     )
 
 
@@ -287,8 +289,13 @@ async def retry_null_cleaned_md():
         null_cleaned_md_newsletters = await get_null_cleaned_md_newsletters()
         for newsletter in null_cleaned_md_newsletters:
             try:
+                log_info = [
+                    newsletter.sender_name,
+                    newsletter.sender_email,
+                    convert_internal_date_to_datetime(int(newsletter.internal_date)),
+                ]
                 retried_cleaned_md: str = await llm_clean_up(
-                    newsletter.raw_md, newsletter.id
+                    newsletter.raw_md, log_info
                 )
                 if not retried_cleaned_md:
                     logger.error(

@@ -14,6 +14,7 @@ class Newsletter(BaseModel):
     raw_html: Optional[str]
     raw_md: Optional[str]
     cleaned_md: Optional[str]
+    cleaned_md_embedding: Optional[list[float]] = None
 
     class Config:
         validate_by_name = True
