@@ -4,8 +4,10 @@ import os
 import os.path
 import time
 
+import chromadb
 from config import settings
 from database.database import (
+    add_newsletter_to_chroma_collection,
     close_mongo_connection,
     connect_to_mongo,
     get_newsletter,
@@ -138,6 +140,9 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         thread_id=get_item_from_gmail_response(newsletter_data, "thread_id"),
         history_id=get_item_from_gmail_response(newsletter_data, "history_id"),
         internal_date=get_item_from_gmail_response(newsletter_data, "internal_date"),
+        received_datetime=convert_internal_date_to_datetime(
+            int(get_item_from_gmail_response(newsletter_data, "internal_date"))
+        ),
         sender_name=sender_info["name"],
         sender_email=sender_info["email"],
         subject=get_item_from_gmail_response(newsletter_data, "subject"),
@@ -232,6 +237,12 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
         error_flag = False
         # authenticate
         service = gmail_authenticate()
+        # chromadb client
+        client = chromadb.CloudClient(
+            api_key=settings.chromadb_api_key,
+            tenant=settings.chromadb_tenant,
+            database=settings.chromadb_database,
+        )
 
         # process fetched newsletters
         for i, newsletter_id in enumerate(fetched_newsletters_ids):
@@ -256,6 +267,8 @@ async def process_fetched_newsletters(fetched_newsletters_ids: list):
                     newsletter: Newsletter = await newsletter_to_model(newsletter_data)
                 # save to db
                 await upsert_newsletter(newsletter)
+                # save to chromadb
+                await add_newsletter_to_chroma_collection(client, newsletter)
             except HttpError as e:
                 logger.error(
                     f"Gmail API HttpError processing newsletter {newsletter_id['id']}: {e}"
@@ -292,7 +305,7 @@ async def retry_null_cleaned_md():
                 log_info = [
                     newsletter.sender_name,
                     newsletter.sender_email,
-                    convert_internal_date_to_datetime(int(newsletter.internal_date)),
+                    newsletter.received_datetime,
                 ]
                 retried_cleaned_md: str = await llm_clean_up(
                     newsletter.raw_md, log_info

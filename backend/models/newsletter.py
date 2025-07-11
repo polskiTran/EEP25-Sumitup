@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, Field
@@ -8,6 +9,7 @@ class Newsletter(BaseModel):
     thread_id: str = Field(...)
     history_id: Optional[str]
     internal_date: int = Field(...)
+    received_datetime: Optional[datetime] = None
     sender_name: str = Field(...)
     sender_email: str = Field(...)
     subject: str = Field(...)

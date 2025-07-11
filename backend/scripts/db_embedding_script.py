@@ -91,7 +91,7 @@ async def add_embeddings_to_collection():
 
             # Generate embedding
             logger.info(
-                f"Embedding newsletter: {newsletter.id} of date: {convert_internal_date_to_datetime(newsletter.internal_date)}"
+                f"Embedding newsletter: {newsletter.id} of date: {convert_internal_date_to_datetime(newsletter.internal_date).strftime('%Y-%m-%d %H:%M:%S')}"
             )
             embedding = embed_newsletter(cleaned_md)
             if embedding is None:

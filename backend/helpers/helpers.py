@@ -78,8 +78,9 @@ def convert_internal_date_to_datetime(internal_date: int) -> datetime:
         datetime: The datetime object
     """
     internal_date_s = internal_date / 1000
-    converted_date = datetime.fromtimestamp(internal_date_s, tz=timezone.utc)
-    return converted_date.strftime("%Y-%m-%d %H:%M:%S UTC")
+    converted_date: datetime = datetime.fromtimestamp(internal_date_s, tz=timezone.utc)
+    # return converted_date.strftime("%Y-%m-%d %H:%M:%S UTC")
+    return converted_date
 
 
 if __name__ == "__main__":

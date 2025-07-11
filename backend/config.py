@@ -13,6 +13,12 @@ class Settings(BaseSettings):
     sync_state_collection_name: str = "sync_state"
     sync_state_id: str = "SYNC_STATE_ID"
 
+    # ChromaDB
+    chromadb_api_key: str
+    chromadb_tenant: str
+    chromadb_database: str = "sumitup-dev"
+    chromadb_collection_name: str = "newsletters"
+
     # Google
     google_gmail_client_id: str
     google_gmail_client_secret: str
@@ -48,17 +54,8 @@ class Settings(BaseSettings):
 
     # Popular tech newsletters to monitor
     target_newsletters: List[Dict[str, str]] = [
-        # {"name": "TLDR AI", "email": "dan@tldrnewsletter.com"},
         {"name": "TLDR", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Design", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Web Dev", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Product", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Founders", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Data", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Fintech", "email": "dan@tldrnewsletter.com"},
-        # {"name": "TLDR Marketing", "email": "dan@tldrnewsletter.com"},
         {"name": "Tech Brew", "email": "crew@morningbrew.com"},
-        # {"name": "IT Brew", "email": "crew@morningbrew.com"}, # TODO: considering removal
         {
             "name": "ByteByteGo",
             "email": "bytebytego@substack.com",

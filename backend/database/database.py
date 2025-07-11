@@ -1,6 +1,7 @@
 import logging
 from typing import List, Optional
 
+import chromadb
 from config import settings
 from models.newsletter import Newsletter
 from models.sync_state import SyncState
@@ -158,9 +159,16 @@ async def get_newsletter(gmail_message_id: str) -> Newsletter:
     Returns:
         Newsletter: The newsletter model
     """
-    newsletter_collection = get_collection(settings.newsletter_collection_name)
-    newsletter = await newsletter_collection.find_one({"_id": gmail_message_id})
-    return Newsletter(**newsletter) if newsletter else None
+    try:
+        if db.client is None:
+            logger.error("Database client is not connected")
+            raise Exception("Database client is not connected")
+        newsletter_collection = get_collection(settings.newsletter_collection_name)
+        newsletter = await newsletter_collection.find_one({"_id": gmail_message_id})
+        return Newsletter(**newsletter) if newsletter else None
+    except Exception as e:
+        logger.error(f"Error getting newsletter: {e}")
+        raise e
 
 
 async def get_newsletters(filter: dict = {}) -> List[Newsletter]:
@@ -170,9 +178,16 @@ async def get_newsletters(filter: dict = {}) -> List[Newsletter]:
     Returns:
         List[Newsletter]: The newsletters models
     """
-    newsletter_collection = get_collection(settings.newsletter_collection_name)
-    newsletters = await newsletter_collection.find(filter).to_list(length=None)
-    return [Newsletter(**newsletter) for newsletter in newsletters]
+    try:
+        if db.client is None:
+            logger.error("Database client is not connected")
+            raise Exception("Database client is not connected")
+        newsletter_collection = get_collection(settings.newsletter_collection_name)
+        newsletters = await newsletter_collection.find(filter).to_list(length=None)
+        return [Newsletter(**newsletter) for newsletter in newsletters]
+    except Exception as e:
+        logger.error(f"Error getting newsletters: {e}")
+        raise e
 
 
 async def get_null_cleaned_md_newsletters():
@@ -227,6 +242,37 @@ async def delete_newsletter(gmail_message_id: str):
         logger.info(f"Newsletter deleted: {gmail_message_id}")
     except Exception as e:
         logger.error(f"Error deleting newsletter: {e}")
+        raise e
+
+
+# ------------------------------
+# ChromaDB Operations
+# ------------------------------
+async def add_newsletter_to_chroma_collection(
+    client: chromadb.CloudClient, newsletter: Newsletter
+):
+    """Add the newsletter to the chroma collection
+    Args:
+        client (chromadb.CloudClient): The chroma client
+        newsletter (Newsletter): The newsletter model
+    """
+    try:
+        collection = client.get_collection(name=settings.chromadb_collection_name)
+        collection.add(
+            ids=[newsletter.id],
+            documents=[newsletter.cleaned_md],
+            metadatas=[
+                {
+                    "date": newsletter.received_datetime.strftime("%Y-%m-%d"),
+                    "sender_name": newsletter.sender_name,
+                    "sender_email": newsletter.sender_email,
+                    "subject": newsletter.subject,
+                }
+            ],
+        )
+        logger.info(f"Newsletter added to chroma collection: {newsletter.id}")
+    except Exception as e:
+        logger.error(f"Error adding newsletter to chroma collection: {e}")
         raise e
 
 
