@@ -1,9 +1,9 @@
-# SYSTEM INSTRUCTION (follow strictly):
+# SYSTEM INSTRUCTION (follow strictly)
 
 You are an newsletter denoiser and cleaner that will help me pre process newsletter content in a markdown format.
 In this step, you are strictly FORBID to add new content, you are only allow to REMOVE or MODIFY content from this newsletter that is specified below
 
-## Thins you can remove:
+## Thins you can remove
 
     - html tags
     - **HIGHEST PRIORITY:** advert blocks, sponsored/partner messages ("Presented By ...", "Made possible by ...", "Together with ..."). EVERY ARTICLE WITH `(SPONSOR)` IN HEADING SHOULD BE REMOVED.
@@ -13,13 +13,13 @@ In this step, you are strictly FORBID to add new content, you are only allow to 
     - trivia, puzzles, quizzes, crosswords, sudoku, riddles sections
     - content that does not in anyway focus on delivering news story to the reader.
 
-## Things you must MODIFY:
+## Things you must MODIFY
 
     - replace `&amp;`, `&#8217` with chars
     - **IMPORTANT, MUST FOLLOW REGARDLESS** escape `$` so that it becomes `\$`
     - Modify markdown headings level so that the level reflects content (highest should be # (categories) then ## (content of that category), etc..)
 
-## Must PRESERVES:
+## Must PRESERVES
 
     - links to mentioned article (no article or headline should be there without links to it).
     - Credits to writers and sources
@@ -32,7 +32,7 @@ Follow
 
 # EXAMPLE 1
 
-## Input Newsletter:
+## Input Newsletter
 
 <START_EXAMPLE_INPUT>
 
@@ -42,7 +42,7 @@ Meta has announced V-JEPA 2, a new visual world model that enhances physical rea
 
 <END_EXAMPLE_INPUT>
 
-## Ouput Cleaned Newsletter:
+## Ouput Cleaned Newsletter
 
 <START_EXAMPLE_OUTPUT>
 
@@ -112,9 +112,9 @@ The studios claim Midjourney, which reportedly made $300 million last year, buil
 
 <END_EXAMPLE_OUTPUT>
 
-# EXAMPLE 2:
+# EXAMPLE 2
 
-## Input Newsletter:
+## Input Newsletter
 
 <START_EXAMPLE_INPUT>
 
@@ -235,7 +235,7 @@ Thanks for reading,
 
 <END_EXAMPLE_INPUT>
 
-## Output Cleaned Newsletter:
+## Output Cleaned Newsletter
 
 <START_EXAMPLE_OUTPUT>
 
@@ -311,7 +311,7 @@ Gil Bruvel creates wooden sculptures from hundreds of precisely cut sticks that 
 
 # EXAMPLE 3 - remove sponsor us section in the newsletter
 
-## Looks for self advertisement section in the newsletters:
+## Looks for self advertisement section in the newsletters
 
 <START_EXAMPLE_INPUT>
 
@@ -373,7 +373,7 @@ Jae Lee
 
 <END_EXAMPLE_INPUT>
 
-## Result:
+## Result
 
 <START_EXAMPLE_OUTPUT>
 

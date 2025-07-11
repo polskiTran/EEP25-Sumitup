@@ -1,5 +1,5 @@
 import logging
-from pprint import pprint
+from pprint import pprint  # noqa: F401
 
 import chromadb
 import chromadb.utils.embedding_functions as embedding_functions
@@ -55,6 +55,9 @@ except Exception as e:
 # Main
 # ------------------------------
 async def main():
+    """
+    Add newsletters from mongo db to chromadb collection
+    """
     # get newsletters from mongo db
     newsletters = await get_newsletters()
     logger.info(f"Total newsletters: {len(newsletters)}")
@@ -73,9 +76,7 @@ async def main():
                 documents=[newsletter.cleaned_md],
                 metadatas=[
                     {
-                        "date": newsletter.received_datetime.strftime(
-                            "%Y-%m-%d %H:%M:%S"
-                        ),
+                        "date": newsletter.received_datetime.strftime("%Y-%m-%d"),
                         "sender_name": newsletter.sender_name,
                         "sender_email": newsletter.sender_email,
                         "subject": newsletter.subject,
@@ -87,6 +88,9 @@ async def main():
 
 
 async def date_modify():
+    """
+    Modify the date format of the newsletters in chromadb collection
+    """
     newsletters = await get_newsletters()
     for index, newsletter in enumerate(newsletters):
         logger.info(
@@ -113,10 +117,10 @@ if __name__ == "__main__":
         await connect_to_mongo()
 
         # add documents to collection
-        # await main()
+        await main()
         # result = collection.query(query_texts=["OpenAI Court order"])
         # pprint(result["metadatas"])
-        await date_modify()
+        # await date_modify()
 
         # disconnect from mongo db
         await close_mongo_connection()

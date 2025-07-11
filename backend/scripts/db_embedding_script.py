@@ -1,6 +1,4 @@
 import logging
-import os
-import time
 
 from config import settings
 from database.database import (
