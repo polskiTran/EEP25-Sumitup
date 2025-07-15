@@ -3,8 +3,8 @@ from datetime import datetime
 
 from config import settings
 from database.database import (
-    close_mongo_connection,
     connect_to_mongo,
+    disconnect_from_mongo,
     get_newsletters,
     upsert_newsletter,
 )
@@ -53,7 +53,7 @@ async def main():
             )
             # update the newsletter
             try:
-                newsletter.received_datetime = new_date
+                newsletter.received_datetime = new_date.strftime("%Y-%m-%d")
                 await upsert_newsletter(newsletter)
                 logger.info(f"Updated newsletter: {newsletter.id}")
             except Exception as e:
@@ -85,6 +85,6 @@ if __name__ == "__main__":
         # await remove_received_datetime()
 
         # close db connection
-        await close_mongo_connection()
+        await disconnect_from_mongo()
 
     asyncio.run(run())

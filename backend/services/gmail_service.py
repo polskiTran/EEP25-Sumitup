@@ -8,8 +8,8 @@ import chromadb
 from config import settings
 from database.database import (
     add_newsletter_to_chroma_collection,
-    close_mongo_connection,
     connect_to_mongo,
+    disconnect_from_mongo,
     get_newsletter,
     get_null_cleaned_md_newsletters,
     get_sync_state,
@@ -142,7 +142,7 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         internal_date=get_item_from_gmail_response(newsletter_data, "internal_date"),
         received_datetime=convert_internal_date_to_datetime(
             int(get_item_from_gmail_response(newsletter_data, "internal_date"))
-        ),
+        ).strftime("%Y-%m-%d"),
         sender_name=sender_info["name"],
         sender_email=sender_info["email"],
         subject=get_item_from_gmail_response(newsletter_data, "subject"),
@@ -339,6 +339,6 @@ if __name__ == "__main__":
         # retry null cleaned md
         await retry_null_cleaned_md()
         # stop db
-        await close_mongo_connection()
+        await disconnect_from_mongo()
 
     asyncio.run(test_run())

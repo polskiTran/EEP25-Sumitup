@@ -2,7 +2,7 @@ from contextlib import asynccontextmanager
 
 from api.newsletters_api import router as newsletters_api
 from config import settings
-from database.database import close_mongo_connection, connect_to_mongo
+from database.database import connect_to_mongo, disconnect_from_mongo
 from fastapi import FastAPI
 
 
@@ -12,7 +12,7 @@ async def lifespan(app: FastAPI):
     await connect_to_mongo()
     yield
     # Shutdown
-    await close_mongo_connection()
+    await disconnect_from_mongo()
 
 
 app = FastAPI(lifespan=lifespan)

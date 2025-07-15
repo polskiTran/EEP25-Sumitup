@@ -1,10 +1,11 @@
 import logging
+from datetime import datetime
 from pprint import pprint  # noqa: F401
 
 import chromadb
 import chromadb.utils.embedding_functions as embedding_functions
 from config import settings
-from database.database import close_mongo_connection, connect_to_mongo, get_newsletters
+from database.database import connect_to_mongo, disconnect_from_mongo, get_newsletters
 
 # ------------------------------
 # Logger
@@ -102,11 +103,40 @@ async def date_modify():
         try:
             collection.update(
                 ids=[newsletter.id],
-                documents=[newsletter.cleaned_md],
-                metadatas=[{"date": newsletter.received_datetime.strftime("%Y-%m-%d")}],
+                metadatas=[{"date_timestamp": newsletter.internal_date}],
             )
         except Exception as e:
             logger.error(f"Error updating newsletter: {e}")
+
+
+async def test_query():
+    """
+    Test query
+    """
+    date1 = "2025-07-10"
+    date_timestamp1 = int(datetime.strptime(date1, "%Y-%m-%d").timestamp() * 1000)
+    print(date_timestamp1)
+
+    date2 = "2025-07-02"
+    print(datetime.strptime(date2, "%Y-%m-%d").timestamp())
+    # query = {
+    #     "$and": [
+    #         {
+    #             "date_timestamp": {
+    #                 "$gte": int(datetime.strptime(date1, "%Y-%m-%d").timestamp())
+    #             }
+    #         },
+    #         {
+    #             "date_timestamp": {
+    #                 "$lte": int(datetime.strptime(date2, "%Y-%m-%d").timestamp())
+    #             }
+    #         },
+    #     ]
+    # }
+    query = {"date_timestamp": {"$gte": date_timestamp1}}
+
+    result = collection.query(query_texts=["foldables"], where=query, n_results=10)
+    pprint(result["metadatas"])
 
 
 if __name__ == "__main__":
@@ -117,12 +147,12 @@ if __name__ == "__main__":
         await connect_to_mongo()
 
         # add documents to collection
-        await main()
+        # await main()
         # result = collection.query(query_texts=["OpenAI Court order"])
         # pprint(result["metadatas"])
-        # await date_modify()
+        await test_query()
 
         # disconnect from mongo db
-        await close_mongo_connection()
+        await disconnect_from_mongo()
 
     asyncio.run(run())

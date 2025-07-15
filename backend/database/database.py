@@ -58,7 +58,7 @@ async def connect_to_mongo():
         raise e
 
 
-async def close_mongo_connection():
+async def disconnect_from_mongo():
     """Close database connection"""
     try:
         if db.client:
@@ -284,7 +284,7 @@ if __name__ == "__main__":
         # test delete_newsletter
         await get_null_cleaned_md_newsletters()
 
-        await close_mongo_connection()
+        await disconnect_from_mongo()
 
     asyncio.run(main())
     print("database.py _ test")

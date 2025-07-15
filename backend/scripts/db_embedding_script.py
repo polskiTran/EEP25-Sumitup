@@ -2,8 +2,8 @@ import logging
 
 from config import settings
 from database.database import (
-    close_mongo_connection,
     connect_to_mongo,
+    disconnect_from_mongo,
     get_newsletters,
     upsert_newsletter,
 )
@@ -132,6 +132,6 @@ if __name__ == "__main__":
         await embedding_test()
 
         # disconnect from db
-        await close_mongo_connection()
+        await disconnect_from_mongo()
 
     asyncio.run(run())
