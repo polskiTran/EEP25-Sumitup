@@ -81,7 +81,35 @@ async def chromadb_vector_search(query: str, limit: int = 5, filter: dict = {}):
         collection = client.get_collection(name=settings.chromadb_collection_name)
     except Exception as e:
         print(f"Error getting collection: {e}.")
-    result = collection.query(query_texts=[query], where=filter, n_results=limit)
+    result = collection.query(
+        query_texts=[query],
+        where=filter,
+        n_results=limit,
+        include=["distances"],
+    )
+    return result["metadatas"]
+
+
+async def chromadb_query_search(query: dict = {}, limit: int = 5):
+    """
+    Search for newsletters in chromadb using query search
+    Args:
+        query (str): The query to search for
+        limit (int): The number of results to return
+    Returns:
+        list[dict]: The list of results
+    """
+    # connect to chromadb
+    client = chromadb.CloudClient(
+        api_key=settings.chromadb_api_key,
+        tenant=settings.chromadb_tenant,
+        database=settings.chromadb_database,
+    )
+    try:
+        collection = client.get_collection(name=settings.chromadb_collection_name)
+    except Exception as e:
+        print(f"Error getting collection: {e}.")
+    result = collection.get(where=query)
     return result["metadatas"]
 
 
@@ -121,11 +149,12 @@ if __name__ == "__main__":
     # test data
     date1 = "2025-07-10"
     date2 = "2025-07-13"
+    date3 = "2025-07-12"
     date_timestamp1 = int(datetime.strptime(date1, "%Y-%m-%d").timestamp() * 1000)
     date_timestamp2 = int(datetime.strptime(date2, "%Y-%m-%d").timestamp() * 1000)
 
     # query
-    query = "foldables"
+    query = "Windsurf acquisition"
     limit = 5
     # pre filter query
     # pre_filter_query = {
@@ -134,7 +163,7 @@ if __name__ == "__main__":
     #         "$lt": date_timestamp2,
     #     }
     # }
-    pre_filter_query = {"date": "2025-07-14"}
+    pre_filter_query = {"received_datetime": date3}
     # chroma_filter = {
     #     "date_timestamp": {
     #         "$gte": int(datetime.strptime(date1, "%Y-%m-%d").timestamp())
@@ -151,16 +180,20 @@ if __name__ == "__main__":
     #         {"date": "2025-07-12"},
     #     ]
     # }
-    chroma_filter = {"$eq": {"date": "2025-07-14"}}
+    chroma_filter = {"date": date3}
 
     async def run():
         print("---------------------------------------------------")
         print("---------------------------------------------------")
         print("mongodb_vector_search")
-        pprint(await mongodb_vector_search(query, limit, pre_filter_query))
+        # pprint(await mongodb_vector_search(query, limit, pre_filter_query))
         print("---------------------------------------------------")
         print("---------------------------------------------------")
         print("chromadb_vector_search")
-        pprint(await chromadb_vector_search(query, limit, chroma_filter))
+        # pprint(await chromadb_vector_search(query, limit, chroma_filter))
+        print("---------------------------------------------------")
+        print("---------------------------------------------------")
+        print("chromadb_query_search")
+        pprint(await chromadb_query_search(chroma_filter, limit))
 
     asyncio.run(run())
