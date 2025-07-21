@@ -3,6 +3,7 @@ from datetime import datetime
 import chromadb
 from config import settings
 from database.database import connect_to_mongo, disconnect_from_mongo, get_collection
+from pymongo import MongoClient
 from services.genai_service import embed_newsletter
 
 
@@ -85,7 +86,7 @@ async def chromadb_vector_search(query: str, limit: int = 5, filter: dict = {}):
         query_texts=[query],
         where=filter,
         n_results=limit,
-        include=["distances"],
+        # include=["distances"],
     )
     return result["metadatas"]
 
@@ -111,6 +112,60 @@ async def chromadb_query_search(query: dict = {}, limit: int = 5):
         print(f"Error getting collection: {e}.")
     result = collection.get(where=query)
     return result["metadatas"]
+
+
+def sync_mongodb_vector_search(
+    query: str, limit: int = 20, pre_filter_query: dict = {}
+):
+    """
+    Search for newsletters in mongodb using vector search
+    Args:
+        query (str): The query to search for
+        limit (int): The number of results to return
+        pre_filter_query (dict): The pre filter query to apply to the search
+    Returns:
+        list[dict]: The list of results
+    """
+
+    # connect to mongo db
+    client = MongoClient(settings.mongodb_url)
+    collection = client[settings.database_name]["newsletters"]
+
+    print(f"Pre filter query: {pre_filter_query}")
+
+    # vector search
+    query_vector = embed_newsletter(query)
+    cursor = collection.aggregate(
+        [
+            {
+                "$vectorSearch": {
+                    "queryVector": query_vector,
+                    "path": "cleaned_md_embedding",
+                    "numCandidates": 100,
+                    "limit": limit,
+                    "index": "vector_index",
+                    "filter": pre_filter_query,
+                }
+            }
+        ]
+    )
+
+    # clean results
+    cleaned_results = []
+    for doc in cursor:
+        cleaned_results.append(
+            {
+                "id": doc["_id"],
+                "sender_name": doc["sender_name"],
+                "sender_email": doc["sender_email"],
+                "subject": doc["subject"],
+                "received_datetime": doc["received_datetime"],
+                # "cleaned_md": doc["cleaned_md"],
+            }
+        )
+    # disconnect from mongo db
+    client.close()
+    return cleaned_results
 
 
 # async def chroma_prefilter_vector_search(query: str, limit: int = 5, pre-filter: dict = {}):
@@ -147,15 +202,15 @@ if __name__ == "__main__":
     from pprint import pprint
 
     # test data
-    date1 = "2025-07-10"
-    date2 = "2025-07-13"
+    date1 = "2025-07-14"
+    date2 = "2025-07-20"
     date3 = "2025-07-12"
     date_timestamp1 = int(datetime.strptime(date1, "%Y-%m-%d").timestamp() * 1000)
     date_timestamp2 = int(datetime.strptime(date2, "%Y-%m-%d").timestamp() * 1000)
 
     # query
     query = "Windsurf acquisition"
-    limit = 5
+    limit = 50
     # pre filter query
     # pre_filter_query = {
     #     "internal_date": {
@@ -163,11 +218,24 @@ if __name__ == "__main__":
     #         "$lt": date_timestamp2,
     #     }
     # }
-    pre_filter_query = {"received_datetime": date3}
+    pre_filter_query = {
+        "internal_date": {"$gte": 1753057282423, "$lt": 1752625282423},
+        "sender_name": "TLDR AI",
+    }
+    # pre_filter_query = {"received_datetime": date3}
     # chroma_filter = {
-    #     "date_timestamp": {
-    #         "$gte": int(datetime.strptime(date1, "%Y-%m-%d").timestamp())
-    #     }
+    #     "$and": [
+    #         {"date_timestamp": {"$gte": date_timestamp1}},
+    #         {"date_timestamp": {"$lt": date_timestamp2}},
+    #     ]
+    # }
+    print(date_timestamp1)
+    chroma_filter = {"date_timestamp": {"$gte": date_timestamp1}}
+    # chroma_filter = {
+    #     "$or": [
+    #         {"date": date1},
+    #         {"date": date2},
+    #     ]
     # }
     # chroma_filter = {
     #     "$and": [
@@ -180,20 +248,24 @@ if __name__ == "__main__":
     #         {"date": "2025-07-12"},
     #     ]
     # }
-    chroma_filter = {"date": date3}
+    # chroma_filter = {"date": date3}
 
     async def run():
         print("---------------------------------------------------")
         print("---------------------------------------------------")
         print("mongodb_vector_search")
-        # pprint(await mongodb_vector_search(query, limit, pre_filter_query))
+        pprint(await mongodb_vector_search(query, limit, pre_filter_query))
         print("---------------------------------------------------")
         print("---------------------------------------------------")
-        print("chromadb_vector_search")
+        print("sync_mongodb_vector_search")
+        pprint(sync_mongodb_vector_search(query, limit, pre_filter_query))
+        # print("---------------------------------------------------")
+        # print("---------------------------------------------------")
+        # print("chromadb_vector_search")
         # pprint(await chromadb_vector_search(query, limit, chroma_filter))
-        print("---------------------------------------------------")
-        print("---------------------------------------------------")
-        print("chromadb_query_search")
-        pprint(await chromadb_query_search(chroma_filter, limit))
+        # print("---------------------------------------------------")
+        # print("---------------------------------------------------")
+        # print("chromadb_query_search")
+        # pprint(await chromadb_query_search(chroma_filter, limit))
 
     asyncio.run(run())

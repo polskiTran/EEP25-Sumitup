@@ -263,7 +263,7 @@ async def add_newsletter_to_chroma_collection(
             documents=[newsletter.cleaned_md],
             metadatas=[
                 {
-                    "date": newsletter.received_datetime.strftime("%Y-%m-%d"),
+                    "date": newsletter.received_datetime,
                     "sender_name": newsletter.sender_name,
                     "sender_email": newsletter.sender_email,
                     "subject": newsletter.subject,
