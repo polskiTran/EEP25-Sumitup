@@ -273,8 +273,6 @@ Ad spots typically sell out about 4 weeks in advance. To ensure your ad reaches 
 <START_EXAMPLE_OUTPUT>
 
 ```md
-![](https://eotrx.substackcdn.com/open?token=eyJtIjoiPDIwMjUwNzAxMTUzMDU3LjMuNTY2YjBiY2E1NjM5ZDZjN0BtZy1kMS5zdWJzdGFjay5jb20-IiwidSI6MzQ5NzM4MTYzLCJyIjoic3VtaXR1cC5kZXZAZ21haWwuY29tIiwiZCI6Im1nLWQxLnN1YnN0YWNrLmNvbSIsInAiOjE2NzAwNzYyMywidCI6Im5ld3NsZXR0ZXIiLCJhIjoiZXZlcnlvbmUiLCJzIjo4MTcxMzIsImMiOiJwb3N0IiwiZiI6dHJ1ZSwicG9zaXRpb24iOiJ0b3AiLCJpYXQiOjE3NTEzODQ4MjUsImV4cCI6MTc1Mzk3NjgyNSwiaXNzIjoicHViLTAiLCJzdWIiOiJlbyJ9.h_lq446Mo75DspReL5XiPVsYgLcjNPIiBcIO4BzezIA)
-
 This article explains how Spotify addressed these challenges by building an annotation platform designed to scale with its machine learning needs.
 
 # [How Spotify Uses GenAI and ML to Annotate a Hundred Million Tracks](https://substack.com/app-link/post?publication_id=817132&post_id=167007623&utm_source=post-email-title&utm_campaign=email-post-title&isFreemail=true&r=5s83oz&token=eyJ1c2VyX2lkIjozNDk3MzgxNjMsInBvc3RfaWQiOjE2NzAwNzYyMywiaWF0IjoxNzUxMzg0ODI1LCJleHAiOjE3NTM5NzY4MjUsImlzcyI6InB1Yi04MTcxMzIiLCJzdWIiOiJwb3N0LXJlYWN0aW9uIn0.jKlPgBdrDM6BwsZBkJSwH-8VCfuIPltrporeB3OaqYc)
@@ -907,3 +905,9 @@ We collaborate with [Jobright.ai](https://substack.com/redirect/e6cdc740-9d66-49
 ```
 
 <END_EXAMPLE_OUTPUT>
+
+## Example 3: PATTERN/SECTION TO BE REMOVED REGARDLESS
+
+```md
+
+```
