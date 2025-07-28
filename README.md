@@ -20,7 +20,7 @@
  .      .   . .   .   .   . .  +   .    .            +
 ```
 
-A project for EEP Summer 2025 - Digital Newsletter Garden
+A project for EEP Summer 2025 - Digital Newsletter Garden ([web client](https://sumitup.dev/) - [source](https://github.com/polskiTran/Sumitup-quartz-dev))
 
 ## What
 
