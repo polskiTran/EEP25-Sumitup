@@ -24,13 +24,13 @@ A project for EEP Summer 2025 - Digital Newsletter Garden ([web client](https://
 
 ## What
 
-    - A full-stack web app that ingests popular tech newsletters, strips the noise, summaries them with Google Gemini, and serves a clean dashboard.
+    - A full-stack web app that ingests popular tech newsletters, strips the noise with Google Gemini, and serves a clean dashboard along side an Agentic AI Assistant.
 
 ## How
 
     Stack
-    - Frontend: Astro + React with Shadcn UI
-    - Backend: Python FastAPI (uv as package manager)
+    - Frontend: Quartz V4
+    - Backend: Python FastAPI + Pydantic
     - LLM: gemini-2.0-flash, few-shot prompt, JSON-only output
     - Database: MongoDB Atlas, optional Atlas Vector Search for semantic queries
     - Email integration: GmailAPI
