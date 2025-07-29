@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     google_gmail_client_id: str
     google_gmail_client_secret: str
     google_gemini_genai_api_token: str
-    google_gemini_genai_model: str = "gemini-2.5-flash-lite-preview-06-17"
+    google_gemini_genai_model: str = "gemini-2.5-flash-lite"
     google_gemini_embedding_model: str = "gemini-embedding-exp-03-07"
     google_gemini_genai_model_backup: str = "gemini-2.5-flash"
     google_gemini_genai_cleanup_prompt_path: str = (
