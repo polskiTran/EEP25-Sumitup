@@ -116,6 +116,40 @@ async def add_embeddings_to_collection():
         logger.error(f"Unexpected error: {e}")
 
 
+async def re_embedding_newsletters(filter_query: dict):
+    """Re-embed newsletters with filter query.
+    Args:
+        filter_query: Filter query to get newsletters.
+    """
+    try:
+        # get newsletters
+        newsletters = await get_newsletters(filter_query)
+        total_docs = len(newsletters)
+        logger.info(f"Total documents: {total_docs}")
+        # re-embed newsletters
+        for index, newsletter in enumerate(newsletters):
+            logger.info(
+                f"\n(*) Processing {index + 1} out of {total_docs} documents ============"
+            )
+            cleaned_md = newsletter.cleaned_md
+            embedding = embed_newsletter(cleaned_md)
+            if embedding is None:
+                logger.error(
+                    f"Failed to generate embedding for document {newsletter.id}"
+                )
+                continue
+            # update document with embedding
+            newsletter.cleaned_md_embedding = embedding
+            await upsert_newsletter(newsletter)
+            logger.info(
+                f"Updated document {newsletter.id} with embedding ({index + 1}/{total_docs})"
+            )
+    except PyMongoError as e:
+        logger.error(f"MongoDB error: {e}")
+    except Exception as e:
+        logger.error(f"Unexpected error: {e}")
+
+
 # Run the script
 if __name__ == "__main__":
     # Connect to MongoDB
@@ -124,12 +158,16 @@ if __name__ == "__main__":
     async def run():
         # connect to db
         await connect_to_mongo()
+        print("No script selected")
 
         # add embeddings to collection
         # await add_embeddings_to_collection()
 
         # test embedding
-        await embedding_test()
+        # await embedding_test()
+
+        # re-embed newsletters
+        await re_embedding_newsletters({"received_datetime": "2025-08-01"})
 
         # disconnect from db
         await disconnect_from_mongo()
