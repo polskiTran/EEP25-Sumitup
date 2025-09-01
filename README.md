@@ -20,7 +20,7 @@
  .      .   . .   .   .   . .  +   .    .            +
 ```
 
-A project for EEP Summer 2025 - Digital Newsletter Garden ([web client](https://sumitup.dev/) - [source](https://github.com/polskiTran/Sumitup-quartz-dev))
+A project for EEP Summer 2025 - Digital Newsletter Garden ([web client](https://sumitup.dev/) - [source](https://github.com/polskiTran/Sumitup-quartz-dev); [Agent Assistant](https://github.com/polskiTran/EEP25-Sumitup-Agent-Assistant))
 
 ## What
 
