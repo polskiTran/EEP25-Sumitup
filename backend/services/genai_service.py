@@ -63,7 +63,7 @@ def llm_call(
         types.GenerateContentResponse: The LLM response
     """
     max_attempts = 10
-    backoff = 1  # seconds
+    backoff = 1  # start with 30 seconds wait
     for attempt in range(1, max_attempts + 1):
         try:
             if retry:
@@ -111,9 +111,9 @@ def llm_call(
                     )
                     raise Exception(f"LLM call failed after retries: {str(e)}")
                 time.sleep(backoff)
-                backoff = min(backoff * 2, 60)  # Cap at 60s
-                continue
-            logger.error(f"LLM call failed with error: {str(e)}")
+                backoff = min(
+                    backoff + 30, 300
+                )  # increase wait time by 30s, cap at 5min
             raise Exception(f"LLM call failed: {str(e)}")
 
 
@@ -196,7 +196,7 @@ def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
         list[float]: The embedded cleaned newsletter markdown as a list of floats
     """
     max_attempts = 10
-    backoff = 1
+    backoff = 1  # start with 30 seconds wait
     for attempt in range(1, max_attempts + 1):
         try:
             logger.info(f"Embedding newsletter...")
@@ -225,7 +225,9 @@ def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
                     )
                     raise Exception(f"Embedding failed after retries: {str(e)}")
                 time.sleep(backoff)
-                backoff = min(backoff * 2, 60)  # Cap at 60s
+                backoff = min(
+                    backoff + 30, 300
+                )  # increase wait time by 30s, cap at 5min
                 continue
             logger.error(f"Unexpected error generating embedding: {e}")
             raise Exception(f"Embedding failed: {str(e)}")
