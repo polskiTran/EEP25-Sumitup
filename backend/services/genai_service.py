@@ -1,42 +1,143 @@
-import json
+import asyncio
 import logging
 import os
 import time
-from datetime import datetime
+from collections import deque
 
 from config import settings
 from google import genai
-from google.api_core.exceptions import GoogleAPIError
 from google.genai import types
+from tenacity import (
+    before_sleep_log,
+    retry,
+    retry_if_exception,
+    stop_after_attempt,
+    wait_exponential,
+)
 
 # ------------------------------
 # Logger
 # ------------------------------
-# capture module name and set level
 logger = logging.getLogger(__name__)
 logger.setLevel(settings.logger_level)
 
-# Create console handler (stream logger to console) and set level to debug
 console_handler = logging.StreamHandler()
-console_handler.setLevel(settings.logger_level)  # Capture all levels
+console_handler.setLevel(settings.logger_level)
 
-# Create formatter and add it to the handler
 formatter = logging.Formatter(
     "\n[%(asctime)s] %(levelname)s in [%(module)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 console_handler.setFormatter(formatter)
 
-# Add the handler to the logger if not already added
 if not logger.hasHandlers():
     logger.addHandler(console_handler)
 
 
 # ------------------------------
+# Rate Limiter
+# ------------------------------
+class GeminiRateLimiter:
+    """Async-safe rate limiter for Gemini API calls.
+
+    Enforces both RPM (requests per minute) and max concurrent requests
+    using a sliding window and semaphore.
+    """
+
+    def __init__(self, rpm: int, max_concurrent: int):
+        self.rpm = rpm
+        self.max_concurrent = max_concurrent
+        self._semaphore: asyncio.Semaphore | None = None
+        self._request_times: deque[float] = deque()
+        self._lock: asyncio.Lock | None = None
+
+    def _ensure_initialized(self) -> None:
+        """Lazily initialize asyncio primitives in the current event loop."""
+        if self._semaphore is None:
+            self._semaphore = asyncio.Semaphore(self.max_concurrent)
+        if self._lock is None:
+            self._lock = asyncio.Lock()
+
+    async def acquire(self) -> None:
+        """Acquire a slot, waiting if necessary to stay under RPM limit."""
+        self._ensure_initialized()
+
+        # Type narrowing after initialization
+        assert self._semaphore is not None
+        assert self._lock is not None
+
+        # First acquire the semaphore for concurrency control
+        await self._semaphore.acquire()
+
+        async with self._lock:
+            now = time.monotonic()
+
+            # Remove timestamps older than 60 seconds (sliding window)
+            while self._request_times and now - self._request_times[0] > 60:
+                self._request_times.popleft()
+
+            # If at RPM limit, wait until oldest request expires
+            if len(self._request_times) >= self.rpm:
+                wait_time = 60 - (now - self._request_times[0]) + 0.1  # small buffer
+                if wait_time > 0:
+                    logger.debug(
+                        f"Rate limit: waiting {wait_time:.1f}s before next request"
+                    )
+                    # Release lock while sleeping to not block other waiters
+                    self._lock.release()
+                    try:
+                        await asyncio.sleep(wait_time)
+                    finally:
+                        await self._lock.acquire()
+                    # Recalculate after sleep
+                    now = time.monotonic()
+                    while self._request_times and now - self._request_times[0] > 60:
+                        self._request_times.popleft()
+
+            # Record this request
+            self._request_times.append(time.monotonic())
+
+    def release(self) -> None:
+        """Release the concurrency semaphore."""
+        if self._semaphore is not None:
+            self._semaphore.release()
+
+    async def __aenter__(self):
+        await self.acquire()
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        self.release()
+        return False
+
+
+# Global rate limiter instance
+_rate_limiter = GeminiRateLimiter(
+    rpm=settings.gemini_rpm,
+    max_concurrent=settings.gemini_max_concurrent,
+)
+
+
+def get_rate_limiter() -> GeminiRateLimiter:
+    """Get the global rate limiter instance."""
+    return _rate_limiter
+
+
+# ------------------------------
 # GenAI Service
 # ------------------------------
-# Configure the Generative AI API key (could also be done once on startup)
 client = genai.Client(api_key=settings.google_gemini_genai_api_token)
+
+
+def is_rate_limit_error(exception: BaseException) -> bool:
+    """Check if an exception is a rate limit / resource exhausted error."""
+    err_str = str(exception).lower()
+    return (
+        "resource_exhausted" in err_str
+        or "429" in err_str
+        or "rate limit" in err_str
+        or "quota" in err_str
+    )
 
 
 def construct_prompt(prompt_path: str, newsletter_markdown: str) -> str:
@@ -44,107 +145,172 @@ def construct_prompt(prompt_path: str, newsletter_markdown: str) -> str:
 
     Args:
         prompt_path (str): The path to the prompt
-        newsletter (dict): The newsletter to summarize
+        newsletter_markdown (str): The newsletter markdown
+    Returns:
+        str: The constructed prompt
     """
     with open(prompt_path, "r", encoding="utf-8") as f:
         prompt = f.read()
     return prompt + newsletter_markdown + '"'
 
 
-def llm_call(
-    newsletter_markdown: str, system_instruction: str, retry: bool = False
+def _sync_llm_call(
+    newsletter_markdown: str, system_instruction: str, use_backup_model: bool = False
 ) -> types.GenerateContentResponse:
-    """Construct the LLM call with manual exponential backoff and retry for 429/resource exhaustion errors.
-    Args:
-        newsletter_markdown (str): The newsletter markdown to summarize
-        system_instruction (str): The system instruction to use for the LLM call
-        retry (bool): Whether to retry the LLM call in case of empty response
-    Returns:
-        types.GenerateContentResponse: The LLM response
-    """
-    max_attempts = 10
-    backoff = 1  # start with 30 seconds wait
-    for attempt in range(1, max_attempts + 1):
-        try:
-            if retry:
-                # retry with backup model and thinking budget
-                config = types.GenerateContentConfig(
-                    temperature=0.0,
-                    thinking_config=types.ThinkingConfig(
-                        thinking_budget=8000,
-                    ),
-                    response_mime_type="text/plain",
-                    system_instruction=system_instruction,
-                )
-                response = client.models.generate_content(
-                    model=settings.google_gemini_genai_model_backup,
-                    contents=newsletter_markdown,
-                    config=config,
-                )
-            else:
-                # call the LLM
-                response = client.models.generate_content(
-                    model=settings.google_gemini_genai_model,
-                    contents=newsletter_markdown,
-                    config=types.GenerateContentConfig(
-                        temperature=0.0,
-                        # thinking_config=types.ThinkingConfig(
-                        #     thinking_budget=8000,
-                        # ),
-                        system_instruction=system_instruction,
-                    ),
-                )
-            return response
-        except Exception as e:
-            err_str = str(e).lower()
-            if (
-                "resource_exhausted" in err_str
-                or "429" in err_str
-                or "rate limit" in err_str
-            ):
-                logger.warning(
-                    f"LLM call attempt {attempt} failed with RESOURCE_EXHAUSTED/429: {e}. Retrying in {backoff} seconds..."
-                )
-                if attempt == max_attempts:
-                    logger.error(
-                        f"LLM call failed after {max_attempts} attempts due to RESOURCE_EXHAUSTED/429."
-                    )
-                    raise Exception(f"LLM call failed after retries: {str(e)}")
-                time.sleep(backoff)
-                backoff = min(
-                    backoff + 30, 300
-                )  # increase wait time by 30s, cap at 5min
-            raise Exception(f"LLM call failed: {str(e)}")
-
-
-async def llm_clean_up(newsletter_markdown: str, log_info: list, logging: bool = False):
-    """The LLM clean up function.
+    """Synchronous LLM call (to be run in thread pool).
 
     Args:
-        newsletter_markdown (str): The newsletter markdown to summarize
-        log_info (list): The log info [sender_name, sender_email, date]
+        newsletter_markdown: The content to process
+        system_instruction: System instruction for the model
+        use_backup_model: If True, use backup model with thinking budget
     Returns:
-        str: The llm-cleaned markdown
+        The model response
     """
-    # unpack log info
+    if use_backup_model:
+        config = types.GenerateContentConfig(
+            temperature=0.0,
+            thinking_config=types.ThinkingConfig(thinking_budget=8000),
+            response_mime_type="text/plain",
+            system_instruction=system_instruction,
+        )
+        response = client.models.generate_content(
+            model=settings.google_gemini_genai_model_backup,
+            contents=newsletter_markdown,
+            config=config,
+        )
+    else:
+        config = types.GenerateContentConfig(
+            temperature=0.0,
+            system_instruction=system_instruction,
+        )
+        response = client.models.generate_content(
+            model=settings.google_gemini_genai_model,
+            contents=newsletter_markdown,
+            config=config,
+        )
+    return response
+
+
+def _sync_embed_call(newsletter_cleaned_markdown: str) -> list[float]:
+    """Synchronous embedding call (to be run in thread pool).
+
+    Args:
+        newsletter_cleaned_markdown: The cleaned markdown to embed
+    Returns:
+        List of embedding values
+    Raises:
+        ValueError: If embedding result is empty
+    """
+    result = client.models.embed_content(
+        model=settings.google_gemini_embedding_model,
+        contents=newsletter_cleaned_markdown,
+        config=settings.google_gemini_embedding_config,
+    )
+    if not result.embeddings or not result.embeddings[0].values:
+        raise ValueError("Embedding API returned empty result")
+    return list(result.embeddings[0].values)
+
+
+# Create retry decorator for rate limit errors
+def create_retry_decorator():
+    """Create a tenacity retry decorator configured for Gemini rate limits."""
+    return retry(
+        stop=stop_after_attempt(settings.gemini_retry_max_attempts),
+        wait=wait_exponential(
+            multiplier=1,
+            min=settings.gemini_retry_min_wait,
+            max=settings.gemini_retry_max_wait,
+        ),
+        retry=retry_if_exception(is_rate_limit_error),
+        before_sleep=before_sleep_log(logger, logging.WARNING),
+        reraise=True,
+    )
+
+
+gemini_retry = create_retry_decorator()
+
+
+@gemini_retry
+async def llm_call(
+    newsletter_markdown: str, system_instruction: str, use_backup_model: bool = False
+) -> types.GenerateContentResponse:
+    """Async LLM call with rate limiting and automatic retry on 429/resource exhaustion.
+
+    Args:
+        newsletter_markdown: The newsletter markdown to process
+        system_instruction: The system instruction for the LLM
+        use_backup_model: If True, use backup model with thinking budget
+    Returns:
+        The model response
+    Raises:
+        Exception: If all retries are exhausted or a non-rate-limit error occurs
+    """
+    rate_limiter = get_rate_limiter()
+
+    async with rate_limiter:
+        # Run sync client call in thread pool to avoid blocking event loop
+        response = await asyncio.to_thread(
+            _sync_llm_call,
+            newsletter_markdown,
+            system_instruction,
+            use_backup_model,
+        )
+        return response
+
+
+@gemini_retry
+async def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
+    """Async embed the newsletter markdown with rate limiting and retry.
+
+    Args:
+        newsletter_cleaned_markdown: The cleaned newsletter markdown to embed
+    Returns:
+        The embedding as a list of floats
+    Raises:
+        Exception: If all retries are exhausted or a non-rate-limit error occurs
+    """
+    rate_limiter = get_rate_limiter()
+
+    async with rate_limiter:
+        logger.info("Embedding newsletter...")
+        embeddings = await asyncio.to_thread(
+            _sync_embed_call,
+            newsletter_cleaned_markdown,
+        )
+        logger.info(f"Embedding done! Embedding length: {len(embeddings)}")
+        return embeddings
+
+
+async def llm_clean_up(
+    newsletter_markdown: str, log_info: list, logging_enabled: bool = False
+) -> str | None:
+    """Clean up newsletter markdown using the LLM.
+
+    Args:
+        newsletter_markdown: The newsletter markdown to clean
+        log_info: The log info [sender_name, sender_email, date]
+        logging_enabled: Whether to save logs for debugging
+    Returns:
+        The cleaned markdown, or None if cleanup failed
+    """
     sender_name, sender_email, date = log_info
-    # save logs for debugging
-    if logging:
-        with open(
-            f"logs/genai_requests/{sender_name}_{sender_email}_{date}_llm_cleanup_prompt.txt",
-            "w",
-            encoding="utf-8",
-        ) as f:
-            f.write(
-                construct_prompt(
-                    settings.google_gemini_genai_cleanup_prompt_path,
-                    newsletter_markdown,
-                )
-            )
 
-    # get system instruction based on sender name
+    # Save logs for debugging
+    if logging_enabled:
+        log_path = f"logs/genai_requests/{sender_name}_{sender_email}_{date}_llm_cleanup_prompt.txt"
+        try:
+            with open(log_path, "w", encoding="utf-8") as f:
+                f.write(
+                    construct_prompt(
+                        settings.google_gemini_genai_cleanup_prompt_path,
+                        newsletter_markdown,
+                    )
+                )
+        except Exception as e:
+            logger.warning(f"Failed to write log file: {e}")
+
+    # Get system instruction based on sender name
     if sender_name in settings.tldr_newsletters_group_names:
-        # use tldr system instruction
         system_instruction_file_name = "tldr_llm_cleanup_prompt.md"
     else:
         system_instruction_file_name = (
@@ -155,105 +321,45 @@ async def llm_clean_up(newsletter_markdown: str, log_info: list, logging: bool =
     system_instruction_path = (
         "helpers/system_instructions/" + system_instruction_file_name
     )
-    # check if system instruction file exists
+
     if not os.path.exists(system_instruction_path):
-        # use base system instruction
         system_instruction = settings.google_gemini_genai_system_instruction
         logger.warning(
             f"System instruction file {system_instruction_file_name} does not exist. Using base system instruction."
         )
     else:
-        system_instruction = open(
-            system_instruction_path,
-            "r",
-            encoding="utf-8",
-        ).read()
+        with open(system_instruction_path, "r", encoding="utf-8") as f:
+            system_instruction = f.read()
 
-    # call the llm
+    # Call the LLM
     logger.info(
         f"Calling LLM cleanup for {sender_name}_{sender_email}_{date} with system instruction: {system_instruction_path}"
     )
-    response = llm_call(newsletter_markdown, system_instruction)
-    if not response.text:
-        logger.debug(
-            f"LLM response is empty for {sender_name}_{sender_email}_{date}. Retrying with system instruction in prompt + thinking."
-        )
-        response = llm_call(newsletter_markdown, system_instruction, retry=True)
+
+    try:
+        response = await llm_call(newsletter_markdown, system_instruction)
+
         if not response.text:
-            logger.error(
-                f"LLM response is still empty for {sender_name}_{sender_email}_{date}."
+            logger.debug(
+                f"LLM response is empty for {sender_name}_{sender_email}_{date}. "
+                "Retrying with backup model + thinking."
             )
-            return response.text
-    return response.text
-
-
-def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
-    """Embed the newsletter markdown using the Gemini embedding model.
-
-    Args:
-        newsletter_cleaned_markdown (str): The cleaned newsletter markdown to embed
-    Returns:
-        list[float]: The embedded cleaned newsletter markdown as a list of floats
-    """
-    max_attempts = 10
-    backoff = 1  # start with 30 seconds wait
-    for attempt in range(1, max_attempts + 1):
-        try:
-            logger.info(f"Embedding newsletter...")
-            result = client.models.embed_content(
-                model=settings.google_gemini_embedding_model,
-                contents=newsletter_cleaned_markdown,
-                config=settings.google_gemini_embedding_config,
+            response = await llm_call(
+                newsletter_markdown, system_instruction, use_backup_model=True
             )
-            logger.info(
-                f"Embedding done! Embedding length: {len(result.embeddings[0].values)}"
-            )
-            return result.embeddings[0].values
-        except Exception as e:
-            err_str = str(e).lower()
-            if (
-                "resource_exhausted" in err_str
-                or "429" in err_str
-                or "rate limit" in err_str
-            ):
-                logger.warning(
-                    f"Embedding attempt {attempt} failed with RESOURCE_EXHAUSTED/429: {e}. Retrying in {backoff} seconds..."
+
+            if not response.text:
+                logger.error(
+                    f"LLM response is still empty for {sender_name}_{sender_email}_{date}."
                 )
-                if attempt == max_attempts:
-                    logger.error(
-                        f"Embedding failed after {max_attempts} attempts due to RESOURCE_EXHAUSTED/429."
-                    )
-                    raise Exception(f"Embedding failed after retries: {str(e)}")
-                time.sleep(backoff)
-                backoff = min(
-                    backoff + 30, 300
-                )  # increase wait time by 30s, cap at 5min
-                continue
-            logger.error(f"Unexpected error generating embedding: {e}")
-            raise Exception(f"Embedding failed: {str(e)}")
+                return None
+
+        return response.text
+
+    except Exception as e:
+        logger.error(f"LLM cleanup failed for {sender_name}_{sender_email}_{date}: {e}")
+        raise
 
 
 if __name__ == "__main__":
-    # test the construct_prompt function
-    # with open(
-    #     "TEST_Newsletters/responses/response_Jun_13.json", "r", encoding="utf-8"
-    # ) as f:
-    #     newsletter_markdown = json.load(f)["markdown"]
-    # print(
-    #     construct_prompt(
-    #         settings.google_gemini_llm_cleanup_prompt_path, newsletter_markdown
-    #     )
-    # )
-
-    # test the llm clean up function
-    # import asyncio
-
-    # with open(
-    #     f"TEST_Newsletters/responses/{settings.test_newsletter_name}_html_md_converter.json",
-    #     "r",
-    #     encoding="utf-8",
-    # ) as f:
-    #     newsletter_md_converted_response = json.load(f)
-    # response = asyncio.run(llm_clean_up(newsletter_md_converted_response))
-    # # test status
     print("GenAI Service")

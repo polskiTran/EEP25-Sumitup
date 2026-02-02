@@ -1,8 +1,7 @@
-import json
+import asyncio
 import logging
 import os
 import os.path
-import time
 
 import chromadb
 from config import settings
@@ -22,7 +21,6 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from helpers.helpers import (
-    construct_sender_info,
     convert_internal_date_to_datetime,
     get_item_from_gmail_response,
     parse_sender,
@@ -134,7 +132,12 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         ),
     ]
     cleaned_md = await llm_clean_up(raw_md, log_info)
-    cleaned_md_embedding = embed_newsletter(cleaned_md)
+
+    # Only embed if we got cleaned markdown
+    cleaned_md_embedding = None
+    if cleaned_md:
+        cleaned_md_embedding = await embed_newsletter(cleaned_md)
+
     return Newsletter(
         id=get_item_from_gmail_response(newsletter_data, "id"),
         thread_id=get_item_from_gmail_response(newsletter_data, "thread_id"),
@@ -228,102 +231,272 @@ async def fetch_new_newsletters_ids():
         return {"message": "Error fetching newsletters", "results": [], "count": 0}
 
 
-async def process_fetched_newsletters(fetched_newsletters_ids: list):
-    """Process the newsletter data
+async def _process_single_newsletter(
+    service,
+    chroma_client,
+    newsletter_id: dict,
+    index: int,
+    total: int,
+    semaphore: asyncio.Semaphore,
+) -> tuple[bool, str | None]:
+    """Process a single newsletter with concurrency control.
+
     Args:
-        fetched_newsletters_ids (list): The fetched newsletters ids
+        service: Gmail API service
+        chroma_client: ChromaDB client
+        newsletter_id: Dict with newsletter id
+        index: Current index for logging
+        total: Total count for logging
+        semaphore: Semaphore for concurrency control
+
+    Returns:
+        Tuple of (success: bool, error_message: str | None)
     """
+    async with semaphore:
+        try:
+            # Fetch newsletter data (sync call, run in thread)
+            newsletter_data = await asyncio.to_thread(
+                lambda: service.users()
+                .messages()
+                .get(userId="me", id=newsletter_id["id"])
+                .execute()
+            )
+
+            logger.info(
+                f"(*) Processing newsletter {index + 1} of {total} =========================="
+            )
+
+            # Check if newsletter already exists
+            if await get_newsletter(newsletter_data["id"]):
+                logger.info(f"Newsletter already exists: {newsletter_data['id']}")
+                return (True, None)
+
+            # Convert to pydantic model (includes LLM cleanup and embedding)
+            newsletter: Newsletter = await newsletter_to_model(newsletter_data)
+
+            # Save to db
+            await upsert_newsletter(newsletter)
+
+            # Save to chromadb
+            await add_newsletter_to_chroma_collection(chroma_client, newsletter)
+
+            return (True, None)
+
+        except HttpError as e:
+            error_msg = (
+                f"Gmail API HttpError processing newsletter {newsletter_id['id']}: {e}"
+            )
+            logger.error(error_msg)
+            return (False, error_msg)
+        except Exception as e:
+            error_msg = f"Error processing newsletter {newsletter_id['id']}: {e}"
+            logger.error(error_msg)
+            return (False, error_msg)
+
+
+async def process_fetched_newsletters(
+    fetched_newsletters_ids: list,
+    max_concurrent: int | None = None,
+) -> dict:
+    """Process the newsletter data with concurrent processing.
+
+    Args:
+        fetched_newsletters_ids: The fetched newsletters ids
+        max_concurrent: Max concurrent newsletter processing (defaults to gemini_max_concurrent)
+
+    Returns:
+        Dict with processing results
+    """
+    if not fetched_newsletters_ids:
+        logger.info("No newsletters to process")
+        return {"processed": 0, "failed": 0, "errors": []}
+
     try:
-        error_flag = False
-        # authenticate
+        # Use configured concurrency or override
+        concurrent_limit = max_concurrent or settings.gemini_max_concurrent
+        semaphore = asyncio.Semaphore(concurrent_limit)
+
+        # Authenticate
         service = gmail_authenticate()
-        # chromadb client
-        client = chromadb.CloudClient(
+
+        # ChromaDB client
+        chroma_client = chromadb.CloudClient(
             api_key=settings.chromadb_api_key,
             tenant=settings.chromadb_tenant,
             database=settings.chromadb_database,
         )
 
-        # process fetched newsletters
-        for i, newsletter_id in enumerate(fetched_newsletters_ids):
+        total = len(fetched_newsletters_ids)
+        logger.info(
+            f"Processing {total} newsletters with max {concurrent_limit} concurrent"
+        )
+
+        # Create tasks for all newsletters
+        tasks = [
+            _process_single_newsletter(
+                service, chroma_client, newsletter_id, i, total, semaphore
+            )
+            for i, newsletter_id in enumerate(fetched_newsletters_ids)
+        ]
+
+        # Process concurrently
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Collect results
+        processed = 0
+        failed = 0
+        errors = []
+
+        for i, result in enumerate(results):
+            if isinstance(result, Exception):
+                failed += 1
+                errors.append(
+                    f"Newsletter {fetched_newsletters_ids[i]['id']}: {result}"
+                )
+            elif isinstance(result, tuple):
+                success, error = result
+                if success:
+                    processed += 1
+                else:
+                    failed += 1
+                    if error:
+                        errors.append(error)
+
+        logger.info(f"Processing complete: {processed} succeeded, {failed} failed")
+
+        # Update sync state if any succeeded
+        if processed > 0:
             try:
-                # fetch newsletters from ids
-                newsletter_data = (
+                latest_email_id = (
                     service.users()
                     .messages()
-                    .get(userId="me", id=newsletter_id["id"])
-                    .execute()
+                    .list(userId="me")
+                    .execute()["messages"][0]["id"]
                 )
-                # progress bar
-                logger.info(
-                    f"(*) Processing newsletter {i + 1} of {len(fetched_newsletters_ids)} =========================="
-                )
-                # check if newsletter already exists
-                if await get_newsletter(newsletter_data["id"]):
-                    logger.info(f"Newsletter already exists: {newsletter_data['id']}")
-                    continue
-                else:
-                    # to pydantic model
-                    newsletter: Newsletter = await newsletter_to_model(newsletter_data)
-                # save to db
-                await upsert_newsletter(newsletter)
-                # save to chromadb
-                await add_newsletter_to_chroma_collection(client, newsletter)
-            except HttpError as e:
-                logger.error(
-                    f"Gmail API HttpError processing newsletter {newsletter_id['id']}: {e}"
-                )
-                continue
+                latest_sync_state = sync_state_to_model(latest_email_id)
+                await upsert_sync_state(latest_sync_state)
             except Exception as e:
-                logger.error(f"Error processing newsletter {newsletter_id['id']}: {e}")
-                error_flag = True
-                break
+                logger.error(f"Failed to update sync state: {e}")
 
-        # capture latest fetched email id
-        if not error_flag:
-            latest_email_id = (
-                service.users()
-                .messages()
-                .list(userId="me")
-                .execute()["messages"][0]["id"]
-            )
-            latest_sync_state = sync_state_to_model(latest_email_id)
-            await upsert_sync_state(latest_sync_state)
+        return {"processed": processed, "failed": failed, "errors": errors}
+
     except Exception as e:
         logger.error(f"Error in process_fetched_newsletters: {e}")
+        return {
+            "processed": 0,
+            "failed": len(fetched_newsletters_ids),
+            "errors": [str(e)],
+        }
 
 
-async def retry_null_cleaned_md():
-    """Retry to clean the newsletter if the cleaned_md is null
+async def _retry_single_newsletter_cleanup(
+    newsletter: Newsletter,
+    semaphore: asyncio.Semaphore,
+) -> tuple[bool, str | None]:
+    """Retry cleanup for a single newsletter with concurrency control.
+
     Args:
-        newsletter (Newsletter): The newsletter model
+        newsletter: The newsletter to retry
+        semaphore: Semaphore for concurrency control
+
+    Returns:
+        Tuple of (success: bool, error_message: str | None)
+    """
+    async with semaphore:
+        try:
+            # Check if raw_md exists
+            if not newsletter.raw_md:
+                return (False, f"Newsletter {newsletter.id} has no raw_md to clean")
+
+            log_info = [
+                newsletter.sender_name,
+                newsletter.sender_email,
+                newsletter.received_datetime,
+            ]
+
+            retried_cleaned_md = await llm_clean_up(newsletter.raw_md, log_info)
+
+            if not retried_cleaned_md:
+                return (
+                    False,
+                    f"Failed to clean newsletter {newsletter.id}: empty response",
+                )
+
+            newsletter.cleaned_md = retried_cleaned_md
+
+            # Also generate embedding for the cleaned markdown
+            newsletter.cleaned_md_embedding = await embed_newsletter(retried_cleaned_md)
+
+            await upsert_newsletter(newsletter)
+
+            logger.info(f"Successfully retried cleanup for newsletter {newsletter.id}")
+            return (True, None)
+
+        except Exception as e:
+            error_msg = f"Error retrying cleaned_md for newsletter {newsletter.id}: {e}"
+            logger.error(error_msg)
+            return (False, error_msg)
+
+
+async def retry_null_cleaned_md(max_concurrent: int | None = None) -> dict:
+    """Retry cleaning newsletters that have null cleaned_md with concurrent processing.
+
+    Args:
+        max_concurrent: Max concurrent retries (defaults to gemini_max_concurrent)
+
+    Returns:
+        Dict with retry results
     """
     try:
         null_cleaned_md_newsletters = await get_null_cleaned_md_newsletters()
-        for newsletter in null_cleaned_md_newsletters:
-            try:
-                log_info = [
-                    newsletter.sender_name,
-                    newsletter.sender_email,
-                    newsletter.received_datetime,
-                ]
-                retried_cleaned_md: str = await llm_clean_up(
-                    newsletter.raw_md, log_info
+
+        if not null_cleaned_md_newsletters:
+            logger.info("No newsletters with null cleaned_md to retry")
+            return {"retried": 0, "failed": 0, "errors": []}
+
+        concurrent_limit = max_concurrent or settings.gemini_max_concurrent
+        semaphore = asyncio.Semaphore(concurrent_limit)
+
+        total = len(null_cleaned_md_newsletters)
+        logger.info(
+            f"Retrying {total} newsletters with max {concurrent_limit} concurrent"
+        )
+
+        # Create tasks for all newsletters
+        tasks = [
+            _retry_single_newsletter_cleanup(newsletter, semaphore)
+            for newsletter in null_cleaned_md_newsletters
+        ]
+
+        # Process concurrently
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Collect results
+        retried = 0
+        failed = 0
+        errors = []
+
+        for i, result in enumerate(results):
+            if isinstance(result, Exception):
+                failed += 1
+                errors.append(
+                    f"Newsletter {null_cleaned_md_newsletters[i].id}: {result}"
                 )
-                if not retried_cleaned_md:
-                    logger.error(
-                        f"Failed to clean the newsletter: {newsletter.id}. Skipping..."
-                    )
-                    continue
-                newsletter.cleaned_md = retried_cleaned_md
-                await upsert_newsletter(newsletter)
-            except Exception as e:
-                logger.error(
-                    f"Error retrying cleaned_md for newsletter {newsletter.id}: {e}"
-                )
-                continue
+            elif isinstance(result, tuple):
+                success, error = result
+                if success:
+                    retried += 1
+                else:
+                    failed += 1
+                    if error:
+                        errors.append(error)
+
+        logger.info(f"Retry complete: {retried} succeeded, {failed} failed")
+        return {"retried": retried, "failed": failed, "errors": errors}
+
     except Exception as e:
         logger.error(f"Error in retry_null_cleaned_md: {e}")
+        return {"retried": 0, "failed": 0, "errors": [str(e)]}
 
 
 if __name__ == "__main__":
