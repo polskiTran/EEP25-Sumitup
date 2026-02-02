@@ -48,6 +48,13 @@ class Settings(BaseSettings):
         output_dimensionality=3072,
     )
 
+    # Gemini Rate Limiting
+    gemini_rpm: int = 15  # requests per minute limit
+    gemini_max_concurrent: int = 5  # max concurrent requests
+    gemini_retry_max_attempts: int = 10  # max retry attempts on rate limit errors
+    gemini_retry_min_wait: int = 4  # min wait seconds for exponential backoff
+    gemini_retry_max_wait: int = 300  # max wait seconds (5 minutes)
+
     # HTML to Markdown Converter
     html_md_converter_api_token: str
     html_md_converter_api_base_url: str
