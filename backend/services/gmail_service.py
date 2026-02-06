@@ -364,8 +364,8 @@ async def process_fetched_newsletters(
 
         logger.info(f"Processing complete: {processed} succeeded, {failed} failed")
 
-        # Update sync state if any succeeded
-        if processed > 0:
+        # Update sync state only if no failed
+        if failed == 0:
             try:
                 latest_email_id = (
                     service.users()
