@@ -3,10 +3,8 @@ from datetime import datetime, timezone
 from email.utils import parseaddr
 from typing import Dict
 
-from models.newsletter import Newsletter
 
-
-def get_item_from_gmail_response(response_json: dict, item: str) -> str:
+def get_item_from_gmail_response(response_json: dict, item: str) -> str | None:
     """Get a specific item (html, sender, subject) from the gmail response
 
     Args:
@@ -47,7 +45,7 @@ def get_item_from_gmail_response(response_json: dict, item: str) -> str:
         return None
 
 
-def construct_sender_info(sender_info: Dict[str, str]) -> str:
+def construct_sender_info(sender_info: Dict[str, str]) -> str | None:
     """Construct the sender info from the sender name and email
     Args:
         sender_name (str): The sender name

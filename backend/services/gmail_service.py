@@ -2,6 +2,7 @@ import asyncio
 import logging
 import os
 import os.path
+import ssl
 
 import chromadb
 from config import settings
@@ -102,15 +103,15 @@ def sync_state_to_model(latest_email_id: str) -> SyncState:
     )
     return SyncState(
         gmail_message_id=latest_email_id,
-        subject=get_item_from_gmail_response(latest_email, "subject"),
-        sender_name=parse_sender(get_item_from_gmail_response(latest_email, "sender"))[
-            "name"
-        ],
-        sender_email=parse_sender(get_item_from_gmail_response(latest_email, "sender"))[
-            "email"
-        ],
-        last_synced_internal_date=get_item_from_gmail_response(
-            latest_email, "internal_date"
+        subject=get_item_from_gmail_response(latest_email, "subject") or "",
+        sender_name=parse_sender(
+            get_item_from_gmail_response(latest_email, "sender") or ""
+        )["name"],
+        sender_email=parse_sender(
+            get_item_from_gmail_response(latest_email, "sender") or ""
+        )["email"],
+        last_synced_internal_date=int(
+            get_item_from_gmail_response(latest_email, "internal_date") or 0
         ),
     )
 
@@ -122,13 +123,15 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
     Returns:
         Newsletter: The newsletter model
     """
-    sender_info = parse_sender(get_item_from_gmail_response(newsletter_data, "sender"))
+    sender_info = parse_sender(
+        get_item_from_gmail_response(newsletter_data, "sender") or ""
+    )
     raw_md = html_to_markdown(newsletter_data)  # clean markdown text
     log_info = [
         sender_info["name"],
         sender_info["email"],
         convert_internal_date_to_datetime(
-            int(get_item_from_gmail_response(newsletter_data, "internal_date"))
+            int(get_item_from_gmail_response(newsletter_data, "internal_date") or 0)
         ),
     ]
     cleaned_md = await llm_clean_up(raw_md, log_info)
@@ -139,16 +142,18 @@ async def newsletter_to_model(newsletter_data: dict) -> Newsletter:
         cleaned_md_embedding = await embed_newsletter(cleaned_md)
 
     return Newsletter(
-        id=get_item_from_gmail_response(newsletter_data, "id"),
-        thread_id=get_item_from_gmail_response(newsletter_data, "thread_id"),
+        _id=str(get_item_from_gmail_response(newsletter_data, "id")),
+        thread_id=get_item_from_gmail_response(newsletter_data, "thread_id") or "",
         history_id=get_item_from_gmail_response(newsletter_data, "history_id"),
-        internal_date=get_item_from_gmail_response(newsletter_data, "internal_date"),
+        internal_date=int(
+            get_item_from_gmail_response(newsletter_data, "internal_date") or 0
+        ),
         received_datetime=convert_internal_date_to_datetime(
-            int(get_item_from_gmail_response(newsletter_data, "internal_date"))
+            int(get_item_from_gmail_response(newsletter_data, "internal_date") or 0)
         ).strftime("%Y-%m-%d"),
         sender_name=sender_info["name"],
         sender_email=sender_info["email"],
-        subject=get_item_from_gmail_response(newsletter_data, "subject"),
+        subject=get_item_from_gmail_response(newsletter_data, "subject") or "",
         raw_html=get_item_from_gmail_response(newsletter_data, "html"),
         raw_md=raw_md,
         cleaned_md=cleaned_md,
@@ -231,6 +236,65 @@ async def fetch_new_newsletters_ids():
         return {"message": "Error fetching newsletters", "results": [], "count": 0}
 
 
+def _is_transient_error(exception: BaseException) -> bool:
+    """Check if an exception is a transient/retriable error."""
+    err_str = str(exception).lower()
+    return (
+        "ssl" in err_str
+        or "record layer failure" in err_str
+        or "connection reset" in err_str
+        or "connection refused" in err_str
+        or "connection aborted" in err_str
+        or "timeout" in err_str
+        or "timed out" in err_str
+        or "temporary failure" in err_str
+        or "service unavailable" in err_str
+        or isinstance(exception, (ssl.SSLError, ConnectionError, TimeoutError))
+    )
+
+
+async def _fetch_gmail_message_with_retry(
+    service, message_id: str, max_retries: int = 5, base_delay: float = 2.0
+) -> dict:
+    """Fetch a Gmail message with retry on transient errors.
+    
+    Args:
+        service: Gmail API service
+        message_id: The message ID to fetch
+        max_retries: Maximum retry attempts
+        base_delay: Base delay in seconds for exponential backoff
+        
+    Returns:
+        The message data dict
+        
+    Raises:
+        Exception: If all retries are exhausted
+    """
+    last_exception = None
+    
+    for attempt in range(max_retries + 1):
+        try:
+            return await asyncio.to_thread(
+                lambda: service.users()
+                .messages()
+                .get(userId="me", id=message_id)
+                .execute()
+            )
+        except Exception as e:
+            last_exception = e
+            if _is_transient_error(e) and attempt < max_retries:
+                delay = base_delay * (2 ** attempt)  # exponential backoff
+                logger.warning(
+                    f"Transient error fetching message {message_id} (attempt {attempt + 1}/{max_retries + 1}): {e}. "
+                    f"Retrying in {delay:.1f}s..."
+                )
+                await asyncio.sleep(delay)
+            else:
+                raise
+    
+    raise last_exception  # type: ignore
+
+
 async def _process_single_newsletter(
     service,
     chroma_client,
@@ -254,12 +318,9 @@ async def _process_single_newsletter(
     """
     async with semaphore:
         try:
-            # Fetch newsletter data (sync call, run in thread)
-            newsletter_data = await asyncio.to_thread(
-                lambda: service.users()
-                .messages()
-                .get(userId="me", id=newsletter_id["id"])
-                .execute()
+            # Fetch newsletter data with retry on transient errors
+            newsletter_data = await _fetch_gmail_message_with_retry(
+                service, newsletter_id["id"]
             )
 
             logger.info(
