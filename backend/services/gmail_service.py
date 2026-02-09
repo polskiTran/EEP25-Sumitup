@@ -90,17 +90,17 @@ def gmail_authenticate():
         raise
 
 
-def sync_state_to_model(latest_email_id: str) -> SyncState:
-    """Convert the sync state to a model
+async def sync_state_to_model(latest_email_id: str) -> SyncState:
+    """Convert the sync state to a model (with retry on transient errors).
+
     Args:
-        newsletter_data (dict): The newsletter data
+        latest_email_id: Gmail message ID of the latest synced email.
+
     Returns:
         SyncState: The sync state model
     """
     service = gmail_authenticate()
-    latest_email = (
-        service.users().messages().get(userId="me", id=latest_email_id).execute()
-    )
+    latest_email = await _fetch_gmail_message_with_retry(service, latest_email_id)
     return SyncState(
         gmail_message_id=latest_email_id,
         subject=get_item_from_gmail_response(latest_email, "subject") or "",
@@ -196,21 +196,18 @@ async def fetch_new_newsletters_ids():
             # add 5 seconds to the last synced internal date to avoid duplicates
             query = f"after:{int(sync_state.last_synced_internal_date / 1000) + 5} AND {query}"
 
-        # fetch newsletters from query
+        # fetch newsletters from query (with retry on SSL/transient errors)
         logger.info(f"(*) Fetching newsletters using query: {query}")
         next_page_token = None
         while True:
             try:
-                request = (
-                    service.users()
+                gmail_fetch_result = await _gmail_execute_with_retry(
+                    lambda pt=next_page_token: service.users()
                     .messages()
-                    .list(
-                        userId="me",
-                        q=query,
-                        pageToken=next_page_token,
-                    )
+                    .list(userId="me", q=query, pageToken=pt)
+                    .execute(),
+                    operation_name="messages.list",
                 )
-                gmail_fetch_result = request.execute()
                 if "messages" in gmail_fetch_result:
                     fetched_newsletter_ids.extend(gmail_fetch_result["messages"])
                 next_page_token = gmail_fetch_result.get("nextPageToken")
@@ -237,7 +234,7 @@ async def fetch_new_newsletters_ids():
 
 
 def _is_transient_error(exception: BaseException) -> bool:
-    """Check if an exception is a transient/retriable error."""
+    """Check if an exception is a transient/retriable error (e.g. SSL, network)."""
     err_str = str(exception).lower()
     return (
         "ssl" in err_str
@@ -249,8 +246,53 @@ def _is_transient_error(exception: BaseException) -> bool:
         or "timed out" in err_str
         or "temporary failure" in err_str
         or "service unavailable" in err_str
+        or "handshake" in err_str
+        or "decryption" in err_str
+        or "certificate" in err_str
+        or "eof occurred" in err_str
+        or "wrong_version_number" in err_str
+        or "transient" in err_str
         or isinstance(exception, (ssl.SSLError, ConnectionError, TimeoutError))
     )
+
+
+async def _gmail_execute_with_retry(
+    thunk,
+    *,
+    max_retries: int = 5,
+    base_delay: float = 2.0,
+    operation_name: str = "Gmail API",
+):
+    """Run a sync Gmail API call (e.g. request.execute()) with retry on transient errors.
+
+    Args:
+        thunk: No-arg callable that performs the API call and returns the result.
+        max_retries: Maximum retry attempts.
+        base_delay: Base delay in seconds for exponential backoff.
+        operation_name: Label for logging.
+
+    Returns:
+        The return value of thunk().
+
+    Raises:
+        Exception: If all retries are exhausted.
+    """
+    last_exception = None
+    for attempt in range(max_retries + 1):
+        try:
+            return await asyncio.to_thread(thunk)
+        except Exception as e:
+            last_exception = e
+            if _is_transient_error(e) and attempt < max_retries:
+                delay = base_delay * (2**attempt)
+                logger.warning(
+                    f"Transient error in {operation_name} (attempt {attempt + 1}/{max_retries + 1}): {e}. "
+                    f"Retrying in {delay:.1f}s..."
+                )
+                await asyncio.sleep(delay)
+            else:
+                raise
+    raise last_exception  # type: ignore
 
 
 async def _fetch_gmail_message_with_retry(
@@ -425,16 +467,15 @@ async def process_fetched_newsletters(
 
         logger.info(f"Processing complete: {processed} succeeded, {failed} failed")
 
-        # Update sync state only if no failed
+        # Update sync state only if no failed (with retry on transient errors)
         if failed == 0:
             try:
-                latest_email_id = (
-                    service.users()
-                    .messages()
-                    .list(userId="me")
-                    .execute()["messages"][0]["id"]
+                list_result = await _gmail_execute_with_retry(
+                    lambda: service.users().messages().list(userId="me").execute(),
+                    operation_name="messages.list(sync state)",
                 )
-                latest_sync_state = sync_state_to_model(latest_email_id)
+                latest_email_id = list_result["messages"][0]["id"]
+                latest_sync_state = await sync_state_to_model(latest_email_id)
                 await upsert_sync_state(latest_sync_state)
             except Exception as e:
                 logger.error(f"Failed to update sync state: {e}")
