@@ -8,12 +8,14 @@ from config import settings
 from google import genai
 from google.genai import types
 from tenacity import (
-    before_sleep_log,
+    RetryCallState,
     retry,
     retry_if_exception,
     stop_after_attempt,
     wait_exponential,
 )
+
+from services.progress_display import get_current_newsletter_ctx, get_current_tracker
 
 # ------------------------------
 # Logger
@@ -212,6 +214,36 @@ def _sync_embed_call(newsletter_cleaned_markdown: str) -> list[float]:
 
 
 # Create retry decorator for rate limit errors
+
+
+def _before_sleep_with_tracker(retry_state: RetryCallState) -> None:
+    """Tenacity before_sleep callback that notifies either the Rich tracker or the logger."""
+    attempt = retry_state.attempt_number
+    max_attempts = settings.gemini_retry_max_attempts
+    wait_seconds = retry_state.next_action.sleep if retry_state.next_action else 0  # type: ignore[union-attr]
+    exception = retry_state.outcome.exception() if retry_state.outcome else None
+    reason = str(exception) if exception else "unknown"
+
+    # If a Rich tracker is active, route the event there exclusively
+    tracker = get_current_tracker()
+    nl_ctx = get_current_newsletter_ctx()
+    if tracker and nl_ctx:
+        tracker.log_retry(
+            newsletter_id=nl_ctx.newsletter_id,
+            label=nl_ctx.label,
+            attempt=attempt,
+            max_attempts=max_attempts,
+            reason=reason,
+            wait_seconds=float(wait_seconds),
+        )
+    else:
+        # Fallback to standard logger when Rich display is not active
+        logger.warning(
+            f"Retry {attempt}/{max_attempts} after {wait_seconds:.1f}s "
+            f"(reason: {reason})"
+        )
+
+
 def create_retry_decorator():
     """Create a tenacity retry decorator configured for Gemini rate limits."""
     return retry(
@@ -222,7 +254,7 @@ def create_retry_decorator():
             max=settings.gemini_retry_max_wait,
         ),
         retry=retry_if_exception(is_rate_limit_error),
-        before_sleep=before_sleep_log(logger, logging.WARNING),
+        before_sleep=_before_sleep_with_tracker,
         reraise=True,
     )
 
@@ -272,12 +304,14 @@ async def embed_newsletter(newsletter_cleaned_markdown: str) -> list[float]:
     rate_limiter = get_rate_limiter()
 
     async with rate_limiter:
-        logger.info("Embedding newsletter...")
+        if not get_current_tracker():
+            logger.info("Embedding newsletter...")
         embeddings = await asyncio.to_thread(
             _sync_embed_call,
             newsletter_cleaned_markdown,
         )
-        logger.info(f"Embedding done! Embedding length: {len(embeddings)}")
+        if not get_current_tracker():
+            logger.info(f"Embedding done! Embedding length: {len(embeddings)}")
         return embeddings
 
 
@@ -322,42 +356,49 @@ async def llm_clean_up(
         "helpers/system_instructions/" + system_instruction_file_name
     )
 
+    tracker = get_current_tracker()
+
     if not os.path.exists(system_instruction_path):
         system_instruction = settings.google_gemini_genai_system_instruction
-        logger.warning(
-            f"System instruction file {system_instruction_file_name} does not exist. Using base system instruction."
-        )
+        if not tracker:
+            logger.warning(
+                f"System instruction file {system_instruction_file_name} does not exist. Using base system instruction."
+            )
     else:
         with open(system_instruction_path, "r", encoding="utf-8") as f:
             system_instruction = f.read()
 
     # Call the LLM
-    logger.info(
-        f"Calling LLM cleanup for {sender_name}_{sender_email}_{date} with system instruction: {system_instruction_path}"
-    )
+    if not tracker:
+        logger.info(
+            f"Calling LLM cleanup for {sender_name}_{sender_email}_{date} with system instruction: {system_instruction_path}"
+        )
 
     try:
         response = await llm_call(newsletter_markdown, system_instruction)
 
         if not response.text:
-            logger.debug(
-                f"LLM response is empty for {sender_name}_{sender_email}_{date}. "
-                "Retrying with backup model + thinking."
-            )
+            if not tracker:
+                logger.debug(
+                    f"LLM response is empty for {sender_name}_{sender_email}_{date}. "
+                    "Retrying with backup model + thinking."
+                )
             response = await llm_call(
                 newsletter_markdown, system_instruction, use_backup_model=True
             )
 
             if not response.text:
-                logger.error(
-                    f"LLM response is still empty for {sender_name}_{sender_email}_{date}."
-                )
+                if not tracker:
+                    logger.error(
+                        f"LLM response is still empty for {sender_name}_{sender_email}_{date}."
+                    )
                 return None
 
         return response.text
 
     except Exception as e:
-        logger.error(f"LLM cleanup failed for {sender_name}_{sender_email}_{date}: {e}")
+        if not tracker:
+            logger.error(f"LLM cleanup failed for {sender_name}_{sender_email}_{date}: {e}")
         raise
 
 

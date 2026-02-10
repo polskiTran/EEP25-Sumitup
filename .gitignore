@@ -27,3 +27,6 @@ wheels/
 # Gmail API
 credentials.json
 token.json
+
+# Agents
+AGENTS.md

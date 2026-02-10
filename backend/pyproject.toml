@@ -20,5 +20,6 @@ dependencies = [
     "pymongo>=4.13.2",
     "requests>=2.32.3",
     "tenacity>=8.2.0",
+    "rich>=13.0.0",
     "uvicorn>=0.34.3",
 ]
